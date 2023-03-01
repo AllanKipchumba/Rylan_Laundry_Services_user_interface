@@ -16,6 +16,25 @@
       list-style: none;
       padding: 1rem;
 
+      .navlink {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .active {
+        cursor: pointer;
+      }
+
+      .active::before {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background-color: var(--white);
+      }
+
       li {
         display: flex;
         padding: 1rem;

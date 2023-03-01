@@ -9,6 +9,13 @@ import { GiExpense, GiCreditsCurrency } from "react-icons/gi";
 import { TbFileReport } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
 
+// interface CustomNavLinkProps {
+//   isActive: boolean;
+// }
+
+// const activeLink = ({ isActive }: CustomNavLinkProps) =>
+//   isActive ? `${styles.active}` : `${styles.navLink}`;
+
 export const Sidebar = () => {
   return (
     <div className={styles.sidebar}>
