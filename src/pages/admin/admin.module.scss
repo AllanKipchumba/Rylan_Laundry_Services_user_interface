@@ -1,0 +1,11 @@
+.admin {
+  display: flex;
+  .sidebar {
+    max-width: 12rem;
+  }
+  .content {
+    background-color: var(--white);
+    width: 75%;
+    padding: 1rem;
+  }
+}

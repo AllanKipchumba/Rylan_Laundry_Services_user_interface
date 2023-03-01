@@ -1,0 +1,44 @@
+.sidebar {
+  background-color: var(--light-blue);
+  height: 100vh;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h1 {
+      margin: 2rem 0;
+      color: #fff;
+    }
+  }
+  .dash-list {
+    ul {
+      list-style: none;
+      padding: 1rem;
+
+      li {
+        display: flex;
+        padding: 1rem;
+        text-transform: capitalize;
+        color: var(--white);
+        font-family: var(--font-content);
+
+        @media screen and (max-width: 640px) {
+          font-family: var(--font-mobile);
+        }
+
+        //icons
+
+        p {
+          margin-left: 15px;
+        }
+
+        &:hover {
+          background-color: var(--hover-light-blue);
+          border-radius: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

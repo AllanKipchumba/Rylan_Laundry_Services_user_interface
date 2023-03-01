@@ -2,18 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 /* 
-  font-family: 'Montserrat', sans-serif; //Headers
-  font-family: 'Open Sans', sans-serif;  //tab && desktop content
-  font-family: 'Roboto', sans-serif;     //mobile content
-
-  
-LOGIN PAGE
-bg: #345acc || ** #4f72df **
-form-bg: #fefeff
-header-txt: #46566e 
-btn: #4f72df 
-btn-hover: #2751D4
-
   breakpoints 
   
       sm
@@ -28,18 +16,32 @@ btn-hover: #2751D4
 
     @media screen and (min-width: 1024px) {}
 */
-
-body {
-  font-family: "Open Sans", sans-serif;
-  @media screen and (max-width: 640px) {
-    body {
-      font-family: "Roboto", sans-serif;
-    }
-  }
+:root {
+  --light-blue: #4f72df;
+  --hover-light-blue: #2751d4;
+  --white: #fefeff;
+  --font-header: "Montserrat", sans-serif;
+  --font-content: "Open Sans", sans-serif;
+  --font-mobile: "Roboto", sans-serif;
+  --cont-color: #46566e;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
 }
 
 h1 {
   font-family: "Montserrat", sans-serif;
+  color: #46566e;
 }
 
-/* sm */
+@media screen and (max-width: 640px) {
+  h1 {
+    font-size: 18px;
+  }
+}
+@media screen and (min-width: 640px) {
+  h1 {
+    font-size: 25px;
+  }
+}
