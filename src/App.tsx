@@ -1,9 +1,11 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { Login } from "./pages/login/Login";
 
 export const App = () => {
   return (
-    <div>
-      <h1>hello laundry management system</h1>
-    </div>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+    </Routes>
   );
 };

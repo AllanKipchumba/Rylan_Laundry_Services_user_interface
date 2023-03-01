@@ -6,6 +6,14 @@
   font-family: 'Open Sans', sans-serif;  //tab && desktop content
   font-family: 'Roboto', sans-serif;     //mobile content
 
+  
+LOGIN PAGE
+bg: #345acc || ** #4f72df **
+form-bg: #fefeff
+header-txt: #46566e 
+btn: #4f72df 
+btn-hover: #2751D4
+
   breakpoints 
   
       sm
@@ -20,3 +28,18 @@
 
     @media screen and (min-width: 1024px) {}
 */
+
+body {
+  font-family: "Open Sans", sans-serif;
+  @media screen and (max-width: 640px) {
+    body {
+      font-family: "Roboto", sans-serif;
+    }
+  }
+}
+
+h1 {
+  font-family: "Montserrat", sans-serif;
+}
+
+/* sm */
