@@ -5,8 +5,8 @@ import { Admin, Login } from "./pages";
 export const App = () => {
   return (
     <Routes>
+      <Route path="/*" element={<Admin />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/admin/*" element={<Admin />} />
     </Routes>
   );
 };
