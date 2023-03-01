@@ -13,8 +13,8 @@ import { NavLink } from "react-router-dom";
 //   isActive: boolean;
 // }
 
-// const activeLink = ({ isActive }: CustomNavLinkProps) =>
-//   isActive ? `${styles.active}` : `${styles.navLink}`;
+// const activeLink = ({ isActive }) =>
+//   isActive ? `${styles.active} ${styles.navLink}` : `${styles.navLink}`;
 
 export const Sidebar = () => {
   return (
@@ -25,39 +25,39 @@ export const Sidebar = () => {
       <hr />
       <div className={styles["dash-list"]}>
         <ul>
-          <NavLink to="/">
+          <NavLink to="/" className={styles.navlink}>
             <li>
-              <AiFillDashboard />
+              <AiFillDashboard size={25} />
               <p>Dashboard</p>
             </li>
           </NavLink>
-          <NavLink to="/sales">
+          <NavLink to="/sales" className={styles.navlink}>
             <li>
-              <AiFillDollarCircle />
+              <AiFillDollarCircle size={25} />
               <p>Sales</p>
             </li>
           </NavLink>
-          <NavLink to="/expenses">
+          <NavLink to="/expenses" className={styles.navlink}>
             <li>
-              <GiExpense />
+              <GiExpense size={25} />
               <p>Expenses</p>
             </li>
           </NavLink>
-          <NavLink to="/credits">
+          <NavLink to="/credits" className={styles.navlink}>
             <li>
-              <GiCreditsCurrency />
+              <GiCreditsCurrency size={25} />
               <p>credits</p>
             </li>
           </NavLink>
-          <NavLink to="/report">
+          <NavLink to="/report" className={styles.navlink}>
             <li>
-              <TbFileReport />
+              <TbFileReport size={25} />
               <p>report</p>
             </li>
           </NavLink>
 
           <li>
-            <AiOutlinePoweroff />
+            <AiOutlinePoweroff size={25} />
             <p>logout</p>
           </li>
         </ul>

@@ -21,19 +21,19 @@
         color: inherit;
       }
 
-      .active {
-        cursor: pointer;
-      }
+      // .active {
+      //   cursor: pointer;
+      // }
 
-      .active::before {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 4px;
-        height: 100%;
-        background-color: var(--white);
-      }
+      // .active::before {
+      //   content: "";
+      //   position: absolute;
+      //   right: 0;
+      //   top: 0;
+      //   width: 4px;
+      //   height: 100%;
+      //   background-color: var(--white);
+      // }
 
       li {
         display: flex;
@@ -42,12 +42,18 @@
         color: var(--white);
         font-family: var(--font-content);
 
-        @media screen and (max-width: 640px) {
+        @media screen and (max-width: 768px) {
           font-family: var(--font-mobile);
+          display: block;
+          padding-left: 0;
+          text-align: center;
         }
 
         p {
           margin-left: 15px;
+          @media screen and (max-width: 768px) {
+            margin-left: 1px;
+          }
         }
 
         &:hover {

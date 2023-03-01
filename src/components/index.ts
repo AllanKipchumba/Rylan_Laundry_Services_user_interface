@@ -1,3 +1,4 @@
+export { Header } from "./header/Header";
 export { Sales } from "./sales/Sales";
 export { Report } from "./report/Report";
 export { Expenses } from "./expenses/Expenses";

@@ -2,10 +2,21 @@
   display: flex;
   .sidebar {
     max-width: 12rem;
+
+    @media screen and (max-width: 768px) {
+      max-width: 6rem;
+    }
   }
   .content {
-    background-color: var(--white);
-    width: 75%;
-    padding: 1rem;
+    background-color: #f8f9fc;
+    width: 100%;
+    font-family: var(--font-content);
+    @media screen and (max-width: 640px) {
+      font-family: var(--font-mobile);
+    }
+
+    .routes {
+      padding: 1rem;
+    }
   }
 }
