@@ -7,6 +7,7 @@ import {
 } from "react-icons/ai";
 import { GiExpense, GiCreditsCurrency } from "react-icons/gi";
 import { TbFileReport } from "react-icons/tb";
+import { NavLink } from "react-router-dom";
 
 export const Sidebar = () => {
   return (
@@ -17,26 +18,37 @@ export const Sidebar = () => {
       <hr />
       <div className={styles["dash-list"]}>
         <ul>
-          <li>
-            <AiFillDashboard />
-            <p>Dashboard</p>
-          </li>
-          <li>
-            <AiFillDollarCircle />
-            <p>Sales</p>
-          </li>
-          <li>
-            <GiExpense />
-            <p>Expenses</p>
-          </li>
-          <li>
-            <GiCreditsCurrency />
-            <p>credits</p>
-          </li>
-          <li>
-            <TbFileReport />
-            <p>report</p>
-          </li>
+          <NavLink to="/">
+            <li>
+              <AiFillDashboard />
+              <p>Dashboard</p>
+            </li>
+          </NavLink>
+          <NavLink to="/sales">
+            <li>
+              <AiFillDollarCircle />
+              <p>Sales</p>
+            </li>
+          </NavLink>
+          <NavLink to="/expenses">
+            <li>
+              <GiExpense />
+              <p>Expenses</p>
+            </li>
+          </NavLink>
+          <NavLink to="/credits">
+            <li>
+              <GiCreditsCurrency />
+              <p>credits</p>
+            </li>
+          </NavLink>
+          <NavLink to="/report">
+            <li>
+              <TbFileReport />
+              <p>report</p>
+            </li>
+          </NavLink>
+
           <li>
             <AiOutlinePoweroff />
             <p>logout</p>
