@@ -1,7 +1,10 @@
 .admin {
   display: flex;
+  position: relative;
+
   .sidebar {
     max-width: 12rem;
+    position: fixed;
 
     @media screen and (max-width: 768px) {
       max-width: 6rem;
@@ -13,6 +16,11 @@
     font-family: var(--font-content);
     @media screen and (max-width: 640px) {
       font-family: var(--font-mobile);
+    }
+
+    margin-left: 12rem;
+    @media screen and (max-width: 768px) {
+      margin-left: 6rem;
     }
 
     .routes {

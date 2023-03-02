@@ -1,0 +1,32 @@
+table {
+  background-color: var(--white);
+  border-collapse: collapse;
+  width: 40%;
+  font-size: 1.4rem;
+
+  thead {
+    border-top: 2px solid var(--light-blue);
+    border-bottom: 2px solid var(--light-blue);
+  }
+  th {
+    border: 1px solid #eee;
+  }
+  th,
+  td {
+    vertical-align: top;
+    text-align: left;
+    padding: 0.5rem;
+    &.icons {
+      > * {
+        margin-right: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+  tr {
+    border-bottom: 1px solid #ccc;
+  }
+  tr:nth-child(even) {
+    background-color: #eee;
+  }
+}
