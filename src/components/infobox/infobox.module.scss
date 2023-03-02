@@ -1,13 +1,8 @@
 .info-box {
   width: 100%;
-  max-width: 25rem;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
-  .card {
-    border: 1px solid #ccc;
-    border-bottom: 3px solid var(--light-blue);
-    padding: 5px;
-    background-color: var(--white);
+
+  h4 {
+    text-transform: capitalize;
   }
   span {
     display: flex;

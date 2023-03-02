@@ -1,3 +1,4 @@
+export { Infobox } from "./infobox/Infobox";
 export { Card } from "./card/Card";
 export { Header } from "./header/Header";
 export { Sales } from "./admin/sales/Sales";
