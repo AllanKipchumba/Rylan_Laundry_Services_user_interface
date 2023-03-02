@@ -24,6 +24,7 @@
   --font-content: "Open Sans", sans-serif;
   --font-mobile: "Roboto", sans-serif;
   --cont-color: #46566e;
+  --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 * {
   box-sizing: border-box;
