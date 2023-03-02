@@ -55,13 +55,6 @@ export const Dashboard = () => {
       </div>
 
       <hr />
-
-      <div className={styles["month-analysis"]}>
-        <h2>Month's analysis</h2>
-        <div>
-          <MonthAnalytics data={data} />
-        </div>
-      </div>
     </div>
   );
 };
