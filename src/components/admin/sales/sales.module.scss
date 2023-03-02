@@ -1,0 +1,110 @@
+.sales {
+  min-height: 100vh;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      //   flex-wrap: wrap;
+
+      .sales-duration {
+        form {
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+          align-items: center;
+
+          input[type="number"] {
+            width: 30%;
+            height: 2rem;
+            color: var(--cont-color);
+            font-family: var(--font-content);
+
+            &:focus {
+              outline: none;
+            }
+            @media screen and (max-width: 640px) {
+              font-family: var(--font-mobile);
+            }
+          }
+        }
+      }
+    }
+
+    .btn {
+      background-color: var(--light-blue);
+      color: var(--white);
+      justify-content: center;
+      align-items: center;
+      padding: 13px;
+      border: none;
+      border-radius: 5px;
+      font-family: var(--font-content);
+      @media screen and (max-width: 640px) {
+        font-family: var(--font-mobile);
+        padding: 9px;
+        margin-top: 1rem;
+      }
+
+      &:hover {
+        background-color: var(--hover-light-blue);
+        cursor: pointer;
+      }
+    }
+  }
+  .sales-data {
+    margin: 2rem 0;
+    max-width: 100vw;
+    background-color: #fefeff;
+    padding: 1rem;
+
+    .header {
+      @media screen and (min-width: 1024px) {
+        width: 80%;
+      }
+      margin: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      h2 {
+        color: #36b9cc;
+      }
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 2rem;
+
+      @media screen and (min-width: 1024px) {
+        width: 80%;
+      }
+
+      thead,
+      tr,
+      th,
+      td {
+        padding: 0.8rem;
+        border: 3px solid #eee;
+        text-align: left;
+        @media screen and (max-width: 640px) {
+          padding: 8px;
+        }
+      }
+
+      tr:nth-child(even) {
+        background-color: #f3f3f2;
+      }
+
+      .action {
+        display: flex;
+        gap: 8px;
+      }
+    }
+  }
+}

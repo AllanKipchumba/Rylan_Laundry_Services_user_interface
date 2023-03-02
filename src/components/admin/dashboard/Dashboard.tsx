@@ -33,8 +33,6 @@ export const Dashboard = () => {
           icon={revenueIcon}
         />
       </div>
-
-      <hr />
     </div>
   );
 };
