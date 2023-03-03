@@ -40,6 +40,25 @@ h2 {
 h2 {
   color: #5a6e8d;
 }
+.btn {
+  background-color: var(--light-blue);
+  color: var(--white);
+  justify-content: center;
+  align-items: center;
+  padding: 13px;
+  border: none;
+  border-radius: 5px;
+  font-family: var(--font-content);
+  @media screen and (max-width: 640px) {
+    font-family: var(--font-mobile);
+    padding: 9px;
+    margin-top: 1rem;
+  }
+}
+.btn:hover {
+  background-color: var(--hover-light-blue);
+  cursor: pointer;
+}
 
 @media screen and (max-width: 640px) {
   h1 {
@@ -47,6 +66,9 @@ h2 {
   }
   h2 {
     font-size: 15px;
+  }
+  .btn {
+    padding: 7px;
   }
 }
 @media screen and (min-width: 640px) {

@@ -4,6 +4,7 @@ import styles from "./dashboard.module.scss";
 import { MdDryCleaning } from "react-icons/md";
 import { IoIosPeople } from "react-icons/io";
 import { AiOutlineDollarCircle } from "react-icons/ai";
+import { editIcon, deleteIcon } from "../transactions/sales/Sales";
 
 const washesIcon = <MdDryCleaning size={30} color="#46566e" />;
 const clientsIcon = <IoIosPeople size={30} color="#1f93ff" />;

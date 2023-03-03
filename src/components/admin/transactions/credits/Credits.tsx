@@ -1,42 +1,40 @@
 import React from "react";
-import styles from "./sales.module.scss";
-import { BsPlus } from "react-icons/bs";
-import { FiEdit } from "react-icons/fi";
-import { MdOutlineDelete } from "react-icons/md";
+import styles from "../transactions.module.scss";
+import { editIcon, deleteIcon, plusIcon } from "../sales/Sales";
 
-const editIcon = <FiEdit color="#36b9cc" />;
-const deleteIcon = <MdOutlineDelete color="#e64b3b" />;
-
-export const Sales = () => {
+export const Credits = () => {
   return (
-    <div className={styles.sales}>
+    <div className={styles.transactions}>
       <div className={styles.header}>
         <div className={styles.wrapper}>
-          <h1>Sales data</h1>
-          <div className={styles["sales-duration"]}>
+          <h1>credits data</h1>
+          <div className={styles["transactions-duration"]}>
             <form>
               <input type="number" placeholder="month" required />
               <input type="number" placeholder="year" required />
-              <button className={styles.btn}>Get data</button>
+              <button className={`btn }`} style={{ padding: "7px" }}>
+                Get data
+              </button>
             </form>
           </div>
         </div>
-        <button className={styles.btn}>
-          <BsPlus /> <span>Add sale</span>
+        <button className={`btn`}>
+          {plusIcon} <span>Add credit</span>
         </button>
       </div>
 
-      <div className={styles["sales-data"]}>
+      <div className={styles["transactions-data"]}>
         <div className={styles.header}>
-          <h2>February 2023 sales</h2>
+          <h2>February 2023 credits</h2>
         </div>
         <table>
           <thead>
             <tr>
               <th>#</th>
               <th>Transaction ID</th>
-              <th>Client</th>
+              <th>Item</th>
               <th>Amount</th>
+              <th>creditor</th>
               <th>Date</th>
               <th>Action</th>
             </tr>
@@ -45,8 +43,9 @@ export const Sales = () => {
             <tr>
               <td>1</td>
               <td>1fdsse3</td>
-              <td>Leila</td>
+              <td>downy</td>
               <td>150</td>
+              <td>ryl</td>
               <td>2/2/2023</td>
               <td className={styles.action}>
                 <div>{editIcon}</div>
@@ -56,8 +55,9 @@ export const Sales = () => {
             <tr>
               <td>2</td>
               <td>1fdsse3</td>
-              <td>Leila</td>
+              <td>downy</td>
               <td>150</td>
+              <td>ryl</td>
               <td>2/2/2023</td>
               <td className={styles.action}>
                 <div>{editIcon}</div>
@@ -67,8 +67,9 @@ export const Sales = () => {
             <tr>
               <td>3</td>
               <td>1fdsse3</td>
-              <td>Leila</td>
+              <td>downy</td>
               <td>150</td>
+              <td>ryl</td>
               <td>2/2/2023</td>
               <td className={styles.action}>
                 <div>{editIcon}</div>
@@ -78,8 +79,9 @@ export const Sales = () => {
             <tr>
               <td>4</td>
               <td>1fdsse3</td>
-              <td>Leila</td>
+              <td>downy</td>
               <td>150</td>
+              <td>ryl</td>
               <td>2/2/2023</td>
               <td className={styles.action}>
                 <div>{editIcon}</div>
