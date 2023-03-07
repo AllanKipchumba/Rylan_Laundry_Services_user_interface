@@ -11,9 +11,14 @@ export const plusIcon = <BsPlus />;
 
 export const Sales = () => {
   const [showInputForm, setShowInputForm] = useState<boolean>(false);
+
+  const handleToggle = (hideForm: boolean) => {
+    setShowInputForm(hideForm);
+  };
+
   return (
     <>
-      {showInputForm && <TransactionInputForm />}
+      {showInputForm && <TransactionInputForm onToggle={handleToggle} />}
       <div className={styles.transactions}>
         <div className={styles.header}>
           <div className={styles.wrapper}>

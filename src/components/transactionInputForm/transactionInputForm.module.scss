@@ -11,20 +11,79 @@
     top: 50%;
     transform: translate(-50%, -50%);
     z-index: 999;
+    background-color: var(--white);
+    padding: 3rem;
+    border-radius: 10px;
+    width: 50%;
+    @media screen and (max-width: 640px) {
+      width: 90%;
+    }
+    @media screen and (max-width: 768px) {
+      width: 80%;
+    }
+
+    //x icon
+    .cancel {
+      position: relative;
+      .cancel-icon {
+        position: absolute;
+        color: var(--cont-color);
+        top: -2rem;
+        right: -2rem;
+
+        &:hover {
+          color: var(--red);
+          cursor: pointer;
+        }
+      }
+    }
+
+    h1 {
+      margin-bottom: 2rem;
+    }
 
     form {
+      display: flex;
+      gap: 0.8rem;
+      flex-direction: column;
+      font-family: var(--font-content);
+      @media screen and (max-width: 640px) {
+        font-family: var(--font-mobile);
+      }
+
       input[type="number"],
+      input[type="date"],
       input[type="text"] {
-        width: 30%;
-        height: 2rem;
         color: var(--cont-color);
         font-family: var(--font-content);
+        height: 2.5rem;
 
         &:focus {
           outline: none;
         }
         @media screen and (max-width: 640px) {
           font-family: var(--font-mobile);
+        }
+      }
+
+      .btns {
+        display: flex;
+        gap: 2rem;
+
+        button {
+          width: 50%;
+          text-transform: capitalize;
+          @media screen and (max-width: 640px) {
+            padding: 0.7rem;
+          }
+
+          &:nth-child(2) {
+            background-color: var(--red);
+
+            &:hover {
+              background-color: var(--hover-red);
+            }
+          }
         }
       }
     }
