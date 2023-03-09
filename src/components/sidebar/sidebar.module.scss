@@ -60,6 +60,11 @@
           background-color: var(--hover-light-blue);
           border-radius: 10px;
           cursor: pointer;
+          @media screen and (max-width: 640px) {
+            background-color: inherit;
+            font-size: 17px;
+            text-decoration: underline;
+          }
         }
       }
     }
