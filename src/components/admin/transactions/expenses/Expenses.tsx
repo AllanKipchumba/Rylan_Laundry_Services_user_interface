@@ -6,6 +6,7 @@ import {
   returnTitle,
 } from "../../../transactionInputForm/TransactionInputForm";
 import { useLocation } from "react-router-dom";
+import { TransactionDuration } from "../../../transactionDuration/TransactionDuration";
 
 export const Expenses = () => {
   const [showInputForm, setShowInputForm] = useState<boolean>(false);
@@ -23,14 +24,8 @@ export const Expenses = () => {
         <div className={styles.header}>
           <div className={styles.wrapper}>
             <h1>{returnTitle(id, "sales", "expenditure", "credits")} data</h1>
-            <div className={styles["transactions-duration"]}>
-              <form>
-                <input type="number" placeholder="month" required />
-                <input type="number" placeholder="year" required />
-                <button className={`btn }`} style={{ padding: "7px" }}>
-                  Get data
-                </button>
-              </form>
+            <div>
+              <TransactionDuration />
             </div>
           </div>
           <button

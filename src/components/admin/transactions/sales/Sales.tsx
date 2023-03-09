@@ -8,6 +8,7 @@ import {
   returnTitle,
 } from "../../../transactionInputForm/TransactionInputForm";
 import { useLocation } from "react-router-dom";
+import { TransactionDuration } from "../../../transactionDuration/TransactionDuration";
 
 export const editIcon = <FiEdit color="#36b9cc" />;
 export const deleteIcon = <MdOutlineDelete color="#e64b3b" />;
@@ -28,14 +29,8 @@ export const Sales = () => {
         <div className={styles.header}>
           <div className={styles.wrapper}>
             <h1>{returnTitle(id, "sales", "expenditure", "credits")} data</h1>
-            <div className={styles["transactions-duration"]}>
-              <form>
-                <input type="number" placeholder="month" required />
-                <input type="number" placeholder="year" required />
-                <button className={`btn }`} style={{ padding: "7px" }}>
-                  Get data
-                </button>
-              </form>
+            <div>
+              <TransactionDuration />
             </div>
           </div>
           <button

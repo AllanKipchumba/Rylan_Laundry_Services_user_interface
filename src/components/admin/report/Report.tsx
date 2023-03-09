@@ -1,4 +1,5 @@
 import React from "react";
+import { TransactionDuration } from "../../transactionDuration/TransactionDuration";
 import styles from "./report.module.scss";
 
 // interface data {
@@ -30,14 +31,8 @@ export const Report = () => {
     <div className={styles.report}>
       <div className={styles.header}>
         <h1>monthly report</h1>
-        <div className={styles["transactions-duration"]}>
-          <form>
-            <input type="number" placeholder="month" required />
-            <input type="number" placeholder="year" required />
-            <button className={`btn }`} style={{ padding: "7px" }}>
-              Get data
-            </button>
-          </form>
+        <div>
+          <TransactionDuration />
         </div>
       </div>
 

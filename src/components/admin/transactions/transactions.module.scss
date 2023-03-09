@@ -12,29 +12,6 @@
       justify-content: center;
       align-items: center;
       gap: 2rem;
-
-      .transactions-duration {
-        form {
-          display: flex;
-          gap: 1rem;
-          justify-content: center;
-          align-items: center;
-
-          input[type="number"] {
-            width: 30%;
-            height: 2rem;
-            color: var(--cont-color);
-            font-family: var(--font-content);
-
-            &:focus {
-              outline: none;
-            }
-            @media screen and (max-width: 640px) {
-              font-family: var(--font-mobile);
-            }
-          }
-        }
-      }
     }
   }
   .transactions-data {

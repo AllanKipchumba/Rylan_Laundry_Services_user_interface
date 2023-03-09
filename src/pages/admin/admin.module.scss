@@ -4,6 +4,10 @@
 
   .hideSidebar {
     display: none;
+    @media screen and (min-width: 768px) {
+      display: block;
+      position: fixed;
+    }
   }
 
   .sidebar {
@@ -56,6 +60,10 @@
     font-family: var(--font-content);
     @media screen and (max-width: 640px) {
       font-family: var(--font-mobile);
+    }
+    @media screen and (min-width: 768px) {
+      margin-left: 12rem;
+      width: 100%;
     }
   }
 }

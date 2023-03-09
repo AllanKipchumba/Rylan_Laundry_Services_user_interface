@@ -1,35 +1,15 @@
 .report {
   min-height: 100vh;
+  padding-top: 1rem;
 
   .header {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 
-    .transactions-duration {
-      form {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        align-items: center;
-
-        input[type="number"] {
-          width: 30%;
-          height: 2rem;
-          color: var(--cont-color);
-          font-family: var(--font-content);
-
-          &:focus {
-            outline: none;
-          }
-          @media screen and (max-width: 640px) {
-            font-family: var(--font-mobile);
-          }
-        }
-      }
-      @media screen and (max-width: 768px) {
-        margin-top: 1rem;
-        margin-left: -1rem;
+    h1 {
+      @media screen and (max-width: 640px) {
+        margin-bottom: 1rem;
       }
     }
   }
