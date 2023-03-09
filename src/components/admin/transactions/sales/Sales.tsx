@@ -3,7 +3,11 @@ import styles from "../transactions.module.scss";
 import { BsPlus } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
-import { TransactionInputForm } from "../../../transactionInputForm/TransactionInputForm";
+import {
+  TransactionInputForm,
+  returnTitle,
+} from "../../../transactionInputForm/TransactionInputForm";
+import { useLocation } from "react-router-dom";
 
 export const editIcon = <FiEdit color="#36b9cc" />;
 export const deleteIcon = <MdOutlineDelete color="#e64b3b" />;
@@ -11,6 +15,7 @@ export const plusIcon = <BsPlus />;
 
 export const Sales = () => {
   const [showInputForm, setShowInputForm] = useState<boolean>(false);
+  const id = useLocation().pathname.split("/")[1];
 
   const handleToggle = (hideForm: boolean) => {
     setShowInputForm(hideForm);
@@ -22,7 +27,7 @@ export const Sales = () => {
       <div className={styles.transactions}>
         <div className={styles.header}>
           <div className={styles.wrapper}>
-            <h1>Sales data</h1>
+            <h1>{returnTitle(id, "sales", "expenditure", "credits")} data</h1>
             <div className={styles["transactions-duration"]}>
               <form>
                 <input type="number" placeholder="month" required />
@@ -43,7 +48,9 @@ export const Sales = () => {
 
         <div className={styles["transactions-data"]}>
           <div className={styles.header}>
-            <h2>February 2023 sales</h2>
+            <h2>
+              February 2023 {returnTitle(id, "sales", "expenses", "credits")}
+            </h2>
           </div>
           <table>
             <thead>

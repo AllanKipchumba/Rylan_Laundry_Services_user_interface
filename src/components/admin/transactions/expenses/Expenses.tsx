@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import styles from "../transactions.module.scss";
 import { editIcon, deleteIcon, plusIcon } from "../sales/Sales";
-import { TransactionInputForm } from "../../../transactionInputForm/TransactionInputForm";
+import {
+  TransactionInputForm,
+  returnTitle,
+} from "../../../transactionInputForm/TransactionInputForm";
+import { useLocation } from "react-router-dom";
 
 export const Expenses = () => {
   const [showInputForm, setShowInputForm] = useState<boolean>(false);
+  const id = useLocation().pathname.split("/")[1];
 
   const handleToggle = (hideForm: boolean) => {
     setShowInputForm(hideForm);
@@ -17,7 +22,7 @@ export const Expenses = () => {
       <div className={styles.transactions}>
         <div className={styles.header}>
           <div className={styles.wrapper}>
-            <h1>Expenditure data</h1>
+            <h1>{returnTitle(id, "sales", "expenditure", "credits")} data</h1>
             <div className={styles["transactions-duration"]}>
               <form>
                 <input type="number" placeholder="month" required />
@@ -38,7 +43,9 @@ export const Expenses = () => {
 
         <div className={styles["transactions-data"]}>
           <div className={styles.header}>
-            <h2>February 2023 expenses</h2>
+            <h2>
+              February 2023 {returnTitle(id, "Sales", "expenditure", "credits")}
+            </h2>
           </div>
           <table>
             <thead>
