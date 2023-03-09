@@ -7,15 +7,40 @@ type ChildProps = {
   onToggle: (hideform: boolean) => void;
 };
 
+interface IState {
+  client: string;
+  item: string;
+  creditor: string;
+  amount: number;
+  date: Date;
+}
+
+const initialState: IState = {
+  client: "",
+  item: "",
+  creditor: "",
+  amount: 0,
+  date: new Date(),
+};
+
 export const TransactionInputForm = ({ onToggle }: ChildProps) => {
-  const [hideForm, sethideForm] = useState<boolean>(false);
+  const [transactionData, setTransactionData] = useState(initialState);
+  const [hideForm, setHideForm] = useState<boolean>(false);
 
   const inputFormElement = document.getElementById("inputForm");
-  if (!inputFormElement) return null;
+  // If the input form element is not found, return null to prevent errors
+  if (!inputFormElement) {
+    return null;
+  }
 
-  const handleToggle = () => {
-    sethideForm(!hideForm);
+  const handleFormToggle = () => {
+    setHideForm(!hideForm);
     onToggle(hideForm);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setTransactionData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   return createPortal(
@@ -24,7 +49,7 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
         <div className={styles.cancel}>
           <RxCross2
             size={25}
-            onClick={handleToggle}
+            onClick={handleFormToggle}
             className={styles["cancel-icon"]}
           />
         </div>
@@ -33,15 +58,21 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
           <label>Client</label>
           <input type="text" required />
 
+          <label>Item</label>
+          <input type="text" required />
+
           <label>Amount</label>
           <input type="number" required />
+
+          <label>Creditor</label>
+          <input type="text" required />
 
           <label>Date</label>
           <input type="date" required />
 
           <div className={styles.btns}>
             <button className="btn">Submit</button>
-            <button onClick={handleToggle} className="btn">
+            <button onClick={handleFormToggle} className="btn">
               cancel
             </button>
           </div>
