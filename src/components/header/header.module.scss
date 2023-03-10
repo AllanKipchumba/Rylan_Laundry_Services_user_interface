@@ -8,9 +8,13 @@
   .header-right {
     position: absolute;
     right: 2rem;
+    text-transform: capitalize;
     @media screen and (max-width: 768px) {
       margin-top: 3.5rem;
       margin-bottom: 10px;
+    }
+    h4 {
+      color: #46566e;
     }
   }
 }

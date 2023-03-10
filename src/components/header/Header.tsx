@@ -1,8 +1,17 @@
-import React from "react";
+import { ReactNode } from "react";
 import styles from "./header.module.scss";
 import image from "../../assets/logo.png";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+
+interface IProps {
+  children: ReactNode;
+}
 
 export const Header = () => {
+  const { user } = useSelector((store: RootState) => store["auth"]);
+  const username = user && user.username;
+
   return (
     <div className={styles.header}>
       <div>
@@ -12,7 +21,7 @@ export const Header = () => {
         <h1>Laundry Management System</h1>
       </div>
       <div className={styles["header-right"]}>
-        <p>Howdy, Admin!</p>
+        <h4>Howdy, {username}!</h4>
       </div>
     </div>
   );
