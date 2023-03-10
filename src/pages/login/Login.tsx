@@ -4,6 +4,8 @@ import logo from "../../assets/logo.png";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import { BeatLoader } from "react-spinners";
+import { AUTH_SUCCESS } from "../../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
 
 interface IState {
   username: string;
@@ -11,6 +13,7 @@ interface IState {
 }
 
 export const Login = () => {
+  const dispatch = useDispatch();
   const [user, setUser] = useState<IState>({ username: "", password: "" });
   const { username, password } = user;
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -29,11 +32,12 @@ export const Login = () => {
     try {
       await axios({
         method: "post",
-        url: "http://localhost:5000/auth/login",
+        url: `http://localhost:5000/auth/login`,
         data: { username, password },
       }).then((res) => {
         console.log(res.data);
         setLoading(false);
+        dispatch(AUTH_SUCCESS(res.data));
       });
     } catch (error) {
       setLoading(false);

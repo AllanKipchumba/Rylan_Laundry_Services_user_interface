@@ -9,5 +9,13 @@ export const store = configureStore({
   reducer: rootReducer,
 });
 
-// export type RootState = ReturnType<typeof store.getState>;
+/* 
+Subscribe to changes in the store and store the user in
+local storage whenever there is a change
+*/
+store.subscribe(() => {
+  localStorage.setItem("user", JSON.stringify(store.getState().auth.user));
+});
+
+export type RootState = ReturnType<typeof store.getState>;
 // export type AppDispatch = typeof store.dispatch;

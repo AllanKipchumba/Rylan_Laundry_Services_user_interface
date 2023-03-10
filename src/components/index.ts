@@ -1,3 +1,7 @@
+export {
+  Authenicated,
+  NotAuthenicated,
+} from "./checkAuthentication/CheckAuthentication";
 export { Infobox } from "./infobox/Infobox";
 export { Card } from "./card/Card";
 export { Header } from "./header/Header";

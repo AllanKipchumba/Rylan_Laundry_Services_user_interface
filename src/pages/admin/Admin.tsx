@@ -45,7 +45,7 @@ export const Admin = () => {
         <Header />
         <div className={styles.routes}>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/admin" element={<Dashboard />} />
             <Route path="/sales" element={<Sales />} />
             <Route path="/credits" element={<Credits />} />
             <Route path="/expenses" element={<Expenses />} />

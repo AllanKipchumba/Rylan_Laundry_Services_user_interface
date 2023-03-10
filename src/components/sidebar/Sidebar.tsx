@@ -8,6 +8,8 @@ import {
 import { GiExpense, GiCreditsCurrency } from "react-icons/gi";
 import { TbFileReport } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { LOGOUT } from "../../redux/slices/authSlice";
 
 // interface CustomNavLinkProps {
 //   isActive: boolean;
@@ -17,6 +19,10 @@ import { NavLink } from "react-router-dom";
 //   isActive ? `${styles.active} ${styles.navLink}` : `${styles.navLink}`;
 
 export const Sidebar = () => {
+  const dispatch = useDispatch();
+  const logout = () => {
+    dispatch(LOGOUT());
+  };
   return (
     <div className={styles.sidebar}>
       <div className={styles.header}>
@@ -25,7 +31,7 @@ export const Sidebar = () => {
       <hr />
       <div className={styles["dash-list"]}>
         <ul>
-          <NavLink to="/" className={styles.navlink}>
+          <NavLink to="/admin" className={styles.navlink}>
             <li>
               <AiFillDashboard size={25} />
               <p>Dashboard</p>
@@ -56,7 +62,7 @@ export const Sidebar = () => {
             </li>
           </NavLink>
 
-          <li>
+          <li onClick={logout}>
             <AiOutlinePoweroff size={25} />
             <p>logout</p>
           </li>
