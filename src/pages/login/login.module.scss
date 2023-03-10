@@ -12,6 +12,10 @@
     padding: 8rem 3em;
     border-radius: 0.5rem;
     width: 80%;
+    font-family: var(--font-content);
+    @media screen and (max-width: 640px) {
+      font-family: var(--font-mobile);
+    }
     @media screen and (min-width: 1024px) {
       width: 50%;
     }
@@ -38,11 +42,15 @@
         }
       }
     }
+    .login-fail {
+      text-align: center;
+      color: var(--red);
+      margin-bottom: 1rem;
+    }
     form {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      // align-items: flex-start;
 
       input[type="text"],
       input[type="password"],
@@ -52,6 +60,7 @@
         color: var(--cont-color);
         margin-bottom: 1rem;
         font-family: var(--font-content);
+        border: 1px solid var(--cont-color);
 
         &:focus {
           outline: none;
@@ -73,6 +82,32 @@
         &:hover {
           background-color: var(--hover-light-blue);
           cursor: pointer;
+        }
+      }
+      .input-wrapper {
+        position: relative;
+        height: 2.4rem;
+        display: flex;
+        border: 1px solid var(--cont-color);
+        width: 60%;
+        @media screen and (max-width: 768px) {
+          width: 100%;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+          border: none;
+        }
+
+        span {
+          position: absolute;
+          top: 0.5rem;
+          left: 90%;
+          color: var(--cont-color);
+
+          &:hover {
+            cursor: pointer;
+          }
         }
       }
     }
