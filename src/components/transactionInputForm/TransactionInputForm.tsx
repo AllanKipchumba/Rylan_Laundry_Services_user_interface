@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import axios from "axios";
+import { ChildProps, initialState } from "./types";
 
 export const returnTitle = (
   id: string,
@@ -32,26 +33,6 @@ export const returnTitle = (
   }
 };
 
-type ChildProps = {
-  onToggle: (hideform: boolean) => void;
-};
-
-interface IState {
-  client: string;
-  item: string;
-  creditor: string;
-  amount: number;
-  date: Date;
-}
-
-const initialState: IState = {
-  client: "",
-  item: "",
-  creditor: "",
-  amount: 0,
-  date: new Date(),
-};
-
 export const TransactionInputForm = ({ onToggle }: ChildProps) => {
   const [transactionData, setTransactionData] = useState(initialState);
   const { client, creditor, item, amount, date } = transactionData;
@@ -71,18 +52,13 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
     if (id === "credits") setCredits(true);
   }, [id]);
 
-  //get the DOM node 'inputForm'
-  const inputFormElement = document.getElementById("inputForm");
-  if (!inputFormElement) {
-    return null;
-  }
-
-  //hides input form
+  //hides input form, sends hide form state to parent component
   const handleFormToggle = () => {
     setHideForm(!hideForm);
     onToggle(hideForm);
   };
 
+  //captures form data
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -90,8 +66,8 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
     setTransactionData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  //send data to db
-  const sendDataToDB = async (e: React.FormEvent<HTMLFormElement>) => {
+  //sends form data to db
+  const submitFormDataToDB = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setTransactionData(initialState);
 
@@ -126,6 +102,11 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
     }
   };
 
+  const inputFormElement = document.getElementById("inputForm");
+  if (!inputFormElement) {
+    return null;
+  }
+
   return createPortal(
     <div className={styles.wrapper}>
       <div className={styles.inputForm}>
@@ -137,7 +118,7 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
           />
         </div>
         <h1>Input {returnTitle(id, "Sales", "expenditure", "credits")} data</h1>
-        <form onSubmit={sendDataToDB}>
+        <form onSubmit={submitFormDataToDB}>
           {sales && (
             <>
               <label>Client</label>
