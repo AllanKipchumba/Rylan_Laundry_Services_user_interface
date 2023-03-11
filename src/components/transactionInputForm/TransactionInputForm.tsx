@@ -3,6 +3,9 @@ import { createPortal } from "react-dom";
 import styles from "./transactionInputForm.module.scss";
 import { RxCross2 } from "react-icons/rx";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import axios from "axios";
 
 export const returnTitle = (
   id: string,
@@ -58,6 +61,10 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
   const [expenses, setExpenses] = useState<boolean>(false);
   const [credits, setCredits] = useState<boolean>(false);
 
+  const { user } = useSelector((store: RootState) => store["auth"]);
+  const token = user?.accessToken;
+  const headers = { Authorization: `Bearer ${token}` };
+
   useEffect(() => {
     if (id === "sales") setSales(true);
     if (id === "expenses") setExpenses(true);
@@ -66,7 +73,6 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
 
   //get the DOM node 'inputForm'
   const inputFormElement = document.getElementById("inputForm");
-  // If the input form element is not found, return null to prevent errors
   if (!inputFormElement) {
     return null;
   }
@@ -84,6 +90,42 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
     setTransactionData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  //send data to db
+  const sendDataToDB = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setTransactionData(initialState);
+
+    //send sales data
+    if (sales) {
+      //turn into a component
+      /**
+       * modify component to receive props for sales, credits or expenses
+       */
+      const salesData = {
+        transactionDate: date,
+        transactionType: "sale",
+        amount,
+        description: {
+          client,
+        },
+      };
+      try {
+        await axios({
+          method: "post",
+          url: `http://localhost:5000/transactions`,
+          data: salesData,
+          headers: headers,
+        }).then((res) => {
+          console.log(res.data);
+          //toast success
+        });
+      } catch (error) {
+        console.log(error);
+        //toast error messsage
+      }
+    }
+  };
+
   return createPortal(
     <div className={styles.wrapper}>
       <div className={styles.inputForm}>
@@ -95,7 +137,7 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
           />
         </div>
         <h1>Input {returnTitle(id, "Sales", "expenditure", "credits")} data</h1>
-        <form>
+        <form onSubmit={sendDataToDB}>
           {sales && (
             <>
               <label>Client</label>
@@ -160,7 +202,9 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
           />
 
           <div className={styles.btns}>
-            <button className="btn">Submit</button>
+            <button type="submit" className="btn">
+              Submit
+            </button>
             <button onClick={handleFormToggle} className="btn">
               cancel
             </button>

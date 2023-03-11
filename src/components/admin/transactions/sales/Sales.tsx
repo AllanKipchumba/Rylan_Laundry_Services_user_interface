@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../transactions.module.scss";
 import { BsPlus } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
@@ -13,6 +13,12 @@ import { TransactionDuration } from "../../../transactionDuration/TransactionDur
 export const editIcon = <FiEdit color="#36b9cc" />;
 export const deleteIcon = <MdOutlineDelete color="#e64b3b" />;
 export const plusIcon = <BsPlus />;
+
+interface IState {
+  client: string;
+  amount: number;
+  date: Date;
+}
 
 export const Sales = () => {
   const [showInputForm, setShowInputForm] = useState<boolean>(false);
