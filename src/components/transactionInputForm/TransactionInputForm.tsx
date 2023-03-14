@@ -6,32 +6,9 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import axios from "axios";
-import { ChildProps, initialState } from "./types";
-
-export const returnTitle = (
-  id: string,
-  title1: string,
-  title2: string,
-  title3: string
-): string => {
-  switch (id) {
-    case "sales":
-      return title1;
-      break;
-
-    case "expenses":
-      return title2;
-      break;
-
-    case "credits":
-      return title3;
-      break;
-
-    default:
-      return "undefined";
-      break;
-  }
-};
+import { ChildProps, initialState, returnTitle } from "./types";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
+import { BeatLoader } from "react-spinners";
 
 export const TransactionInputForm = ({ onToggle }: ChildProps) => {
   const [transactionData, setTransactionData] = useState(initialState);
@@ -41,6 +18,7 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
   const [sales, setSales] = useState<boolean>(false);
   const [expenses, setExpenses] = useState<boolean>(false);
   const [credits, setCredits] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { user } = useSelector((store: RootState) => store["auth"]);
   const token = user?.accessToken;
@@ -57,6 +35,10 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
     setHideForm(!hideForm);
     onToggle(hideForm);
   };
+  //empties form fields
+  const emptyFormInputFields = (ChildData) => {
+    setTransactionData(ChildData);
+  };
 
   //captures form data
   const handleInputChange = (
@@ -66,17 +48,12 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
     setTransactionData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  //sends form data to db
   const submitFormDataToDB = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTransactionData(initialState);
+    setLoading(true);
 
     //send sales data
     if (sales) {
-      //turn into a component
-      /**
-       * modify component to receive props for sales, credits or expenses
-       */
       const salesData = {
         transactionDate: date,
         transactionType: "sale",
@@ -85,6 +62,7 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
           client,
         },
       };
+
       try {
         await axios({
           method: "post",
@@ -92,12 +70,42 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
           data: salesData,
           headers: headers,
         }).then((res) => {
-          console.log(res.data);
-          //toast success
+          console.log(res.status);
+          Notify.success(`Data submited`);
+          setTransactionData(initialState);
+          setLoading(false);
         });
       } catch (error) {
         console.log(error);
-        //toast error messsage
+        Notify.failure(`${error}!`);
+        setLoading(false);
+      }
+    } else if (credits) {
+      const creditsData = {
+        transactionDate: date,
+        transactionType: "credit",
+        amount,
+        description: {
+          item,
+          creditor,
+        },
+      };
+      try {
+        await axios({
+          method: "post",
+          url: `http://localhost:5000/transactions`,
+          data: creditsData,
+          headers: headers,
+        }).then((res) => {
+          console.log(res.status);
+          Notify.success(`Data submited`);
+          setTransactionData(initialState);
+          setLoading(false);
+        });
+      } catch (error) {
+        console.log(error);
+        Notify.failure(`${error}!`);
+        setLoading(false);
       }
     }
   };
@@ -184,7 +192,16 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
 
           <div className={styles.btns}>
             <button type="submit" className="btn">
-              Submit
+              {loading ? (
+                <BeatLoader
+                  loading={loading}
+                  color="#fff"
+                  margin={4}
+                  size={17}
+                />
+              ) : (
+                `submit`
+              )}
             </button>
             <button onClick={handleFormToggle} className="btn">
               cancel

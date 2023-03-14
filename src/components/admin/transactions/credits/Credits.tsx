@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import styles from "../transactions.module.scss";
 import { editIcon, deleteIcon, plusIcon } from "../sales/Sales";
-import {
-  returnTitle,
-  TransactionInputForm,
-} from "../../../transactionInputForm/TransactionInputForm";
+import { TransactionInputForm } from "../../../transactionInputForm/TransactionInputForm";
 import { useLocation } from "react-router-dom";
 import { TransactionDuration } from "../../../transactionDuration/TransactionDuration";
+import { returnTitle } from "../../../transactionInputForm/types";
 
 export const Credits = () => {
   const [showInputForm, setShowInputForm] = useState<boolean>(false);

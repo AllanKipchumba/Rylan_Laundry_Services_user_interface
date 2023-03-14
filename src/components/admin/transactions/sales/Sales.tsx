@@ -3,12 +3,10 @@ import styles from "../transactions.module.scss";
 import { BsPlus } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
-import {
-  TransactionInputForm,
-  returnTitle,
-} from "../../../transactionInputForm/TransactionInputForm";
+import { TransactionInputForm } from "../../../transactionInputForm/TransactionInputForm";
 import { useLocation } from "react-router-dom";
 import { TransactionDuration } from "../../../transactionDuration/TransactionDuration";
+import { returnTitle } from "../../../transactionInputForm/types";
 
 export const editIcon = <FiEdit color="#36b9cc" />;
 export const deleteIcon = <MdOutlineDelete color="#e64b3b" />;
