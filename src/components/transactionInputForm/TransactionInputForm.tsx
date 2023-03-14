@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import axios from "axios";
-import { ChildProps, initialState, returnTitle } from "./types";
+import { ChildProps, initialState, IState, returnTitle } from "./types";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { BeatLoader } from "react-spinners";
 
@@ -35,9 +35,14 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
     setHideForm(!hideForm);
     onToggle(hideForm);
   };
+
   //empties form fields
-  const emptyFormInputFields = (ChildData) => {
+  const emptyFormInputFields = (ChildData: IState) => {
     setTransactionData(ChildData);
+  };
+
+  const updateLoadingState = (childData: boolean) => {
+    setLoading(childData);
   };
 
   //captures form data
@@ -52,7 +57,9 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
     e.preventDefault();
     setLoading(true);
 
-    //send sales data
+    const url = `http://localhost:5000/transactions`;
+
+    //submit sales data
     if (sales) {
       const salesData = {
         transactionDate: date,
@@ -66,12 +73,11 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
       try {
         await axios({
           method: "post",
-          url: `http://localhost:5000/transactions`,
+          url,
           data: salesData,
           headers: headers,
         }).then((res) => {
-          console.log(res.status);
-          Notify.success(`Data submited`);
+          res.status == 201 && Notify.success(`Data submited`);
           setTransactionData(initialState);
           setLoading(false);
         });
@@ -80,8 +86,38 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
         Notify.failure(`${error}!`);
         setLoading(false);
       }
-    } else if (credits) {
-      const creditsData = {
+    }
+    //submit expenses
+    else if (expenses) {
+      const expenditureData = {
+        transactionDate: date,
+        transactionType: "expense",
+        amount,
+        description: {
+          item,
+        },
+      };
+
+      try {
+        await axios({
+          method: "post",
+          url,
+          data: expenditureData,
+          headers: headers,
+        }).then((res) => {
+          res.status == 201 && Notify.success(`Data submited`);
+          setTransactionData(initialState);
+          setLoading(false);
+        });
+      } catch (error) {
+        console.log(error);
+        Notify.failure(`${error}!`);
+        setLoading(false);
+      }
+    }
+    //submit credits
+    else if (credits) {
+      const creditdata = {
         transactionDate: date,
         transactionType: "credit",
         amount,
@@ -90,15 +126,15 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
           creditor,
         },
       };
+
       try {
         await axios({
           method: "post",
-          url: `http://localhost:5000/transactions`,
-          data: creditsData,
+          url,
+          data: creditdata,
           headers: headers,
         }).then((res) => {
-          console.log(res.status);
-          Notify.success(`Data submited`);
+          res.status == 201 && Notify.success(`Data submited`);
           setTransactionData(initialState);
           setLoading(false);
         });

@@ -46,7 +46,7 @@ export const initialState: IState = {
 };
 
 // for makeAPIcomponent
-enum TransactionType {
+export enum TransactionType {
   sale = "sale",
   expense = "expense",
   credit = "credit",
@@ -54,7 +54,7 @@ enum TransactionType {
 
 export interface SalesData {
   transactionDate: Date;
-  transactionType: TransactionType.sale;
+  transactionType: string;
   amount: number;
   description: {
     client: string;
@@ -79,10 +79,3 @@ export interface CreditsData {
     creditor: string;
   };
 }
-
-//makeAPIrequest component props
-export type MakeAPIrequestChildProps = {
-  salesData: SalesData;
-  expenditureData: ExpenditureData;
-  creditsData: CreditsData;
-};
