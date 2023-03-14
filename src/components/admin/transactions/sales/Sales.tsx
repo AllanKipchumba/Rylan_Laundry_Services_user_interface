@@ -7,24 +7,66 @@ import { TransactionInputForm } from "../../../transactionInputForm/TransactionI
 import { useLocation } from "react-router-dom";
 import { TransactionDuration } from "../../../transactionDuration/TransactionDuration";
 import { returnTitle } from "../../../transactionInputForm/types";
+import axios from "axios";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
 
 export const editIcon = <FiEdit color="#36b9cc" />;
 export const deleteIcon = <MdOutlineDelete color="#e64b3b" />;
 export const plusIcon = <BsPlus />;
 
-interface IState {
-  client: string;
-  amount: number;
-  date: Date;
+interface IDuration {
+  month: number;
+  year: number;
 }
+
+const initialState: IDuration = {
+  month: new Date().getMonth() + 1,
+  year: new Date().getFullYear(),
+};
 
 export const Sales = () => {
   const [showInputForm, setShowInputForm] = useState<boolean>(false);
   const id = useLocation().pathname.split("/")[1];
+  const [salesPeriod, setSalesPeriod] = useState(initialState);
+  // const [salesData, setsalesData] = useState([]);
+
+  const { user } = useSelector((store: RootState) => store["auth"]);
+  const token = user?.accessToken;
+  const headers = { Authorization: `Bearer ${token}` };
 
   const handleToggle = (hideForm: boolean) => {
     setShowInputForm(hideForm);
   };
+
+  // get sales data from db
+
+  useEffect(() => {
+    const getSalesdata = async () => {
+      try {
+        await axios
+          .get(`http://localhost:5000/transactions`, {
+            headers: headers,
+            params: {
+              month: salesPeriod.month,
+              year: salesPeriod.year,
+            },
+          })
+          .then((res) => {
+            res.status == 201 && Notify.success(`Data submited`);
+            console.log(res.data);
+
+            // setLoading(false);
+          });
+      } catch (error) {
+        console.log(error);
+        Notify.failure(`${error}!`);
+        // setLoading(false);
+      }
+    };
+    getSalesdata();
+  }, [salesPeriod]);
 
   return (
     <>

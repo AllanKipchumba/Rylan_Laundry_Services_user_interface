@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./transactionDuration.module.scss";
 
-const months = [
+export const months = [
   { id: 1, name: "january" },
   { id: 2, name: "february" },
   { id: 3, name: "march" },

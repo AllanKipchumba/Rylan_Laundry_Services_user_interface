@@ -3,12 +3,12 @@ import { createPortal } from "react-dom";
 import styles from "./transactionInputForm.module.scss";
 import { RxCross2 } from "react-icons/rx";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import axios from "axios";
 import { ChildProps, initialState, IState, returnTitle } from "./types";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { BeatLoader } from "react-spinners";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 export const TransactionInputForm = ({ onToggle }: ChildProps) => {
   const [transactionData, setTransactionData] = useState(initialState);

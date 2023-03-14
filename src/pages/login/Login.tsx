@@ -6,6 +6,7 @@ import axios from "axios";
 import { BeatLoader } from "react-spinners";
 import { AUTH_SUCCESS } from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 interface IState {
   username: string;
@@ -19,6 +20,7 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [loginFail, setLoginFail] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,6 +40,7 @@ export const Login = () => {
         console.log(res.data);
         setLoading(false);
         dispatch(AUTH_SUCCESS(res.data));
+        navigate("/admin");
       });
     } catch (error) {
       setLoading(false);
