@@ -34,6 +34,22 @@
       }
     }
 
+    .noTransactionRecords {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 4rem;
+      p {
+        background-color: #d4daed;
+        padding: 3rem;
+        border-radius: 10px;
+
+        @media screen and (min-width: 748px) {
+          padding: 3rem 9rem;
+        }
+      }
+    }
+
     table {
       border-collapse: collapse;
       width: 100%;
@@ -47,7 +63,6 @@
         border: 3px solid #eee;
         text-align: left;
         text-transform: capitalize;
-        
 
         @media screen and (max-width: 640px) {
           padding: 5px;

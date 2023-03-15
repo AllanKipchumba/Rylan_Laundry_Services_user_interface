@@ -12,18 +12,18 @@ import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { CheckLoadingState } from "../../../checkLoadingState/CheckLoadingState";
-import { Timestamp } from "../../../timeStamp/TimeStamp";
+import { monthNames, Timestamp } from "../../../timeStamp/TimeStamp";
 
 export const editIcon = <FiEdit color="#36b9cc" />;
 export const deleteIcon = <MdOutlineDelete color="#e64b3b" />;
 export const plusIcon = <BsPlus />;
 
-interface IDuration {
+export interface IDuration {
   month: number;
   year: number;
 }
 
-const initialState: IDuration = {
+export const defaultPeriod: IDuration = {
   month: new Date().getMonth() + 1,
   year: new Date().getFullYear(),
 };
@@ -31,7 +31,7 @@ const initialState: IDuration = {
 export const Sales = () => {
   const [showInputForm, setShowInputForm] = useState<boolean>(false);
   const id = useLocation().pathname.split("/")[1];
-  const [salesPeriod, setSalesPeriod] = useState(initialState);
+  const [salesPeriod, setSalesPeriod] = useState(defaultPeriod);
   const [salesData, setsalesData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -45,8 +45,11 @@ export const Sales = () => {
     setShowInputForm(hideForm);
   };
 
-  // get sales data from db
+  const changeSalesPeriod = (data: IDuration) => {
+    setSalesPeriod(data);
+  };
 
+  // get sales data from db
   useEffect(() => {
     const getSalesdata = async () => {
       setLoading(true);
@@ -79,7 +82,9 @@ export const Sales = () => {
             <div className={styles.wrapper}>
               <h1>{returnTitle(id, "sales", "expenditure", "credits")} data</h1>
               <div>
-                <TransactionDuration />
+                <TransactionDuration
+                  updateTransactionDuration={changeSalesPeriod}
+                />
               </div>
             </div>
             <button
@@ -93,11 +98,12 @@ export const Sales = () => {
           <div className={styles["transactions-data"]}>
             <div className={styles.header}>
               <h2>
-                February 2023 {returnTitle(id, "sales", "expenses", "credits")}
+                {monthNames[salesPeriod.month - 1]}, {salesPeriod.year} &nbsp;
+                {returnTitle(id, "sales", "expenses", "credits")}
               </h2>
             </div>
             {salesData?.length == 0 ? (
-              <div>
+              <div className={styles.noTransactionRecords}>
                 <p>No Sales records present for this period</p>
               </div>
             ) : (

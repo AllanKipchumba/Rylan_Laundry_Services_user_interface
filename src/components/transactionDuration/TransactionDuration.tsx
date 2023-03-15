@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { defaultPeriod, IDuration } from "../admin/transactions/sales/Sales";
 import styles from "./transactionDuration.module.scss";
 
-export const months = [
+const months = [
   { id: 1, name: "january" },
   { id: 2, name: "february" },
   { id: 3, name: "march" },
@@ -18,11 +19,37 @@ export const months = [
 
 const years = [2021, 2022, 2023];
 
-export const TransactionDuration = () => {
+interface TransactionDurationProps {
+  updateTransactionDuration: (data: IDuration) => void;
+}
+
+export const TransactionDuration = ({
+  updateTransactionDuration,
+}: TransactionDurationProps) => {
+  const [transactionDuration, setTransactionDuration] = useState(defaultPeriod);
+  const { month, year } = transactionDuration;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setTransactionDuration((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const submitTransactionDurstion = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    updateTransactionDuration(transactionDuration);
+  };
+
   return (
     <div>
-      <form>
-        <select value="" required className={styles.input}>
+      <form onSubmit={submitTransactionDurstion}>
+        <select
+          name="month"
+          value={month}
+          onChange={(e) => handleInputChange(e)}
+          required
+          className={styles.input}
+        >
           <option value="" disabled>
             month
           </option>
@@ -36,7 +63,13 @@ export const TransactionDuration = () => {
           })}
         </select>
 
-        <select required className={styles.input} value="">
+        <select
+          name="year"
+          value={year}
+          onChange={(e) => handleInputChange(e)}
+          required
+          className={styles.input}
+        >
           <option value="" disabled>
             year
           </option>
@@ -49,7 +82,11 @@ export const TransactionDuration = () => {
           })}
         </select>
 
-        <button className={`btn }`} style={{ padding: "7px", width: "100%" }}>
+        <button
+          type="submit"
+          className={`btn }`}
+          style={{ padding: "7px", width: "100%" }}
+        >
           Get data
         </button>
       </form>

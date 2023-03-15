@@ -1,25 +1,27 @@
 import React from "react";
 
+export const monthNames = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+];
+
 interface IProps {
   transactionDate: Date;
 }
 
 export const Timestamp = ({ transactionDate }: IProps) => {
   const date = new Date(transactionDate);
-  const monthNames = [
-    "january",
-    "february",
-    "march",
-    "april",
-    "may",
-    "june",
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december",
-  ];
+
   const monthIndex = date.getMonth();
   const fullMonthName = monthNames[monthIndex];
   const day = date.getUTCDate();
