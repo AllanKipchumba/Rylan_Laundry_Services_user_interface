@@ -12,7 +12,7 @@ const revenueIcon = <AiOutlineDollarCircle size={30} color="#1dc88b" />;
 
 export const Dashboard = () => {
   return (
-    <div>
+    <div className={styles.dashboard}>
       <h1>Dashboard</h1>
       <div className={styles["info-box"]}>
         <Infobox

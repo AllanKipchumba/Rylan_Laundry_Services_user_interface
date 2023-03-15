@@ -31,7 +31,7 @@
 
     .report-data {
       display: grid;
-      grid-gap: 1rem;
+      grid-gap: 2rem;
       margin-top: 1.5rem;
       margin-bottom: 1rem;
 
@@ -46,9 +46,9 @@
       }
 
       .the-data {
-        background-color: #fefeff;
+        background-color: #d4daed;
         text-transform: capitalize;
-        border-radius: 10px;
+        border-radius: 7px;
         text-align: center;
         padding: 2rem;
       }

@@ -27,19 +27,23 @@ export const defaultPeriod: IDuration = {
   month: new Date().getMonth() + 1,
   year: new Date().getFullYear(),
 };
+/**
+ * optimise this component to be used in sales, expenses, credits based on id
+ *
+ */
 
 export const Sales = () => {
   const [showInputForm, setShowInputForm] = useState<boolean>(false);
   const id = useLocation().pathname.split("/")[1];
   const [salesPeriod, setSalesPeriod] = useState(defaultPeriod);
   const [salesData, setsalesData] = useState([]);
+  const [expenditureData, setExpenditureData] = useState([]);
+  const [creditsData, setCreditsData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const { user } = useSelector((store: RootState) => store["auth"]);
   const token = user?.accessToken;
   const headers = { Authorization: `Bearer ${token}` };
-
-  console.log(salesData);
 
   const handleToggle = (hideForm: boolean) => {
     setShowInputForm(hideForm);
@@ -49,7 +53,7 @@ export const Sales = () => {
     setSalesPeriod(data);
   };
 
-  // get sales data from db
+  // get transactions data from db
   useEffect(() => {
     const getSalesdata = async () => {
       setLoading(true);
@@ -60,8 +64,9 @@ export const Sales = () => {
           data: salesPeriod,
           headers: headers,
         }).then((res) => {
-          res.status == 201 && Notify.success(`Data submited`);
           setsalesData(res.data.sales);
+          setExpenditureData(res.data.expenditure);
+          setCreditsData(res.data.credits);
           setLoading(false);
         });
       } catch (error) {
@@ -71,7 +76,7 @@ export const Sales = () => {
       }
     };
     getSalesdata();
-  }, [salesPeriod]);
+  }, [salesPeriod, id]);
 
   return (
     <CheckLoadingState loading={loading}>
@@ -94,6 +99,8 @@ export const Sales = () => {
               <BsPlus /> <span>Add sale</span>
             </button>
           </div>
+
+          {/* intercept no-auth */}
 
           <div className={styles["transactions-data"]}>
             <div className={styles.header}>
