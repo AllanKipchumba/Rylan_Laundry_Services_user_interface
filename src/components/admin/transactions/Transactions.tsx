@@ -27,10 +27,6 @@ export const defaultPeriod: IDuration = {
   month: new Date().getMonth() + 1,
   year: new Date().getFullYear(),
 };
-/**
- * optimise this component to be used in sales, expenses, credits based on id
- *
- */
 
 export const Transactions = () => {
   const [showInputForm, setShowInputForm] = useState<boolean>(false);

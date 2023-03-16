@@ -1,38 +1,53 @@
-import React from "react";
+import axios from "axios";
+import { Notify } from "notiflix";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 import { TransactionDuration } from "../../transactionDuration/TransactionDuration";
+import { defaultPeriod, IDuration } from "../transactions/Transactions";
 import styles from "./report.module.scss";
 
-// interface data {
-//   [key: string]: number;
-// }
-
-// const arrdata: data[] = [
-//   {
-//     sales: 2540,
-//     credits: 100,
-//     expenses: 0,
-//     deductions: 100,
-//     businessRevenue: 1016,
-//     debts: 100,
-//     revenueToBeUsedToSettleDebts: 1016,
-//     profit: 916,
-//     sharableRevenue: 1524,
-//     rylRevenue: 381,
-//     debitsForRyl: 0,
-//     expectedPayToRyl: 381,
-//     lanRevenue: 1143,
-//     debitsForLan: 100,
-//     expectedPayToLan: 1243,
-//   },
-// ];
-
 export const Report = () => {
+  const [salesPeriod, setSalesPeriod] = useState(defaultPeriod);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [monthlyReport, setMonthlyReport] = useState([]);
+
+  const { user } = useSelector((store: RootState) => store["auth"]);
+  const token = user?.accessToken;
+  const headers = { Authorization: `Bearer ${token}` };
+
+  const changeSalesPeriod = (data: IDuration) => {
+    setSalesPeriod(data);
+  };
+
+  //get monthly report from db
+  useEffect(() => {
+    const getMonthlyReport = async () => {
+      setLoading(true);
+      try {
+        await axios({
+          method: "post",
+          url: `http://localhost:5000/analytics/monthly`,
+          data: salesPeriod,
+          headers: headers,
+        }).then((res) => {
+          console.log(res.data);
+        });
+      } catch (error) {
+        console.log(error);
+        Notify.failure(`${error}!`);
+        setLoading(false);
+      }
+    };
+    getMonthlyReport();
+  }, [salesPeriod]);
+
   return (
     <div className={styles.report}>
       <div className={styles.header}>
         <h1>monthly report</h1>
         <div>
-          <TransactionDuration />
+          <TransactionDuration updateTransactionDuration={changeSalesPeriod} />
         </div>
       </div>
 
