@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { defaultPeriod, IDuration } from "../admin/transactions/sales/Sales";
+import { defaultPeriod, IDuration } from "../admin/transactions/Transactions";
 import styles from "./transactionDuration.module.scss";
 
 const months = [

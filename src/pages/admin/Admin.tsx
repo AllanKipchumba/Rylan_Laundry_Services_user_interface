@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import {
-  Sales,
   Sidebar,
   Dashboard,
-  Credits,
-  Expenses,
   Report,
   Header,
+  Transactions,
 } from "../../components";
 import styles from "./admin.module.scss";
 import { Routes, Route } from "react-router-dom";
@@ -47,9 +45,9 @@ export const Admin = () => {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/admin" element={<Dashboard />} />
-            <Route path="/sales" element={<Sales />} />
-            <Route path="/credits" element={<Credits />} />
-            <Route path="/expenses" element={<Expenses />} />
+            <Route path="/sales" element={<Transactions />} />
+            <Route path="/credits" element={<Transactions />} />
+            <Route path="/expenses" element={<Transactions />} />
             <Route path="/report" element={<Report />} />
           </Routes>
         </div>

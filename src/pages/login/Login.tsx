@@ -37,7 +37,6 @@ export const Login = () => {
         url: `http://localhost:5000/auth/login`,
         data: { username, password },
       }).then((res) => {
-        console.log(res.data);
         setLoading(false);
         dispatch(AUTH_SUCCESS(res.data));
         navigate("/admin");

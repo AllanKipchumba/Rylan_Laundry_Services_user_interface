@@ -38,7 +38,7 @@ export const Report = () => {
 
       <div className={styles.data}>
         <div className={styles.header}>
-          <h2>February 2023 Business report</h2>
+          <h1>February 2023 Business report</h1>
         </div>
 
         <div className={styles["report-data"]}>

@@ -5,7 +5,7 @@ import styles from "./infobox.module.scss";
 interface propTypes {
   cardClass: string;
   title: string;
-  count: number;
+  count: number | string;
   icon: ReactNode;
 }
 

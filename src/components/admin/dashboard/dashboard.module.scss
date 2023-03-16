@@ -44,4 +44,37 @@
     border-left: 3px solid #1dc88b;
     color: #1dc88b;
   }
+
+  .clients-list {
+    margin-top: 3rem;
+
+    h1 {
+      padding: 1rem;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 2rem;
+
+      thead,
+      tr,
+      th,
+      td {
+        padding: 0.8rem;
+        border: 3px solid #eee;
+        text-align: left;
+        text-transform: capitalize;
+
+        @media screen and (max-width: 640px) {
+          padding: 5px;
+          margin-top: 1rem;
+        }
+      }
+
+      tr:nth-child(even) {
+        background-color: #f3f3f2;
+      }
+    }
+  }
 }
