@@ -9,6 +9,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { CheckLoadingState } from "../../checkLoadingState/CheckLoadingState";
+import { Pagination } from "../../pagination/Pagination";
 
 const washesIcon = <MdDryCleaning size={30} color="#46566e" />;
 const clientsIcon = <IoIosPeople size={30} color="#1f93ff" />;
@@ -24,6 +25,14 @@ export const Dashboard = () => {
   const { user } = useSelector((store: RootState) => store["auth"]);
   const token = user?.accessToken;
   const headers = { Authorization: `Bearer ${token}` };
+
+  //pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [clientsPerPage] = useState(10);
+
+  //get current clients
+  const indexOfLastProduct = currentPage * clientsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - clientsPerPage;
 
   //get dashboard data
   useEffect(() => {
@@ -67,6 +76,8 @@ export const Dashboard = () => {
     getClientsReport();
   }, []);
 
+  const clientPage = ourclients.slice(indexOfFirstProduct, indexOfLastProduct);
+
   return (
     <CheckLoadingState loading={loading}>
       <div className={styles.dashboard}>
@@ -98,19 +109,19 @@ export const Dashboard = () => {
             <table>
               <thead>
                 <tr>
-                  <th>#</th>
+                  {/* <th>#</th> */}
                   <th>name</th>
                   <th>frequency</th>
                   <th>revenue</th>
                 </tr>
               </thead>
               <tbody>
-                {ourclients.map((client, index) => {
+                {clientPage.map((client, index) => {
                   const { _id, count, totalAmount } = client;
                   return (
                     _id !== null && (
                       <tr key={index}>
-                        <td>{index}</td>
+                        {/* <td>{index}</td> */}
                         <td>{_id}</td>
                         <td>{count}</td>
                         <td>Ksh {totalAmount}</td>
@@ -120,6 +131,13 @@ export const Dashboard = () => {
                 })}
               </tbody>
             </table>
+
+            <Pagination
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              clientsPerPage={clientsPerPage}
+              totalClients={ourclients.length}
+            />
           </div>
         )}
       </div>
