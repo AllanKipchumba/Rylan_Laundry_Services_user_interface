@@ -35,6 +35,7 @@ export const TransactionInputForm = ({
   });
   const { description, amount, transactionDate } = transactionData;
   const { client, creditor, item } = description;
+
   const [hideForm, setHideForm] = useState<boolean>(false);
   const id = useLocation().pathname.split("/")[1];
   const [sales, setSales] = useState<boolean>(false);
