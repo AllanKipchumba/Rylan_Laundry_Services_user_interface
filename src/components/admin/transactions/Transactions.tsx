@@ -42,6 +42,7 @@ export const Transactions = () => {
   const token = user?.accessToken;
   const headers = { Authorization: `Bearer ${token}` };
 
+  //hide/show transactions data input form
   const handleToggle = (hideForm: boolean) => {
     setShowInputForm(hideForm);
   };
@@ -49,12 +50,6 @@ export const Transactions = () => {
   const changeSalesPeriod = (data: IDuration) => {
     setSalesPeriod(data);
   };
-
-  useEffect(() => {
-    id === "sales" && setTransactionsData(salesData);
-    id === "expenses" && setTransactionsData(expenditureData);
-    id === "credits" && setTransactionsData(creditsData);
-  }, [id, salesPeriod]);
 
   // get transactions data from db
   useEffect(() => {
@@ -67,9 +62,9 @@ export const Transactions = () => {
           data: salesPeriod,
           headers: headers,
         }).then((res) => {
-          setsalesData(res.data.sales);
-          setExpenditureData(res.data.expenditure);
-          setCreditsData(res.data.credits);
+          setsalesData(res.data?.sales);
+          setExpenditureData(res.data?.expenditure);
+          setCreditsData(res.data?.credits);
           setLoading(false);
         });
       } catch (error) {
@@ -80,6 +75,12 @@ export const Transactions = () => {
     };
     getSalesdata();
   }, [salesPeriod, id]);
+
+  useEffect(() => {
+    id === "sales" && setTransactionsData(salesData);
+    id === "expenses" && setTransactionsData(expenditureData);
+    id === "credits" && setTransactionsData(creditsData);
+  }, [id, salesData, expenditureData, creditsData]);
 
   return (
     <CheckLoadingState loading={loading}>
@@ -128,7 +129,8 @@ export const Transactions = () => {
                     {id === "expenses" && <th>item</th>}
                     {id === "credits" && (
                       <>
-                        <th>item</th> <th>creditor</th>
+                        <th>item</th>
+                        <th>creditor</th>
                       </>
                     )}
                     <th>Amount</th>
