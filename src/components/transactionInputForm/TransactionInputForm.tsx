@@ -10,8 +10,25 @@ import { BeatLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-export const TransactionInputForm = ({ onToggle }: ChildProps) => {
-  const [transactionData, setTransactionData] = useState(initialState);
+export const TransactionInputForm = ({
+  onToggle,
+  editTransaction,
+}: ChildProps) => {
+  //access auth data
+  const { user } = useSelector((store: RootState) => store["auth"]);
+  const token = user?.accessToken;
+  const headers = { Authorization: `Bearer ${token}` };
+
+  //access transaction details for editing
+  const { data } = useSelector(
+    (store: RootState) => store["transactionDetails"]
+  );
+
+  const [transactionData, setTransactionData] = useState(() => {
+    const newstate = editTransaction ? data : initialState;
+
+    return newstate;
+  });
   const { client, creditor, item, amount, date } = transactionData;
   const [hideForm, setHideForm] = useState<boolean>(false);
   const id = useLocation().pathname.split("/")[1];
@@ -20,9 +37,7 @@ export const TransactionInputForm = ({ onToggle }: ChildProps) => {
   const [credits, setCredits] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { user } = useSelector((store: RootState) => store["auth"]);
-  const token = user?.accessToken;
-  const headers = { Authorization: `Bearer ${token}` };
+  console.log(editTransaction);
 
   useEffect(() => {
     if (id === "sales") setSales(true);

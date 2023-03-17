@@ -8,25 +8,22 @@ export const returnTitle = (
   switch (id) {
     case "sales":
       return title1;
-      break;
 
     case "expenses":
       return title2;
-      break;
 
     case "credits":
       return title3;
-      break;
 
     default:
       return "undefined";
-      break;
   }
 };
 
 //props for input form
 export type ChildProps = {
   onToggle: (hideform: boolean) => void;
+  editTransaction: boolean;
 };
 
 export interface IState {
@@ -52,30 +49,18 @@ export enum TransactionType {
   credit = "credit",
 }
 
-export interface SalesData {
+export interface TransactionData {
+  _id: string;
+  __v?: number;
   transactionDate: Date;
-  transactionType: string;
+  transactionType:
+    | TransactionType.sale
+    | TransactionType.expense
+    | TransactionType.credit;
   amount: number;
   description: {
-    client: string;
-  };
-}
-
-export interface ExpenditureData {
-  transactionDate: Date;
-  transactionType: TransactionType.expense;
-  amount: number;
-  description: {
-    item: string;
-  };
-}
-
-export interface CreditsData {
-  transactionDate: Date;
-  transactionType: TransactionType.credit;
-  amount: number;
-  description: {
-    item: string;
-    creditor: string;
+    client?: string;
+    item?: string;
+    creditor?: string;
   };
 }

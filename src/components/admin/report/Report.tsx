@@ -131,35 +131,35 @@ export const Report = () => {
             </div>
             <div className={styles["the-data"]}>
               <h4>businessRevenue</h4>
-              <p>Ksh {businessRevenue}</p>
+              <p>Ksh {businessRevenue.toFixed(2)}</p>
             </div>
             <div className={styles["the-data"]}>
               <h4>sharableRevenue</h4>
-              <p>Ksh {sharableRevenue}</p>
+              <p>Ksh {sharableRevenue.toFixed(2)}</p>
             </div>
             <div className={styles["the-data"]}>
               <h4>rylRevenue</h4>
-              <p>Ksh {rylRevenue}</p>
+              <p>Ksh {rylRevenue.toFixed(2)}</p>
             </div>
             <div className={styles["the-data"]}>
               <h4>ryl Debits</h4>
-              <p>Ksh {debitsForRyl}</p>
+              <p>Ksh {debitsForRyl.toFixed(2)}</p>
             </div>
             <div className={styles["the-data"]}>
               <h4>total Pay -r</h4>
-              <p>Ksh {expectedPayToRyl}</p>
+              <p>Ksh {expectedPayToRyl.toFixed(2)}</p>
             </div>
             <div className={styles["the-data"]}>
               <h4>lanRevenue</h4>
-              <p>Ksh {lanRevenue}</p>
+              <p>Ksh {lanRevenue.toFixed(2)}</p>
             </div>
             <div className={styles["the-data"]}>
               <h4>lan debits</h4>
-              <p>Ksh {debitsForLan}</p>
+              <p>Ksh {debitsForLan.toFixed(2)}</p>
             </div>
             <div className={styles["the-data"]}>
               <h4>total pay -l </h4>
-              <p>Ksh {expectedPayToLan}</p>
+              <p>Ksh {expectedPayToLan.toFixed(2)}</p>
             </div>
           </div>
         </div>

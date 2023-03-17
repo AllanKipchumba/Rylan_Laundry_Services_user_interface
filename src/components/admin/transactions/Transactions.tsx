@@ -6,13 +6,15 @@ import { MdOutlineDelete } from "react-icons/md";
 import { TransactionInputForm } from "../../transactionInputForm/TransactionInputForm";
 import { useLocation } from "react-router-dom";
 import { TransactionDuration } from "../../transactionDuration/TransactionDuration";
-import { returnTitle } from "../../transactionInputForm/types";
+import { returnTitle, TransactionData } from "../../transactionInputForm/types";
 import axios from "axios";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { CheckLoadingState } from "../../checkLoadingState/CheckLoadingState";
 import { monthNames, Timestamp } from "../../timeStamp/TimeStamp";
+import { useDispatch } from "react-redux";
+import { STORE_TRANSACTION } from "../../../redux/slices/transactionDetails";
 
 export const editIcon = <FiEdit color="#36b9cc" />;
 export const deleteIcon = <MdOutlineDelete color="#e64b3b" />;
@@ -29,22 +31,36 @@ export const defaultPeriod: IDuration = {
 };
 
 export const Transactions = () => {
+  //access auth data
+  const { user } = useSelector((store: RootState) => store["auth"]);
+  const token = user?.accessToken;
+  const headers = { Authorization: `Bearer ${token}` };
+
   const [showInputForm, setShowInputForm] = useState<boolean>(false);
   const id = useLocation().pathname.split("/")[1];
   const [salesPeriod, setSalesPeriod] = useState(defaultPeriod);
   const [salesData, setsalesData] = useState([]);
   const [expenditureData, setExpenditureData] = useState([]);
   const [creditsData, setCreditsData] = useState([]);
-  const [transactionsData, setTransactionsData] = useState([]);
+  const [transactionsData, setTransactionsData] = useState<TransactionData[]>(
+    []
+  );
   const [loading, setLoading] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
-  const { user } = useSelector((store: RootState) => store["auth"]);
-  const token = user?.accessToken;
-  const headers = { Authorization: `Bearer ${token}` };
+  //get transaction to be edited
+  const [transactionID, setTransactionID] = useState<string>();
+  const editThisTransaction = transactionsData.filter(
+    (transaction) => transaction._id === transactionID
+  );
+  const [editTransaction, setEdittransaction] = useState(false);
 
-  //hide/show transactions data input form
+  //update states to hide/show transactions data input form
   const handleToggle = (hideForm: boolean) => {
     setShowInputForm(hideForm);
+
+    //dispatch transaction details to store
+    transactionID && dispatch(STORE_TRANSACTION(editThisTransaction));
   };
 
   const changeSalesPeriod = (data: IDuration) => {
@@ -85,7 +101,12 @@ export const Transactions = () => {
   return (
     <CheckLoadingState loading={loading}>
       <>
-        {showInputForm && <TransactionInputForm onToggle={handleToggle} />}
+        {showInputForm && (
+          <TransactionInputForm
+            onToggle={handleToggle}
+            editTransaction={editTransaction}
+          />
+        )}
         <div className={styles.transactions}>
           <div className={styles.header}>
             <div className={styles.wrapper}>
@@ -97,7 +118,10 @@ export const Transactions = () => {
               </div>
             </div>
             <button
-              onClick={() => setShowInputForm(!showInputForm)}
+              onClick={() => {
+                setShowInputForm(!showInputForm);
+                setEdittransaction(false);
+              }}
               className={`btn`}
             >
               <BsPlus /> <span>Add sale</span>
@@ -134,7 +158,7 @@ export const Transactions = () => {
                       </>
                     )}
                     <th>Amount</th>
-                    {/* <th>Action</th> */}
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -145,6 +169,7 @@ export const Transactions = () => {
                       _id,
                       description: { client, item, creditor },
                     } = transaction;
+
                     return (
                       <tr key={index}>
                         <td>{index + 1}</td>
@@ -161,10 +186,18 @@ export const Transactions = () => {
                         )}
                         <td>Ksh {amount}</td>
 
-                        {/* <td className={styles.action}>
-                          <div>{editIcon}</div>
+                        <td className={styles.action}>
+                          <div
+                            onClick={() => {
+                              setShowInputForm(!showInputForm);
+                              setTransactionID(_id);
+                              setEdittransaction(true);
+                            }}
+                          >
+                            {editIcon}
+                          </div>
                           <div>{deleteIcon}</div>
-                        </td> */}
+                        </td>
                       </tr>
                     );
                   })}
