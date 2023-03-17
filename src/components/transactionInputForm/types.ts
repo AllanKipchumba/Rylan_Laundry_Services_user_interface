@@ -26,22 +26,6 @@ export type ChildProps = {
   editTransaction: boolean;
 };
 
-export interface IState {
-  client: string;
-  item: string;
-  creditor: string;
-  amount: number;
-  date: Date;
-}
-
-export const initialState: IState = {
-  client: "",
-  item: "",
-  creditor: "",
-  amount: 0,
-  date: new Date(),
-};
-
 // for makeAPIcomponent
 export enum TransactionType {
   sale = "sale",
@@ -50,10 +34,10 @@ export enum TransactionType {
 }
 
 export interface TransactionData {
-  _id: string;
+  _id?: string;
   __v?: number;
   transactionDate: Date;
-  transactionType:
+  transactionType?:
     | TransactionType.sale
     | TransactionType.expense
     | TransactionType.credit;
@@ -64,3 +48,13 @@ export interface TransactionData {
     creditor?: string;
   };
 }
+
+export const initialState: TransactionData = {
+  amount: 0,
+  transactionDate: new Date(),
+  description: {
+    client: "",
+    item: "",
+    creditor: "",
+  },
+};

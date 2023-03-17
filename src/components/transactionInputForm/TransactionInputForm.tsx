@@ -4,7 +4,12 @@ import styles from "./transactionInputForm.module.scss";
 import { RxCross2 } from "react-icons/rx";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { ChildProps, initialState, IState, returnTitle } from "./types";
+import {
+  ChildProps,
+  initialState,
+  returnTitle,
+  TransactionData,
+} from "./types";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { BeatLoader } from "react-spinners";
 import { useSelector } from "react-redux";
@@ -26,10 +31,10 @@ export const TransactionInputForm = ({
 
   const [transactionData, setTransactionData] = useState(() => {
     const newstate = editTransaction ? data : initialState;
-
     return newstate;
   });
-  const { client, creditor, item, amount, date } = transactionData;
+  const { description, amount, transactionDate } = transactionData;
+  const { client, creditor, item } = description;
   const [hideForm, setHideForm] = useState<boolean>(false);
   const id = useLocation().pathname.split("/")[1];
   const [sales, setSales] = useState<boolean>(false);
@@ -37,7 +42,7 @@ export const TransactionInputForm = ({
   const [credits, setCredits] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  console.log(editTransaction);
+  console.log(client);
 
   useEffect(() => {
     if (id === "sales") setSales(true);
@@ -52,7 +57,7 @@ export const TransactionInputForm = ({
   };
 
   //empties form fields
-  const emptyFormInputFields = (ChildData: IState) => {
+  const emptyFormInputFields = (ChildData: TransactionData) => {
     setTransactionData(ChildData);
   };
 
@@ -77,7 +82,7 @@ export const TransactionInputForm = ({
     //submit sales data
     if (sales) {
       const salesData = {
-        transactionDate: date,
+        transactionDate: transactionDate,
         transactionType: "sale",
         amount,
         description: {
@@ -105,7 +110,7 @@ export const TransactionInputForm = ({
     //submit expenses
     else if (expenses) {
       const expenditureData = {
-        transactionDate: date,
+        transactionDate: transactionDate,
         transactionType: "expense",
         amount,
         description: {
@@ -133,7 +138,7 @@ export const TransactionInputForm = ({
     //submit credits
     else if (credits) {
       const creditdata = {
-        transactionDate: date,
+        transactionDate: transactionDate,
         transactionType: "credit",
         amount,
         description: {
@@ -236,7 +241,7 @@ export const TransactionInputForm = ({
           <input
             type="date"
             name="date"
-            value={date.toISOString().substring(0, 10)}
+            value={transactionDate.toISOString().substring(0, 10)}
             onChange={(e) => handleInputChange(e)}
             required
           />
