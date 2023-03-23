@@ -20,13 +20,6 @@ export const returnTitle = (
   }
 };
 
-//props for input form
-export type ChildProps = {
-  onToggle: (hideform: boolean) => void;
-  editTransaction: boolean;
-};
-
-// for makeAPIcomponent
 export enum TransactionType {
   sale = "sale",
   expense = "expense",
@@ -50,8 +43,8 @@ export interface TransactionData {
 }
 
 export const initialState: TransactionData = {
-  amount: 0,
   transactionDate: new Date(),
+  amount: 0,
   description: {
     client: "",
     item: "",

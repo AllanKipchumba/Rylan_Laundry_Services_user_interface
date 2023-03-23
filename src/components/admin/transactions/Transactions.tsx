@@ -47,21 +47,22 @@ export const Transactions = () => {
   );
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const [editTransaction, setEdittransaction] = useState(false);
 
   //get transaction to be edited
   const [transactionID, setTransactionID] = useState<string>();
+
   const editThisTransaction = transactionsData.filter(
     (transaction) => transaction._id === transactionID
   );
-  const [editTransaction, setEdittransaction] = useState(false);
 
   //update states to hide/show transactions data input form
-  const handleToggle = (hideForm: boolean) => {
+  const toggleTransactionInputForm = (hideForm: boolean) => {
     setShowInputForm(hideForm);
 
     //dispatch transaction details to store
     transactionID !== undefined &&
-      dispatch(STORE_TRANSACTION(editThisTransaction));
+      dispatch(STORE_TRANSACTION(editThisTransaction[0]));
   };
 
   const changeSalesPeriod = (data: IDuration) => {
@@ -104,7 +105,7 @@ export const Transactions = () => {
       <>
         {showInputForm && (
           <TransactionInputForm
-            onToggle={handleToggle}
+            onToggle={toggleTransactionInputForm}
             editTransaction={editTransaction}
           />
         )}
@@ -190,9 +191,9 @@ export const Transactions = () => {
                         <td className={styles.action}>
                           <div
                             onClick={() => {
-                              setShowInputForm(!showInputForm);
                               setTransactionID(_id);
                               setEdittransaction(true);
+                              setShowInputForm(!showInputForm);
                             }}
                           >
                             {editIcon}

@@ -4,41 +4,21 @@ import styles from "./transactionInputForm.module.scss";
 import { RxCross2 } from "react-icons/rx";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import {
-  ChildProps,
-  initialState,
-  returnTitle,
-  TransactionData,
-} from "./types";
+import { initialState, returnTitle, TransactionData } from "./types";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { BeatLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
+type ChildProps = {
+  onToggle: (hideform: boolean) => void;
+  editTransaction: boolean;
+};
+
 export const TransactionInputForm = ({
   onToggle,
   editTransaction,
 }: ChildProps) => {
-  //access auth data
-  const { user } = useSelector((store: RootState) => store["auth"]);
-  const token = user?.accessToken;
-  const headers = { Authorization: `Bearer ${token}` };
-
-  //access transaction details for editing
-  const { data } = useSelector(
-    (store: RootState) => store["transactionDetails"]
-  );
-
-  //declares transactiondata variable dynamically
-  const [transactionData, setTransactionData] = useState(() => {
-    const newstate = editTransaction ? data[0] : initialState;
-    return newstate;
-  });
-
-  const { description, amount } = transactionData;
-  const { client, creditor, item } = description;
-  const transactionDate = new Date(transactionData.transactionDate);
-
   const [hideForm, setHideForm] = useState<boolean>(false);
   const id = useLocation().pathname.split("/")[1];
   const [sales, setSales] = useState<boolean>(false);
@@ -52,8 +32,16 @@ export const TransactionInputForm = ({
     if (id === "credits") setCredits(true);
   }, [id]);
 
-  //hides input form, sends hide form state to parent component
-  const handleFormToggle = () => {
+  const { data } = useSelector(
+    (store: RootState) => store["transactionDetails"]
+  );
+
+  const [transactionData, setTransactionData] = useState(() => {
+    const newstate = editTransaction ? data : initialState;
+    return newstate;
+  });
+
+  const toggleTransactionInputFormVisibility = () => {
     setHideForm(!hideForm);
     onToggle(hideForm);
   };
@@ -68,16 +56,27 @@ export const TransactionInputForm = ({
   // };
 
   //captures form data
+
+  const {
+    description: { client, creditor, item },
+    amount,
+  } = transactionData;
+  const transactionDate = new Date(transactionData.transactionDate);
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setTransactionData((prevData) => ({ ...prevData, [name]: value }));
+    setTransactionData({ ...transactionData, [name]: value });
   };
 
   const submitFormDataToDB = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+
+    const { user } = useSelector((store: RootState) => store["auth"]);
+    const token = user?.accessToken;
+    const headers = { Authorization: `Bearer ${token}` };
 
     const url = `http://localhost:5000/transactions`;
 
@@ -179,7 +178,7 @@ export const TransactionInputForm = ({
         <div className={styles.cancel}>
           <RxCross2
             size={25}
-            onClick={handleFormToggle}
+            onClick={toggleTransactionInputFormVisibility}
             className={styles["cancel-icon"]}
           />
         </div>
@@ -205,7 +204,7 @@ export const TransactionInputForm = ({
                 type="text"
                 name="item"
                 value={item}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e)}
                 required
               />
             </>
@@ -261,7 +260,10 @@ export const TransactionInputForm = ({
                 `submit`
               )}
             </button>
-            <button onClick={handleFormToggle} className="btn">
+            <button
+              onClick={toggleTransactionInputFormVisibility}
+              className="btn"
+            >
               cancel
             </button>
           </div>
