@@ -1,0 +1,48 @@
+[33m1f61744[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m wip2 - use transaction input form to edit data
+[33m54c634c[m wip - use transaction input form to edit data
+[33m939be69[m edit transaction logic -wip
+[33m4f8ff86[m edit transaction logic -wip
+[33m9460131[m preparng transaction input form to edit a transaction
+[33me75e88b[m Added pagination to clients list in  dashboard
+[33m44e2ee2[m fixed performance  bug in transactions component
+[33mf602829[m populated report data -mvp
+[33m2fc48cb[m business monthly report -wip]
+[33md379c95[m populaed dashboard data
+[33m5b97402[m to create 1 transactions coponent to replace sales, credits and expenditure components
+[33m5b94225[m sales data mvp
+[33m2a2e910[m created timestamp and checkLoadingstate reusable component
+[33mdc4e5d8[m wip-retrieving sales data
+[33mfbdd24a[m sending sales data to db from transactionInputForm
+[33m4496cda[m working on optimising api requests for sending transaction data to db
+[33maf83784[m created a new file to handle types in transaction input form component
+[33mdb7b6b2[m conneted API to send sale record to db
+[33mb9eba48[m access username in header component
+[33m90dd06c[m show admin content when logged in
+[33mddbab46[m connected login form to auth api
+[33m3dc8e0c[m configured redux in the app
+[33ma634a3b[m optimised transactions table styling
+[33mf047d20[m created a component to capture the transaction duration period
+[33m9c376f9[m improved mobile design for sidebar
+[33m9ab1385[m optimised  transactionInputForm Component
+[33m4a26b2c[m optimising transactionInputForm Component
+[33ma5704d6[m connected input form to expenses and credits component
+[33me53204a[m created transaction input form
+[33md189360[m enter sales data form - wip
+[33m0cd8101[m created report component
+[33m88f4634[m i nitiated report section
+[33m75f9c09[m added favicon
+[33mde7b435[m populated credits component
+[33m52d1fcc[m populated sales component
+[33m1d20413[m removed monthly analysis from the dash
+[33mcf6c7e7[m removed monthly analysis from the dash
+[33m415e284[m working on monthly analytics component
+[33m387fa49[m dash header complete
+[33m1288da1[m created infobox and card components
+[33m78a404d[m added header component to dashboard
+[33m278af9d[m fixing sidebar bugs
+[33m8f41ede[m configured routing for admin dash
+[33m2f416de[m scafolded admin dash components
+[33m6edaf90[m mvp-admin sidebar
+[33mcb6a71c[m mvp-login form -ui
+[33md3ada40[m installed sass, configured google fonts
+[33m85be4ea[m bootstrapped app with vite
