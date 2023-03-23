@@ -29,12 +29,15 @@ export const TransactionInputForm = ({
     (store: RootState) => store["transactionDetails"]
   );
 
+  //declares transactiondata variable dynamically
   const [transactionData, setTransactionData] = useState(() => {
-    const newstate = editTransaction ? data : initialState;
+    const newstate = editTransaction ? data[0] : initialState;
     return newstate;
   });
-  const { description, amount, transactionDate } = transactionData;
+
+  const { description, amount } = transactionData;
   const { client, creditor, item } = description;
+  const transactionDate = new Date(transactionData.transactionDate);
 
   const [hideForm, setHideForm] = useState<boolean>(false);
   const id = useLocation().pathname.split("/")[1];
@@ -42,8 +45,6 @@ export const TransactionInputForm = ({
   const [expenses, setExpenses] = useState<boolean>(false);
   const [credits, setCredits] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
-  console.log(client);
 
   useEffect(() => {
     if (id === "sales") setSales(true);
@@ -57,14 +58,14 @@ export const TransactionInputForm = ({
     onToggle(hideForm);
   };
 
-  //empties form fields
-  const emptyFormInputFields = (ChildData: TransactionData) => {
-    setTransactionData(ChildData);
-  };
+  // //empties form fields
+  // const emptyFormInputFields = (ChildData: TransactionData) => {
+  //   setTransactionData(ChildData);
+  // };
 
-  const updateLoadingState = (childData: boolean) => {
-    setLoading(childData);
-  };
+  // const updateLoadingState = (childData: boolean) => {
+  //   setLoading(childData);
+  // };
 
   //captures form data
   const handleInputChange = (

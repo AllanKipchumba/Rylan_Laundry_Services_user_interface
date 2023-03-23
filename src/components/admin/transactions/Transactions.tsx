@@ -10,7 +10,7 @@ import { returnTitle, TransactionData } from "../../transactionInputForm/types";
 import axios from "axios";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+import { RootState, store } from "../../../redux/store";
 import { CheckLoadingState } from "../../checkLoadingState/CheckLoadingState";
 import { monthNames, Timestamp } from "../../timeStamp/TimeStamp";
 import { useDispatch } from "react-redux";
@@ -60,7 +60,8 @@ export const Transactions = () => {
     setShowInputForm(hideForm);
 
     //dispatch transaction details to store
-    transactionID && dispatch(STORE_TRANSACTION(editThisTransaction));
+    transactionID !== undefined &&
+      dispatch(STORE_TRANSACTION(editThisTransaction));
   };
 
   const changeSalesPeriod = (data: IDuration) => {
