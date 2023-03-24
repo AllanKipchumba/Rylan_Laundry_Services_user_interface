@@ -50,6 +50,7 @@ export const TransactionInputForm = ({
   const {
     description: { client: editClient, item: editItem, creditor: editCreditor },
     amount: editAmount,
+    _id: transactionID,
     transactionDate: editTransactionDate,
   } = data;
 
@@ -62,7 +63,7 @@ export const TransactionInputForm = ({
   };
   //
 
-  //captures the transaction data in the input form field
+  // Capture the initial state of transaction data in the input fields
   const [transactionData, setTransactionData] = useState(() => {
     const newstate = editTransaction ? transactionToEdit : initialState;
     return newstate;
@@ -99,18 +100,21 @@ export const TransactionInputForm = ({
     e.preventDefault();
     setLoading(true);
 
-    const url = `http://localhost:5000/transactions`;
+    const url = editTransaction
+      ? `http://localhost:5000/transactions/${transactionID}`
+      : `http://localhost:5000/transactions`;
+    const method = editTransaction ? "patch" : "post";
 
     const submitTransaction = async (url: string, data: TransactionData) => {
       try {
         const response = await axios({
-          method: "post",
+          method,
           url,
           data,
           headers: headers,
         });
 
-        if (response.status === 201) {
+        if (response.status === 201 || 202) {
           Notify.success("Data submitted");
           setTransactionData(initialState);
           setLoading(false);
