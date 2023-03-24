@@ -18,6 +18,7 @@ import {
   STORE_TRANSACTION,
   TransactionData,
 } from "../../../redux/slices/transactionDetails";
+import { Confirm } from "notiflix";
 
 export const editIcon = <FiEdit color="#36b9cc" />;
 export const deleteIcon = <MdOutlineDelete color="#e64b3b" />;
@@ -53,6 +54,7 @@ export const Transactions = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
   const [editTransaction, setEdittransaction] = useState(false);
+  const [transactionIsDeleted, setTransactionIsDeleted] = useState(false);
   //
 
   //get the transaction to be edited and send it to redux store
@@ -104,7 +106,7 @@ export const Transactions = () => {
       }
     };
     getSalesdata();
-  }, [salesPeriod, id, showInputForm]);
+  }, [salesPeriod, id, showInputForm, transactionIsDeleted]);
   //
 
   //update transaction data variable depending on the 'id'
@@ -113,6 +115,44 @@ export const Transactions = () => {
     id === "expenses" && setTransactionsData(expenditureData);
     id === "credits" && setTransactionsData(creditsData);
   }, [id, salesData, expenditureData, creditsData]);
+  //
+
+  //delete transaction record
+  const deleteTransaction = async () => {
+    try {
+      await axios({
+        method: "delete",
+        url: `http://localhost:5000/transactions/${transactionID}`,
+        headers: headers,
+      }).then((res) => {
+        res.status == 204 && Notify.info("Transaction deleted");
+        setTransactionIsDeleted(!transactionIsDeleted);
+      });
+    } catch (error) {
+      console.log(error);
+      Notify.failure(`${error}!`);
+    }
+  };
+
+  const confirmDeleteTransaction = () => {
+    Confirm.show(
+      "Delete Transaction!",
+      `You are about to delete this transaction`,
+      "Delete",
+      "Cancel",
+      function okCb() {
+        deleteTransaction();
+      },
+      function cancelCb() {},
+      {
+        width: "320px",
+        borderRadius: "8px",
+        titleColor: "#eb0202",
+        okButtonBackground: "#eb0202",
+        cssAnimationStyle: "zoom",
+      }
+    );
+  };
   //
 
   return (
@@ -217,7 +257,14 @@ export const Transactions = () => {
                           >
                             {editIcon}
                           </div>
-                          <div>{deleteIcon}</div>
+                          <div
+                            onClick={() => {
+                              setTransactionID(_id);
+                              confirmDeleteTransaction();
+                            }}
+                          >
+                            {deleteIcon}
+                          </div>
                         </td>
                       </tr>
                     );
