@@ -1,8 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  TransactionData,
-  TransactionType,
-} from "../../components/transactionInputForm/types";
+import { TransactionType } from "../../components/transactionInputForm/types";
+
+interface TransactionData {
+  _id?: string;
+  __v?: number;
+  transactionDate: Date;
+  transactionType?:
+    | TransactionType.sale
+    | TransactionType.expense
+    | TransactionType.credit;
+  amount: number;
+  description: {
+    client?: string;
+    item?: string;
+    creditor?: string;
+  };
+}
 
 const transactionData: TransactionData = {
   _id: "",

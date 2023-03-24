@@ -26,30 +26,20 @@ export enum TransactionType {
   credit = "credit",
 }
 
-export interface TransactionData {
-  _id?: string;
-  __v?: number;
-  transactionDate: Date;
-  transactionType?:
-    | TransactionType.sale
-    | TransactionType.expense
-    | TransactionType.credit;
+export interface TransactionInputData {
+  client?: string;
+  item?: string;
+  creditor?: string;
   amount: number;
-  description: {
-    client?: string;
-    item?: string;
-    creditor?: string;
-  };
+  date: Date;
 }
 
-export const initialState: TransactionData = {
-  transactionDate: new Date(),
+export const initialState: TransactionInputData = {
+  client: "",
+  item: "",
+  creditor: "",
   amount: 0,
-  description: {
-    client: "",
-    item: "",
-    creditor: "",
-  },
+  date: new Date(),
 };
 
 // export interface IState {

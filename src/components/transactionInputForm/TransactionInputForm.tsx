@@ -4,7 +4,7 @@ import styles from "./transactionInputForm.module.scss";
 import { RxCross2 } from "react-icons/rx";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { initialState, returnTitle, TransactionData } from "./types";
+import { initialState, returnTitle, TransactionInputData } from "./types";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { BeatLoader } from "react-spinners";
 import { useSelector } from "react-redux";
@@ -36,10 +36,29 @@ export const TransactionInputForm = ({
     (store: RootState) => store["transactionDetails"]
   );
 
+  const {
+    description: { client: editClient, item: editItem, creditor: editCreditor },
+    amount: editAmount,
+    transactionDate: editTransactionDate,
+  } = data;
+
+  const transactionToEdit: TransactionInputData = {
+    client: editClient,
+    item: editItem,
+    creditor: editCreditor,
+    amount: editAmount,
+    date: new Date(editTransactionDate),
+  };
+
   const [transactionData, setTransactionData] = useState(() => {
-    const newstate = editTransaction ? data : initialState;
+    const newstate = editTransaction ? transactionToEdit : initialState;
     return newstate;
   });
+
+  console.log(transactionData);
+
+  const { client, amount, item, creditor } = transactionData;
+  const date = new Date(transactionData.date);
 
   const toggleTransactionInputFormVisibility = () => {
     setHideForm(!hideForm);
@@ -56,12 +75,6 @@ export const TransactionInputForm = ({
   // };
 
   //captures form data
-
-  const {
-    description: { client, creditor, item },
-    amount,
-  } = transactionData;
-  const transactionDate = new Date(transactionData.transactionDate);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -83,7 +96,7 @@ export const TransactionInputForm = ({
     //submit sales data
     if (sales) {
       const salesData = {
-        transactionDate: transactionDate,
+        transactionDate: date,
         transactionType: "sale",
         amount,
         description: {
@@ -111,7 +124,7 @@ export const TransactionInputForm = ({
     //submit expenses
     else if (expenses) {
       const expenditureData = {
-        transactionDate: transactionDate,
+        transactionDate: date,
         transactionType: "expense",
         amount,
         description: {
@@ -139,7 +152,7 @@ export const TransactionInputForm = ({
     //submit credits
     else if (credits) {
       const creditdata = {
-        transactionDate: transactionDate,
+        transactionDate: date,
         transactionType: "credit",
         amount,
         description: {
@@ -242,7 +255,7 @@ export const TransactionInputForm = ({
           <input
             type="date"
             name="date"
-            value={transactionDate.toISOString().substring(0, 10)}
+            value={date.toISOString().substring(0, 10)}
             onChange={(e) => handleInputChange(e)}
             required
           />
