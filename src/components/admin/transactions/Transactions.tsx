@@ -6,7 +6,7 @@ import { MdOutlineDelete } from "react-icons/md";
 import { TransactionInputForm } from "../../transactionInputForm/TransactionInputForm";
 import { useLocation } from "react-router-dom";
 import { TransactionDuration } from "../../transactionDuration/TransactionDuration";
-import { returnTitle, TransactionData } from "../../transactionInputForm/types";
+import { returnTitle } from "../../transactionInputForm/types";
 import axios from "axios";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { useSelector } from "react-redux";
@@ -14,7 +14,10 @@ import { RootState, store } from "../../../redux/store";
 import { CheckLoadingState } from "../../checkLoadingState/CheckLoadingState";
 import { monthNames, Timestamp } from "../../timeStamp/TimeStamp";
 import { useDispatch } from "react-redux";
-import { STORE_TRANSACTION } from "../../../redux/slices/transactionDetails";
+import {
+  STORE_TRANSACTION,
+  TransactionData,
+} from "../../../redux/slices/transactionDetails";
 
 export const editIcon = <FiEdit color="#36b9cc" />;
 export const deleteIcon = <MdOutlineDelete color="#e64b3b" />;
@@ -35,7 +38,9 @@ export const Transactions = () => {
   const { user } = useSelector((store: RootState) => store["auth"]);
   const token = user?.accessToken;
   const headers = { Authorization: `Bearer ${token}` };
+  //
 
+  //variable declarations
   const [showInputForm, setShowInputForm] = useState<boolean>(false);
   const id = useLocation().pathname.split("/")[1];
   const [salesPeriod, setSalesPeriod] = useState(defaultPeriod);
@@ -48,26 +53,33 @@ export const Transactions = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
   const [editTransaction, setEdittransaction] = useState(false);
+  //
 
-  //get transaction to be edited
+  //get the transaction to be edited and send it to redux store
   const [transactionID, setTransactionID] = useState<string>();
-
   const editThisTransaction = transactionsData.filter(
     (transaction) => transaction._id === transactionID
   );
 
-  //update states to hide/show transactions data input form
-  const toggleTransactionInputForm = (hideForm: boolean) => {
-    setShowInputForm(hideForm);
-
-    //dispatch transaction details to store
+  const storeTransactionToBeEdited = () => {
     transactionID !== undefined &&
       dispatch(STORE_TRANSACTION(editThisTransaction[0]));
   };
+  //
 
+  //update states to hide/show transactions data input form
+  const toggleTransactionInputForm = (hideForm: boolean) => {
+    setShowInputForm(hideForm);
+  };
+  //
+
+  /*updates sales period.
+   *Receives data from TransactionDuration component
+   */
   const changeSalesPeriod = (data: IDuration) => {
     setSalesPeriod(data);
   };
+  //
 
   // get transactions data from db
   useEffect(() => {
@@ -92,13 +104,16 @@ export const Transactions = () => {
       }
     };
     getSalesdata();
-  }, [salesPeriod, id]);
+  }, [salesPeriod, id, showInputForm]);
+  //
 
+  //update transaction data variable depending on the 'id'
   useEffect(() => {
     id === "sales" && setTransactionsData(salesData);
     id === "expenses" && setTransactionsData(expenditureData);
     id === "credits" && setTransactionsData(creditsData);
   }, [id, salesData, expenditureData, creditsData]);
+  //
 
   return (
     <CheckLoadingState loading={loading}>
@@ -126,7 +141,10 @@ export const Transactions = () => {
               }}
               className={`btn`}
             >
-              <BsPlus /> <span>Add sale</span>
+              <BsPlus />{" "}
+              <span>
+                Add {returnTitle(id, "sales", "expenditure", "credits")}
+              </span>
             </button>
           </div>
 
@@ -192,6 +210,7 @@ export const Transactions = () => {
                           <div
                             onClick={() => {
                               setTransactionID(_id);
+                              storeTransactionToBeEdited();
                               setEdittransaction(true);
                               setShowInputForm(!showInputForm);
                             }}

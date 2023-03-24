@@ -1,4 +1,3 @@
-//function used by sales, expenses, credits components
 export const returnTitle = (
   id: string,
   title1: string,

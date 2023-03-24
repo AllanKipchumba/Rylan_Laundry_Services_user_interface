@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TransactionType } from "../../components/transactionInputForm/types";
 
-interface TransactionData {
+export interface TransactionData {
   _id?: string;
   __v?: number;
   transactionDate: Date;

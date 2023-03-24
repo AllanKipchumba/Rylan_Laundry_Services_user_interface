@@ -4,11 +4,17 @@ import styles from "./transactionInputForm.module.scss";
 import { RxCross2 } from "react-icons/rx";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { initialState, returnTitle, TransactionInputData } from "./types";
+import {
+  initialState,
+  returnTitle,
+  TransactionInputData,
+  TransactionType,
+} from "./types";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { BeatLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { TransactionData } from "../../redux/slices/transactionDetails";
 
 type ChildProps = {
   onToggle: (hideform: boolean) => void;
@@ -19,19 +25,24 @@ export const TransactionInputForm = ({
   onToggle,
   editTransaction,
 }: ChildProps) => {
+  //variable declarations
   const [hideForm, setHideForm] = useState<boolean>(false);
   const id = useLocation().pathname.split("/")[1];
   const [sales, setSales] = useState<boolean>(false);
   const [expenses, setExpenses] = useState<boolean>(false);
   const [credits, setCredits] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  //
 
+  //upates states based on 'id'
   useEffect(() => {
     if (id === "sales") setSales(true);
     if (id === "expenses") setExpenses(true);
     if (id === "credits") setCredits(true);
   }, [id]);
+  //
 
+  //accesses the transaction to be edited from redux store
   const { data } = useSelector(
     (store: RootState) => store["transactionDetails"]
   );
@@ -49,111 +60,104 @@ export const TransactionInputForm = ({
     amount: editAmount,
     date: new Date(editTransactionDate),
   };
+  //
 
+  //captures the transaction data in the input form field
   const [transactionData, setTransactionData] = useState(() => {
     const newstate = editTransaction ? transactionToEdit : initialState;
     return newstate;
   });
 
-  console.log(transactionData);
-
   const { client, amount, item, creditor } = transactionData;
   const date = new Date(transactionData.date);
+  //
 
+  //accesses auth data
+  const { user } = useSelector((store: RootState) => store["auth"]);
+  const token = user?.accessToken;
+  const headers = { Authorization: `Bearer ${token}` };
+  //
+
+  //manages the state that hides/show the transaction input form
   const toggleTransactionInputFormVisibility = () => {
     setHideForm(!hideForm);
     onToggle(hideForm);
   };
+  //
 
-  // //empties form fields
-  // const emptyFormInputFields = (ChildData: TransactionData) => {
-  //   setTransactionData(ChildData);
-  // };
-
-  // const updateLoadingState = (childData: boolean) => {
-  //   setLoading(childData);
-  // };
-
-  //captures form data
-
+  //manages the changes in the input form field
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setTransactionData({ ...transactionData, [name]: value });
   };
+  //
 
+  //submits form data to db
   const submitFormDataToDB = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
-    const { user } = useSelector((store: RootState) => store["auth"]);
-    const token = user?.accessToken;
-    const headers = { Authorization: `Bearer ${token}` };
-
     const url = `http://localhost:5000/transactions`;
 
-    //submit sales data
+    const submitTransaction = async (url: string, data: TransactionData) => {
+      try {
+        const response = await axios({
+          method: "post",
+          url,
+          data,
+          headers: headers,
+        });
+
+        if (response.status === 201) {
+          Notify.success("Data submitted");
+          setTransactionData(initialState);
+          setLoading(false);
+        } else {
+          Notify.info("Unable to submit data");
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log(error);
+        Notify.failure(`${error}!`);
+        setLoading(false);
+      }
+    };
+
+    //submit sales
     if (sales) {
       const salesData = {
         transactionDate: date,
-        transactionType: "sale",
+        transactionType: TransactionType.sale,
         amount,
         description: {
           client,
         },
       };
 
-      try {
-        await axios({
-          method: "post",
-          url,
-          data: salesData,
-          headers: headers,
-        }).then((res) => {
-          res.status == 201 && Notify.success(`Data submited`);
-          setTransactionData(initialState);
-          setLoading(false);
-        });
-      } catch (error) {
-        console.log(error);
-        Notify.failure(`${error}!`);
-        setLoading(false);
-      }
+      submitTransaction(url, salesData);
     }
-    //submit expenses
+
+    // submit expenses
     else if (expenses) {
       const expenditureData = {
         transactionDate: date,
-        transactionType: "expense",
+        transactionType: TransactionType.expense,
         amount,
         description: {
           item,
         },
       };
 
-      try {
-        await axios({
-          method: "post",
-          url,
-          data: expenditureData,
-          headers: headers,
-        }).then((res) => {
-          res.status == 201 && Notify.success(`Data submited`);
-          setTransactionData(initialState);
-          setLoading(false);
-        });
-      } catch (error) {
-        console.log(error);
-        Notify.failure(`${error}!`);
-        setLoading(false);
-      }
+      submitTransaction(url, expenditureData);
     }
-    //submit credits
+
+    // submit credits
     else if (credits) {
-      const creditdata = {
+      const creditData = {
         transactionDate: date,
-        transactionType: "credit",
+        transactionType: TransactionType.credit,
         amount,
         description: {
           item,
@@ -161,30 +165,22 @@ export const TransactionInputForm = ({
         },
       };
 
-      try {
-        await axios({
-          method: "post",
-          url,
-          data: creditdata,
-          headers: headers,
-        }).then((res) => {
-          res.status == 201 && Notify.success(`Data submited`);
-          setTransactionData(initialState);
-          setLoading(false);
-        });
-      } catch (error) {
-        console.log(error);
-        Notify.failure(`${error}!`);
-        setLoading(false);
-      }
+      submitTransaction(url, creditData);
     }
   };
+  //
 
+  //renders the input form component in the "inputForm" DOM node
   const inputFormElement = document.getElementById("inputForm");
   if (!inputFormElement) {
     return null;
   }
+  //
 
+  /*Ract portal:
+   * React Portal provides a way to render children components
+   * into a different DOM hierarchy than the one that originally renders them.
+   */
   return createPortal(
     <div className={styles.wrapper}>
       <div className={styles.inputForm}>
