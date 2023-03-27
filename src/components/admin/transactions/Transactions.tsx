@@ -55,30 +55,23 @@ export const Transactions = () => {
   const dispatch = useDispatch();
   const [editTransaction, setEdittransaction] = useState(false);
   const [transactionIsDeleted, setTransactionIsDeleted] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState(false);
   //
 
   //get the transaction to be edited and send it to redux store
-  // const [transactionID, setTransactionID] = useState<string>();
-  // const editThisTransaction = transactionsData.filter(
-  //   (transaction) => transaction._id === transactionID
-  // );
-
-  // const storeTransactionToBeEdited = () => {
-  //   transactionID !== undefined &&
-  //     dispatch(STORE_TRANSACTION(editThisTransaction[0]));
-  // };
-
   const storeThisTransaction = (id: string) => {
     const transaction = transactionsData.filter((data) => data._id === id);
     dispatch(STORE_TRANSACTION(transaction[0]));
   };
   //
 
-  //update states to hide/show transactions data input form
-  const toggleTransactionInputForm = (hideForm: boolean) => {
+  //update states from child component, TransactionInputForm
+  const toggleTransactionInputForm = (hideForm: boolean, update: boolean) => {
     setShowInputForm(hideForm);
+    setDataUpdate(update);
   };
   //
+  console.log(dataUpdate);
 
   /*updates sales period.
    *Receives data from TransactionDuration component
@@ -111,7 +104,7 @@ export const Transactions = () => {
       }
     };
     getSalesdata();
-  }, [salesPeriod, id, showInputForm, transactionIsDeleted]);
+  }, [salesPeriod, id, dataUpdate, transactionIsDeleted]);
   //
 
   //update transaction data variable depending on the 'id'
@@ -152,8 +145,8 @@ export const Transactions = () => {
       {
         width: "320px",
         borderRadius: "8px",
-        titleColor: "#eb0202",
-        okButtonBackground: "#eb0202",
+        titleColor: "#e64b3b",
+        okButtonBackground: "#e64b3b",
         cssAnimationStyle: "zoom",
       }
     );

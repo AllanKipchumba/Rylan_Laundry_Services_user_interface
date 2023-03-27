@@ -17,7 +17,7 @@ import { RootState } from "../../redux/store";
 import { TransactionData } from "../../redux/slices/transactionDetails";
 
 type ChildProps = {
-  onToggle: (hideform: boolean) => void;
+  onToggle: (hideform: boolean, databaseIsUpdated: boolean) => void;
   editTransaction: boolean;
 };
 
@@ -26,12 +26,13 @@ export const TransactionInputForm = ({
   editTransaction,
 }: ChildProps) => {
   //variable declarations
-  const [hideForm, setHideForm] = useState<boolean>(false);
+  const [hideForm, setHideForm] = useState(false);
   const id = useLocation().pathname.split("/")[1];
-  const [sales, setSales] = useState<boolean>(false);
-  const [expenses, setExpenses] = useState<boolean>(false);
-  const [credits, setCredits] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [sales, setSales] = useState(false);
+  const [expenses, setExpenses] = useState(false);
+  const [credits, setCredits] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [databaseIsUpdated, setDatabaseIsUpdated] = useState(false);
   //
 
   //upates states based on 'id'
@@ -79,10 +80,10 @@ export const TransactionInputForm = ({
   const headers = { Authorization: `Bearer ${token}` };
   //
 
-  //manages the state that hides/show the transaction input form
+  //manages the state that hides/show the transaction input form , sends data to parent
   const toggleTransactionInputFormVisibility = () => {
     setHideForm(!hideForm);
-    onToggle(hideForm);
+    onToggle(hideForm, databaseIsUpdated);
   };
   //
 
@@ -118,6 +119,7 @@ export const TransactionInputForm = ({
           Notify.success("Data submitted");
           setTransactionData(initialState);
           setLoading(false);
+          setDatabaseIsUpdated(!databaseIsUpdated);
         } else {
           Notify.info("Unable to submit data");
           setLoading(false);
