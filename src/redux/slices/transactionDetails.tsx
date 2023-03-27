@@ -40,7 +40,6 @@ const transactionDetails = createSlice({
   initialState,
   reducers: {
     STORE_TRANSACTION: (state, action) => {
-      // state = initialState; // reset the state to its initial value
       state.data = action.payload; // assign new state value
     },
   },

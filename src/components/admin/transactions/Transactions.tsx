@@ -58,14 +58,19 @@ export const Transactions = () => {
   //
 
   //get the transaction to be edited and send it to redux store
-  const [transactionID, setTransactionID] = useState<string>();
-  const editThisTransaction = transactionsData.filter(
-    (transaction) => transaction._id === transactionID
-  );
+  // const [transactionID, setTransactionID] = useState<string>();
+  // const editThisTransaction = transactionsData.filter(
+  //   (transaction) => transaction._id === transactionID
+  // );
 
-  const storeTransactionToBeEdited = () => {
-    transactionID !== undefined &&
-      dispatch(STORE_TRANSACTION(editThisTransaction[0]));
+  // const storeTransactionToBeEdited = () => {
+  //   transactionID !== undefined &&
+  //     dispatch(STORE_TRANSACTION(editThisTransaction[0]));
+  // };
+
+  const storeThisTransaction = (id: string) => {
+    const transaction = transactionsData.filter((data) => data._id === id);
+    dispatch(STORE_TRANSACTION(transaction[0]));
   };
   //
 
@@ -118,11 +123,11 @@ export const Transactions = () => {
   //
 
   //delete transaction record
-  const deleteTransaction = async () => {
+  const deleteTransaction = async (id: string) => {
     try {
       await axios({
         method: "delete",
-        url: `http://localhost:5000/transactions/${transactionID}`,
+        url: `http://localhost:5000/transactions/${id}`,
         headers: headers,
       }).then((res) => {
         res.status == 204 && Notify.info("Transaction deleted");
@@ -134,14 +139,14 @@ export const Transactions = () => {
     }
   };
 
-  const confirmDeleteTransaction = () => {
+  const confirmDeleteTransaction = (id: string) => {
     Confirm.show(
       "Delete Transaction!",
       `You are about to delete this transaction`,
       "Delete",
       "Cancel",
       function okCb() {
-        deleteTransaction();
+        deleteTransaction(id);
       },
       function cancelCb() {},
       {
@@ -249,8 +254,7 @@ export const Transactions = () => {
                         <td className={styles.action}>
                           <div
                             onClick={() => {
-                              setTransactionID(_id);
-                              storeTransactionToBeEdited();
+                              _id != undefined && storeThisTransaction(_id);
                               setEdittransaction(true);
                               setShowInputForm(!showInputForm);
                             }}
@@ -259,8 +263,7 @@ export const Transactions = () => {
                           </div>
                           <div
                             onClick={() => {
-                              setTransactionID(_id);
-                              confirmDeleteTransaction();
+                              _id != undefined && confirmDeleteTransaction(_id);
                             }}
                           >
                             {deleteIcon}
