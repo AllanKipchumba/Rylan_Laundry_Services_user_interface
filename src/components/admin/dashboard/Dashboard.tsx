@@ -10,24 +10,19 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { CheckLoadingState } from "../../checkLoadingState/CheckLoadingState";
 import { Pagination } from "../../pagination/Pagination";
+import { useNavigate } from "react-router-dom";
 
 const washesIcon = <MdDryCleaning size={30} color="#46566e" />;
 const clientsIcon = <IoIosPeople size={30} color="#1f93ff" />;
 const revenueIcon = <AiOutlineDollarCircle size={30} color="#1dc88b" />;
 
-import Cookies from "js-cookie";
-
 export const Dashboard = () => {
-  ///
-
-  console.log(document.cookie);
-
-  ///
   const [totalWashes, setTotalwatshes] = useState<number>(0);
   const [clientsServed, setClientsServed] = useState<number>(0);
   const [grossRevenueGenerated, setGrossRevenueGenerated] = useState<number>(0);
   const [ourclients, setOurClients] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const { user } = useSelector((store: RootState) => store["auth"]);
   const token = user?.accessToken;
@@ -42,6 +37,7 @@ export const Dashboard = () => {
   const indexOfFirstProduct = indexOfLastProduct - clientsPerPage;
 
   //get dashboard data
+  const [err403, setErr403] = useState(false);
   useEffect(() => {
     const getgrossSalesReport = async () => {
       setLoading(true);
@@ -57,10 +53,20 @@ export const Dashboard = () => {
         });
       } catch (error) {
         setLoading(false);
-        console.log(error);
-        Notify.failure(`${error}!`);
+
+        // check if the error is an instance of AxiosError
+        if (axios.isAxiosError(error)) {
+          setLoading(false);
+          const axiosError = error;
+
+          axiosError.response?.status == 403 && setErr403(true);
+        } else {
+          console.error(error);
+          Notify.failure(`${error}!`);
+        }
       }
     };
+
     const getClientsReport = async () => {
       setLoading(true);
       try {
@@ -82,6 +88,8 @@ export const Dashboard = () => {
     getgrossSalesReport();
     getClientsReport();
   }, []);
+
+  err403 && navigate("/login");
 
   const clientPage = ourclients.slice(indexOfFirstProduct, indexOfLastProduct);
 

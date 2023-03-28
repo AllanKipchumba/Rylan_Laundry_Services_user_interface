@@ -2,6 +2,7 @@ import axios from "axios";
 import { Notify } from "notiflix";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../redux/store";
 import { CheckLoadingState } from "../../checkLoadingState/CheckLoadingState";
 import { monthNames } from "../../timeStamp/TimeStamp";
@@ -75,6 +76,8 @@ export const Report = () => {
   };
 
   //get monthly report from db
+  const [err403, setErr403] = useState(false);
+
   useEffect(() => {
     const getMonthlyReport = async () => {
       setLoading(true);
@@ -89,13 +92,25 @@ export const Report = () => {
           setLoading(false);
         });
       } catch (error) {
-        console.log(error);
-        Notify.failure(`${error}!`);
         setLoading(false);
+
+        if (axios.isAxiosError(error)) {
+          setLoading(false);
+          const axiosError = error;
+
+          axiosError.response?.status == 403 && setErr403(true);
+        } else {
+          console.error(error);
+          Notify.failure(`${error}!`);
+        }
       }
     };
     getMonthlyReport();
   }, [salesPeriod]);
+
+  const navigate = useNavigate();
+  err403 && navigate("/login");
+  //
 
   return (
     <CheckLoadingState loading={loading}>

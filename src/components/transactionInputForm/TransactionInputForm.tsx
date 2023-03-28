@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./transactionInputForm.module.scss";
 import { RxCross2 } from "react-icons/rx";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   initialState,
@@ -97,6 +97,8 @@ export const TransactionInputForm = ({
   //
 
   //submits form data to db
+  const [err403, setErr403] = useState(false);
+
   const submitFormDataToDB = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -126,9 +128,17 @@ export const TransactionInputForm = ({
           setLoading(false);
         }
       } catch (error) {
-        console.log(error);
-        Notify.failure(`${error}!`);
         setLoading(false);
+
+        if (axios.isAxiosError(error)) {
+          setLoading(false);
+          const axiosError = error;
+
+          axiosError.response?.status == 403 && setErr403(true);
+        } else {
+          console.error(error);
+          Notify.failure(`${error}!`);
+        }
       }
     };
 
@@ -175,6 +185,9 @@ export const TransactionInputForm = ({
       submitTransaction(url, creditData);
     }
   };
+
+  const navigate = useNavigate();
+  err403 && navigate("/login");
   //
 
   //renders the input form component in the "inputForm" DOM node

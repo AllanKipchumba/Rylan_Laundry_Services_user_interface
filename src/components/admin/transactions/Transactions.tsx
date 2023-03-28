@@ -4,7 +4,7 @@ import { BsPlus } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
 import { TransactionInputForm } from "../../transactionInputForm/TransactionInputForm";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TransactionDuration } from "../../transactionDuration/TransactionDuration";
 import { returnTitle } from "../../transactionInputForm/types";
 import axios from "axios";
@@ -86,6 +86,8 @@ export const Transactions = () => {
   //
 
   // get transactions data from db
+  const [err403, setErr403] = useState(false);
+
   useEffect(() => {
     const getTransactionsData = async () => {
       setLoading(true);
@@ -102,13 +104,25 @@ export const Transactions = () => {
           setLoading(false);
         });
       } catch (error) {
-        console.log(error);
-        Notify.failure(`${error}!`);
         setLoading(false);
+
+        if (axios.isAxiosError(error)) {
+          setLoading(false);
+          const axiosError = error;
+
+          axiosError.response?.status == 403 && setErr403(true);
+        } else {
+          console.error(error);
+          Notify.failure(`${error}!`);
+        }
       }
     };
     getTransactionsData();
   }, [salesPeriod, id, transactionIsDeleted, updateCounter]);
+
+  const navigate = useNavigate();
+  err403 && navigate("/login");
+
   //
 
   //update transaction data variable depending on the 'id'
