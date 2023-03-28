@@ -42,7 +42,7 @@ export const Transactions = () => {
   //
 
   //variable declarations
-  const [showInputForm, setShowInputForm] = useState<boolean>(false);
+  const [showInputForm, setShowInputForm] = useState(false);
   const id = useLocation().pathname.split("/")[1];
   const [salesPeriod, setSalesPeriod] = useState(defaultPeriod);
   const [salesData, setsalesData] = useState([]);
@@ -55,7 +55,11 @@ export const Transactions = () => {
   const dispatch = useDispatch();
   const [editTransaction, setEdittransaction] = useState(false);
   const [transactionIsDeleted, setTransactionIsDeleted] = useState(false);
-  const [dataUpdate, setDataUpdate] = useState(false);
+
+  // This state variable tracks the number of updates to the transaction data.
+  // It is used to trigger re-renders when the data is updated.
+  const [updateCounter, setUpdateCounter] = useState(0);
+
   //
 
   //get the transaction to be edited and send it to redux store
@@ -68,10 +72,11 @@ export const Transactions = () => {
   //update states from child component, TransactionInputForm
   const toggleTransactionInputForm = (hideForm: boolean, update: boolean) => {
     setShowInputForm(hideForm);
-    setDataUpdate(update);
+    // Increase the update counter when there is a data update.
+    update && setUpdateCounter((prev) => prev + 1);
   };
   //
-  console.log(dataUpdate);
+  console.log(updateCounter);
 
   /*updates sales period.
    *Receives data from TransactionDuration component
@@ -83,7 +88,7 @@ export const Transactions = () => {
 
   // get transactions data from db
   useEffect(() => {
-    const getSalesdata = async () => {
+    const getTransactionsData = async () => {
       setLoading(true);
       try {
         await axios({
@@ -103,8 +108,8 @@ export const Transactions = () => {
         setLoading(false);
       }
     };
-    getSalesdata();
-  }, [salesPeriod, id, dataUpdate, transactionIsDeleted]);
+    getTransactionsData();
+  }, [salesPeriod, id, transactionIsDeleted, updateCounter]);
   //
 
   //update transaction data variable depending on the 'id'

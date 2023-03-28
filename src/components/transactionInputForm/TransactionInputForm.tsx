@@ -104,6 +104,7 @@ export const TransactionInputForm = ({
     const url = editTransaction
       ? `http://localhost:5000/transactions/${transactionID}`
       : `http://localhost:5000/transactions`;
+
     const method = editTransaction ? "patch" : "post";
 
     const submitTransaction = async (url: string, data: TransactionData) => {
@@ -119,7 +120,7 @@ export const TransactionInputForm = ({
           Notify.success("Data submitted");
           setTransactionData(initialState);
           setLoading(false);
-          setDatabaseIsUpdated(!databaseIsUpdated);
+          setDatabaseIsUpdated(true);
         } else {
           Notify.info("Unable to submit data");
           setLoading(false);
