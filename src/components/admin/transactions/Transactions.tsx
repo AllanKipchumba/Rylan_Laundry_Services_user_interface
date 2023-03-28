@@ -69,14 +69,13 @@ export const Transactions = () => {
   };
   //
 
-  //update states from child component, TransactionInputForm
-  const toggleTransactionInputForm = (hideForm: boolean, update: boolean) => {
+  //update states from child component, TransactionInputForm && updateCounter
+  const updateParentStatesFromChild = (hideForm: boolean, update: boolean) => {
     setShowInputForm(hideForm);
     // Increase the update counter when there is a data update.
     update && setUpdateCounter((prev) => prev + 1);
   };
   //
-  console.log(updateCounter);
 
   /*updates sales period.
    *Receives data from TransactionDuration component
@@ -163,7 +162,7 @@ export const Transactions = () => {
       <>
         {showInputForm && (
           <TransactionInputForm
-            onToggle={toggleTransactionInputForm}
+            updateParentState={updateParentStatesFromChild}
             editTransaction={editTransaction}
           />
         )}

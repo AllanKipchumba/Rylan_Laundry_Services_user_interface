@@ -17,12 +17,12 @@ import { RootState } from "../../redux/store";
 import { TransactionData } from "../../redux/slices/transactionDetails";
 
 type ChildProps = {
-  onToggle: (hideform: boolean, databaseIsUpdated: boolean) => void;
+  updateParentState: (hideform: boolean, databaseIsUpdated: boolean) => void;
   editTransaction: boolean;
 };
 
 export const TransactionInputForm = ({
-  onToggle,
+  updateParentState,
   editTransaction,
 }: ChildProps) => {
   //variable declarations
@@ -83,7 +83,7 @@ export const TransactionInputForm = ({
   //manages the state that hides/show the transaction input form , sends data to parent
   const toggleTransactionInputFormVisibility = () => {
     setHideForm(!hideForm);
-    onToggle(hideForm, databaseIsUpdated);
+    updateParentState(hideForm, databaseIsUpdated);
   };
   //
 

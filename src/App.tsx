@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Authenicated, NotAuthenicated } from "./components";
+import { Authenicated } from "./components";
 import { Admin, Login } from "./pages";
 
 export const App = () => {

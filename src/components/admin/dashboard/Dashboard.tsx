@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Infobox } from "../../index";
 import styles from "./dashboard.module.scss";
 import { MdDryCleaning } from "react-icons/md";
@@ -15,7 +15,14 @@ const washesIcon = <MdDryCleaning size={30} color="#46566e" />;
 const clientsIcon = <IoIosPeople size={30} color="#1f93ff" />;
 const revenueIcon = <AiOutlineDollarCircle size={30} color="#1dc88b" />;
 
+import Cookies from "js-cookie";
+
 export const Dashboard = () => {
+  ///
+
+  console.log(document.cookie);
+
+  ///
   const [totalWashes, setTotalwatshes] = useState<number>(0);
   const [clientsServed, setClientsServed] = useState<number>(0);
   const [grossRevenueGenerated, setGrossRevenueGenerated] = useState<number>(0);
