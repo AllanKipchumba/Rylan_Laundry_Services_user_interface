@@ -34,7 +34,7 @@ export const Login = () => {
     try {
       await axios({
         method: "post",
-        url: `http://localhost:5000/auth/login`,
+        url: `https://rylan-laundry-dms-api.onrender.com/auth/login`,
         data: { username, password },
       }).then((res) => {
         setLoading(false);

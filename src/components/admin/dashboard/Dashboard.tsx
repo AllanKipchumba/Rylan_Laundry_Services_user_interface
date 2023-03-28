@@ -44,7 +44,7 @@ export const Dashboard = () => {
       try {
         await axios({
           method: "get",
-          url: `http://localhost:5000/analytics/business`,
+          url: `https://rylan-laundry-dms-api.onrender.com/analytics/business`,
           headers: headers,
         }).then((res) => {
           setLoading(false);
@@ -72,11 +72,11 @@ export const Dashboard = () => {
       try {
         await axios({
           method: "get",
-          url: `http://localhost:5000/analytics/clients`,
+          url: `https://rylan-laundry-dms-api.onrender.com/analytics/clients`,
           headers: headers,
         }).then((res) => {
           setLoading(false);
-          setClientsServed(res.data.clientsServed);
+          setClientsServed(res.data.clientsServed - 1);
           setOurClients(res.data.clients);
         });
       } catch (error) {

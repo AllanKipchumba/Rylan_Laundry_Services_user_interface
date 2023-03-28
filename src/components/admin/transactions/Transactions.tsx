@@ -94,7 +94,7 @@ export const Transactions = () => {
       try {
         await axios({
           method: "post",
-          url: `http://localhost:5000/transactions/monthly`,
+          url: `https://rylan-laundry-dms-api.onrender.com/transactions/monthly`,
           data: salesPeriod,
           headers: headers,
         }).then((res) => {
@@ -138,7 +138,7 @@ export const Transactions = () => {
     try {
       await axios({
         method: "delete",
-        url: `http://localhost:5000/transactions/${id}`,
+        url: `https://rylan-laundry-dms-api.onrender.com/transactions/${id}`,
         headers: headers,
       }).then((res) => {
         res.status == 204 && Notify.info("Transaction deleted");
@@ -263,11 +263,11 @@ export const Transactions = () => {
                         {id === "expenses" && <td>{item}</td>}
                         {id === "credits" && (
                           <>
-                            <td>{item}</td> <td>{creditor}</td>
+                            <td>{item}</td>
+                            <td>{creditor}</td>
                           </>
                         )}
                         <td>Ksh {amount}</td>
-
                         <td className={styles.action}>
                           <div
                             onClick={() => {

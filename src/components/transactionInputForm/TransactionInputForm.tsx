@@ -104,8 +104,8 @@ export const TransactionInputForm = ({
     setLoading(true);
 
     const url = editTransaction
-      ? `http://localhost:5000/transactions/${transactionID}`
-      : `http://localhost:5000/transactions`;
+      ? `https://rylan-laundry-dms-api.onrender.com/transactions/${transactionID}`
+      : `https://rylan-laundry-dms-api.onrender.com/transactions`;
 
     const method = editTransaction ? "patch" : "post";
 
