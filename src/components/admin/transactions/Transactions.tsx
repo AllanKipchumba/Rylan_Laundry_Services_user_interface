@@ -145,8 +145,14 @@ export const Transactions = () => {
         setTransactionIsDeleted(!transactionIsDeleted);
       });
     } catch (error) {
-      console.log(error);
-      Notify.failure(`${error}!`);
+      if (axios.isAxiosError(error)) {
+        const axiosError = error;
+
+        axiosError.response?.status == 401 && Notify.failure(`Unauthorized!`);
+      } else {
+        console.error(error);
+        Notify.failure(`${error}!`);
+      }
     }
   };
 

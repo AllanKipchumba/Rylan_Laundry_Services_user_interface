@@ -135,6 +135,7 @@ export const TransactionInputForm = ({
           const axiosError = error;
 
           axiosError.response?.status == 403 && setErr403(true);
+          axiosError.response?.status == 401 && Notify.failure(`Unauthorized!`);
         } else {
           console.error(error);
           Notify.failure(`${error}!`);
