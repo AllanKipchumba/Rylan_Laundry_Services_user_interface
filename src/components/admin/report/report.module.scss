@@ -1,10 +1,7 @@
 .report {
-  min-height: 100vh;
-  padding-top: 1rem;
-
   .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
 
     h1 {
@@ -29,28 +26,37 @@
       }
     }
 
-    .report-data {
-      display: grid;
-      grid-gap: 2rem;
-      margin-top: 1.5rem;
-      margin-bottom: 1rem;
-
-      @media (max-width: 640px) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      @media (min-width: 640px) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-      @media (min-width: 1024px) {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+    .tableData {
+      width: 70%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 1rem;
+      @media screen and (max-width: 640px) {
+        width: 100%;
       }
 
-      .the-data {
-        background-color: #d4daed;
-        text-transform: capitalize;
-        border-radius: 7px;
-        text-align: center;
-        padding: 2rem;
+      table {
+        border-collapse: collapse;
+        width: 100%;
+
+        thead,
+        tr,
+        th,
+        td {
+          padding: 0.8rem;
+          border: 3px solid #eee;
+          text-align: left;
+          text-transform: capitalize;
+
+          @media screen and (max-width: 640px) {
+            padding: 5px;
+            margin-top: 1rem;
+          }
+        }
+
+        tr:nth-child(even) {
+          background-color: #f3f3f2;
+        }
       }
     }
   }

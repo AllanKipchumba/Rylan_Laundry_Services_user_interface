@@ -131,51 +131,45 @@ export const Report = () => {
             </h1>
           </div>
 
-          <div className={styles["report-data"]}>
-            <div className={styles["the-data"]}>
-              <h4>sales</h4>
-              <p>Ksh {sales}</p>
-            </div>
-            <div className={styles["the-data"]}>
-              <h4>credits</h4>
-              <p>Ksh {credits}</p>
-            </div>
-            <div className={styles["the-data"]}>
-              <h4>expenses</h4>
-              <p>Ksh {expenses}</p>
-            </div>
-            <div className={styles["the-data"]}>
-              <h4>businessRevenue</h4>
-              <p>Ksh {businessRevenue.toFixed(2)}</p>
-            </div>
-            <div className={styles["the-data"]}>
-              <h4>sharableRevenue</h4>
-              <p>Ksh {sharableRevenue.toFixed(2)}</p>
-            </div>
-            <div className={styles["the-data"]}>
-              <h4>rylRevenue</h4>
-              <p>Ksh {rylRevenue.toFixed(2)}</p>
-            </div>
-            <div className={styles["the-data"]}>
-              <h4>ryl Debits</h4>
-              <p>Ksh {debitsForRyl.toFixed(2)}</p>
-            </div>
-            <div className={styles["the-data"]}>
-              <h4>total Pay -r</h4>
-              <p>Ksh {expectedPayToRyl.toFixed(2)}</p>
-            </div>
-            <div className={styles["the-data"]}>
-              <h4>lanRevenue</h4>
-              <p>Ksh {lanRevenue.toFixed(2)}</p>
-            </div>
-            <div className={styles["the-data"]}>
-              <h4>lan debits</h4>
-              <p>Ksh {debitsForLan.toFixed(2)}</p>
-            </div>
-            <div className={styles["the-data"]}>
-              <h4>total pay -l </h4>
-              <p>Ksh {expectedPayToLan.toFixed(2)}</p>
-            </div>
+          <div className={styles.tableData}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>sales</td>
+                  <td>Ksh {sales}</td>
+                </tr>
+                <tr>
+                  <td>expenses</td>
+                  <td>Ksh {expenses}</td>
+                </tr>
+                <tr>
+                  <td>credits</td>
+                  <td>Ksh {credits}</td>
+                </tr>
+                <tr>
+                  <td>business revenue</td>
+                  <td>Ksh {businessRevenue.toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td>sharable revenue</td>
+                  <td>Ksh {sharableRevenue.toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td>revenue-Ryl</td>
+                  <td>Ksh {rylRevenue.toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td>revenue-Lan</td>
+                  <td>Ksh {lanRevenue.toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

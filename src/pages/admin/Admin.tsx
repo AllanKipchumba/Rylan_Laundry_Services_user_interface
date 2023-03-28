@@ -27,12 +27,14 @@ export const Admin = () => {
       >
         <Sidebar />
       </div>
+
       <div
         onClick={() => setToggleSidebar(!toggleSidebar)}
         className={styles["icon-hideSidebar"]}
       >
         {icon}
       </div>
+
       <div
         className={
           toggleSidebar
@@ -41,6 +43,7 @@ export const Admin = () => {
         }
       >
         <Header />
+
         <div className={styles.routes}>
           <Routes>
             <Route path="/" element={<Dashboard />} />

@@ -20,11 +20,10 @@ export const Header = () => {
       <div>
         <h1>Laundry Management System</h1>
       </div>
-      {/* <div className={styles.right}>
-        <div className={styles["header-right"]}>
-          <h4>Howdy, {username}!</h4>
-        </div>
-      </div> */}
+
+      <div className={styles["header-right"]}>
+        <h4>Howdy, {username}!</h4>
+      </div>
     </div>
   );
 };
