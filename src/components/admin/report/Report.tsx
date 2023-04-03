@@ -85,11 +85,7 @@ export const Report = () => {
       try {
         await axios({
           method: "post",
-<<<<<<< HEAD
-          url: `https://rylan-laundry-dms-api.onrender.com/analytics/monthly`,
-=======
           url: `${base_url}/analytics/monthly`,
->>>>>>> wip
           data: salesPeriod,
           headers: headers,
         }).then((res) => {
