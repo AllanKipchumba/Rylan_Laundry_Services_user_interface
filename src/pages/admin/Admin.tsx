@@ -52,6 +52,7 @@ export const Admin = () => {
             <Route path="/credits" element={<Transactions />} />
             <Route path="/expenses" element={<Transactions />} />
             <Route path="/report" element={<Report />} />
+            <Route path="*" element={<Dashboard />} />
           </Routes>
         </div>
       </div>
