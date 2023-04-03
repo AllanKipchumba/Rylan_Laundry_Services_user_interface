@@ -139,7 +139,7 @@ export const Transactions = () => {
     try {
       await axios({
         method: "delete",
-        url: `http://localhost:5000/transactions/${id}`,
+        url: `${base_url}/transactions/${id}`,
         headers: headers,
       }).then((res) => {
         res.status == 204 && Notify.info("Transaction deleted");
