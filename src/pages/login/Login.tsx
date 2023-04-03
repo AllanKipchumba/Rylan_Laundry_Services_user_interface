@@ -7,6 +7,7 @@ import { BeatLoader } from "react-spinners";
 import { AUTH_SUCCESS } from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { base_url } from "../../components/index";
 
 interface IState {
   username: string;
@@ -34,7 +35,7 @@ export const Login = () => {
     try {
       await axios({
         method: "post",
-        url: `https://rylan-laundry-dms-api.onrender.com/auth/login`,
+        url: `${base_url}/auth/login`,
         data: { username, password },
       }).then((res) => {
         setLoading(false);

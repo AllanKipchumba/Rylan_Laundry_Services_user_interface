@@ -19,6 +19,7 @@ import {
   TransactionData,
 } from "../../../redux/slices/transactionDetails";
 import { Confirm } from "notiflix";
+import { base_url } from "../../index";
 
 export const editIcon = <FiEdit color="#36b9cc" />;
 export const deleteIcon = <MdOutlineDelete color="#e64b3b" />;
@@ -94,7 +95,7 @@ export const Transactions = () => {
       try {
         await axios({
           method: "post",
-          url: `https://rylan-laundry-dms-api.onrender.com/transactions/monthly`,
+          url: `${base_url}/transactions/monthly`,
           data: salesPeriod,
           headers: headers,
         }).then((res) => {

@@ -9,6 +9,7 @@ import { monthNames } from "../../timeStamp/TimeStamp";
 import { TransactionDuration } from "../../transactionDuration/TransactionDuration";
 import { defaultPeriod, IDuration } from "../transactions/Transactions";
 import styles from "./report.module.scss";
+import { base_url } from "../../index";
 
 interface IMonthlyReport {
   sales: number;
@@ -84,7 +85,11 @@ export const Report = () => {
       try {
         await axios({
           method: "post",
+<<<<<<< HEAD
           url: `https://rylan-laundry-dms-api.onrender.com/analytics/monthly`,
+=======
+          url: `${base_url}/analytics/monthly`,
+>>>>>>> wip
           data: salesPeriod,
           headers: headers,
         }).then((res) => {

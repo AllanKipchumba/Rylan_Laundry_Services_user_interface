@@ -15,6 +15,7 @@ import { BeatLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { TransactionData } from "../../redux/slices/transactionDetails";
+import { base_url } from "../index";
 
 type ChildProps = {
   updateParentState: (hideform: boolean, databaseIsUpdated: boolean) => void;
@@ -104,8 +105,8 @@ export const TransactionInputForm = ({
     setLoading(true);
 
     const url = editTransaction
-      ? `https://rylan-laundry-dms-api.onrender.com/transactions/${transactionID}`
-      : `https://rylan-laundry-dms-api.onrender.com/transactions`;
+      ? `${base_url}/transactions/${transactionID}`
+      : `${base_url}/transactions`;
 
     const method = editTransaction ? "patch" : "post";
 
