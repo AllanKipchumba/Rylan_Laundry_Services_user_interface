@@ -9,6 +9,7 @@ import { monthNames } from "../../timeStamp/TimeStamp";
 import { TransactionDuration } from "../../transactionDuration/TransactionDuration";
 import { defaultPeriod, IDuration } from "../transactions/Transactions";
 import styles from "./report.module.scss";
+import { base_url } from "../../index";
 
 interface IMonthlyReport {
   sales: number;
@@ -84,7 +85,7 @@ export const Report = () => {
       try {
         await axios({
           method: "post",
-          url: `http://localhost:5000/analytics/monthly`,
+          url: `${base_url}/analytics/monthly`,
           data: salesPeriod,
           headers: headers,
         }).then((res) => {

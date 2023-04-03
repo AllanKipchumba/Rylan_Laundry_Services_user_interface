@@ -10,6 +10,11 @@ import { TbFileReport } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../redux/slices/authSlice";
+import { base_url } from "..";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { Notify } from "notiflix";
 
 // interface CustomNavLinkProps {
 //   isActive: boolean;
@@ -19,10 +24,33 @@ import { LOGOUT } from "../../redux/slices/authSlice";
 //   isActive ? `${styles.active} ${styles.navLink}` : `${styles.navLink}`;
 
 export const Sidebar = () => {
+  const { user } = useSelector((store: RootState) => store["auth"]);
+  const token = user?.accessToken;
+  const headers = { Authorization: `Bearer ${token}` };
+
   const dispatch = useDispatch();
-  const logout = () => {
-    dispatch(LOGOUT());
+
+  const logout = async () => {
+    try {
+      await axios({
+        method: "post",
+        url: `${base_url}/auth/logout`,
+        headers: headers,
+      }).then((res) => {
+        res.status == 204 && dispatch(LOGOUT());
+        console.log(res.data);
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error;
+        Notify.failure(axiosError.response?.data);
+      } else {
+        console.error(error);
+        Notify.failure(`${error}!`);
+      }
+    }
   };
+
   return (
     <div className={styles.sidebar}>
       <div className={styles.header}>

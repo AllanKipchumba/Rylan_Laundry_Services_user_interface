@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Infobox } from "../../index";
+import { Infobox, base_url } from "../../index";
 import styles from "./dashboard.module.scss";
 import { MdDryCleaning } from "react-icons/md";
 import { IoIosPeople } from "react-icons/io";
@@ -72,7 +72,7 @@ export const Dashboard = () => {
       try {
         await axios({
           method: "get",
-          url: `http://localhost:5000/analytics/clients`,
+          url: `${base_url}/analytics/clients`,
           headers: headers,
         }).then((res) => {
           setLoading(false);
