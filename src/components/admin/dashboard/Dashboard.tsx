@@ -11,22 +11,30 @@ import { RootState } from "../../../redux/store";
 import { CheckLoadingState } from "../../checkLoadingState/CheckLoadingState";
 import { Pagination } from "../../pagination/Pagination";
 import { useNavigate } from "react-router-dom";
+import { Search } from "../../search/Search";
+import { useDispatch } from "react-redux";
+import { FILTER_BY_SEARCH } from "../../../redux/slices/fliterOurClients";
 
 const washesIcon = <MdDryCleaning size={30} color="#46566e" />;
 const clientsIcon = <IoIosPeople size={30} color="#1f93ff" />;
 const revenueIcon = <AiOutlineDollarCircle size={30} color="#1dc88b" />;
 
 export const Dashboard = () => {
-  const [totalWashes, setTotalwatshes] = useState<number>(0);
-  const [clientsServed, setClientsServed] = useState<number>(0);
-  const [grossRevenueGenerated, setGrossRevenueGenerated] = useState<number>(0);
-  const [ourclients, setOurClients] = useState([]);
-  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { user } = useSelector((store: RootState) => store["auth"]);
   const token = user?.accessToken;
   const headers = { Authorization: `Bearer ${token}` };
+
+  const { clients } = useSelector((store: RootState) => store["clients"]);
+
+  const [totalWashes, setTotalwatshes] = useState<number>(0);
+  const [clientsServed, setClientsServed] = useState<number>(0);
+  const [grossRevenueGenerated, setGrossRevenueGenerated] = useState<number>(0);
+  const [ourClients, setOurClients] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [search, setSearch] = useState("");
 
   //pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,6 +43,7 @@ export const Dashboard = () => {
   //get current clients
   const indexOfLastProduct = currentPage * clientsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - clientsPerPage;
+  const clientPage = clients.slice(indexOfFirstProduct, indexOfLastProduct);
 
   //get dashboard data
   const [err403, setErr403] = useState(false);
@@ -88,10 +97,12 @@ export const Dashboard = () => {
     getgrossSalesReport();
     getClientsReport();
   }, []);
-
   err403 && navigate("/login");
+  //
 
-  const clientPage = ourclients.slice(indexOfFirstProduct, indexOfLastProduct);
+  useEffect(() => {
+    dispatch(FILTER_BY_SEARCH({ ourClients, search }));
+  }, [dispatch, ourClients, search]);
 
   return (
     <CheckLoadingState loading={loading}>
@@ -118,43 +129,57 @@ export const Dashboard = () => {
           />
         </div>
 
-        {ourclients.length !== 0 && (
-          <div className={styles["clients-list"]}>
+        <div className={styles["clients-list"]}>
+          <div className={styles.header}>
             <h1>Our clients</h1>
-            <table>
-              <thead>
-                <tr>
-                  {/* <th>#</th> */}
-                  <th>name</th>
-                  <th>frequency</th>
-                  <th>revenue</th>
-                </tr>
-              </thead>
-              <tbody>
-                {clientPage.map((client, index) => {
-                  const { _id, count, totalAmount } = client;
-                  return (
-                    _id !== null && (
-                      <tr key={index}>
-                        {/* <td>{index}</td> */}
-                        <td>{_id}</td>
-                        <td>{count}</td>
-                        <td>Ksh {totalAmount}</td>
-                      </tr>
-                    )
-                  );
-                })}
-              </tbody>
-            </table>
-
-            <Pagination
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              clientsPerPage={clientsPerPage}
-              totalClients={ourclients.length}
+            <Search
+              value={search}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSearch(e.target.value)
+              }
             />
           </div>
-        )}
+          {clients.length !== 0 ? (
+            <>
+              <table>
+                <thead>
+                  <tr>
+                    {/* <th>#</th> */}
+                    <th>name</th>
+                    <th>frequency</th>
+                    <th>revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {clientPage.map((client, index) => {
+                    const { _id, count, totalAmount } = client;
+                    return (
+                      _id !== "" && (
+                        <tr key={index}>
+                          {/* <td>{index}</td> */}
+                          <td>{_id}</td>
+                          <td>{count}</td>
+                          <td>Ksh {totalAmount}</td>
+                        </tr>
+                      )
+                    );
+                  })}
+                </tbody>
+              </table>
+
+              <Pagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                clientsPerPage={clientsPerPage}
+                totalClients={clients.length}
+              />
+            </>
+          ) : (
+            <div className={styles.noTransactionRecord}>
+              <p>No record present for `{search}`</p>
+            </div>
+          )}
+        </div>
       </div>
     </CheckLoadingState>
   );

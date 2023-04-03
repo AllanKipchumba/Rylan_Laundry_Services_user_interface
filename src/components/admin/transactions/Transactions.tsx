@@ -139,7 +139,7 @@ export const Transactions = () => {
     try {
       await axios({
         method: "delete",
-        url: `https://rylan-laundry-dms-api.onrender.com/transactions/${id}`,
+        url: `${base_url}/transactions/${id}`,
         headers: headers,
       }).then((res) => {
         res.status == 204 && Notify.info("Transaction deleted");

@@ -46,10 +46,34 @@
   }
 
   .clients-list {
-    margin-top: 3rem;
+    margin-top: 2.5rem;
 
-    h1 {
-      padding: 1rem;
+    .header {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      text-align: center;
+      align-items: baseline;
+      @media screen and (max-width: 640px) {
+        gap: 0;
+      }
+    }
+
+    .noTransactionRecord {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 4rem;
+      p {
+        background-color: #d4daed;
+        padding: 3rem;
+        font-size: 1.2rem;
+        border-radius: 10px;
+
+        @media screen and (min-width: 748px) {
+          padding: 3rem 9rem;
+        }
+      }
     }
 
     table {
