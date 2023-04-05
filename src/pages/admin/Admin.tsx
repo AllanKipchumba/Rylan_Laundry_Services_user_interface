@@ -5,6 +5,7 @@ import {
   Report,
   Header,
   Transactions,
+  ClientTransactionRecord,
 } from "../../components";
 import styles from "./admin.module.scss";
 import { Routes, Route } from "react-router-dom";
@@ -53,6 +54,10 @@ export const Admin = () => {
             <Route path="/expenses" element={<Transactions />} />
             <Route path="/report" element={<Report />} />
             <Route path="*" element={<Dashboard />} />
+            <Route
+              path="/transaction-history/:id"
+              element={<ClientTransactionRecord />}
+            />
           </Routes>
         </div>
       </div>

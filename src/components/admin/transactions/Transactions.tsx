@@ -9,8 +9,6 @@ import { TransactionDuration } from "../../transactionDuration/TransactionDurati
 import { returnTitle } from "../../transactionInputForm/types";
 import axios from "axios";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
-import { useSelector } from "react-redux";
-import { RootState, store } from "../../../redux/store";
 import { CheckLoadingState } from "../../checkLoadingState/CheckLoadingState";
 import { monthNames, Timestamp } from "../../timeStamp/TimeStamp";
 import { useDispatch } from "react-redux";
@@ -20,6 +18,7 @@ import {
 } from "../../../redux/slices/transactionDetails";
 import { Confirm } from "notiflix";
 import { base_url } from "../../index";
+import { useFetchAuthData } from "../../../hooks/useFetchAuthData";
 
 export const editIcon = <FiEdit color="#36b9cc" />;
 export const deleteIcon = <MdOutlineDelete color="#e64b3b" />;
@@ -37,9 +36,7 @@ export const defaultPeriod: IDuration = {
 
 export const Transactions = () => {
   //access auth data
-  const { user } = useSelector((store: RootState) => store["auth"]);
-  const token = user?.accessToken;
-  const headers = { Authorization: `Bearer ${token}` };
+  const headers = useFetchAuthData();
   //
 
   //variable declarations

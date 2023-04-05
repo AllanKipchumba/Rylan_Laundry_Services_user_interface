@@ -85,7 +85,7 @@
       th,
       td {
         padding: 0.8rem;
-        border: 3px solid #eee;
+        border: 2px solid #d4d4d4;
         text-align: left;
         text-transform: capitalize;
         text-align: center;
@@ -98,6 +98,15 @@
 
       tr:nth-child(even) {
         background-color: #f3f3f2;
+      }
+
+      .navlink {
+        text-decoration: none;
+        color: inherit;
+        &:hover {
+          color: var(--hover-light-blue);
+          font-size: 20px;
+        }
       }
     }
   }
