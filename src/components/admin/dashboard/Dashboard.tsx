@@ -10,25 +10,21 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { CheckLoadingState } from "../../checkLoadingState/CheckLoadingState";
 import { Pagination } from "../../pagination/Pagination";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Search } from "../../search/Search";
 import { useDispatch } from "react-redux";
 import { FILTER_BY_SEARCH } from "../../../redux/slices/fliterOurClients";
+import { useFetchAuthData } from "../../../hooks/useFetchAuthData";
 
 const washesIcon = <MdDryCleaning size={30} color="#46566e" />;
 const clientsIcon = <IoIosPeople size={30} color="#1f93ff" />;
-const revenueIcon = <AiOutlineDollarCircle size={30} color="#1dc88b" />;
+export const revenueIcon = <AiOutlineDollarCircle size={30} color="#1dc88b" />;
 
 export const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { user } = useSelector((store: RootState) => store["auth"]);
-  const token = user?.accessToken;
-  const headers = { Authorization: `Bearer ${token}` };
-
+  const headers = useFetchAuthData();
   const { clients } = useSelector((store: RootState) => store["clients"]);
-
   const [totalWashes, setTotalwatshes] = useState<number>(0);
   const [clientsServed, setClientsServed] = useState<number>(0);
   const [grossRevenueGenerated, setGrossRevenueGenerated] = useState<number>(0);
@@ -144,7 +140,6 @@ export const Dashboard = () => {
               <table>
                 <thead>
                   <tr>
-                    {/* <th>#</th> */}
                     <th>name</th>
                     <th>frequency</th>
                     <th>revenue</th>
@@ -156,8 +151,14 @@ export const Dashboard = () => {
                     return (
                       _id !== "" && (
                         <tr key={index}>
-                          {/* <td>{index}</td> */}
-                          <td>{_id}</td>
+                          <td>
+                            <NavLink
+                              to={`/transaction-history/${_id}`}
+                              className={styles.navlink}
+                            >
+                              {_id}
+                            </NavLink>
+                          </td>
                           <td>{count}</td>
                           <td>Ksh {totalAmount}</td>
                         </tr>

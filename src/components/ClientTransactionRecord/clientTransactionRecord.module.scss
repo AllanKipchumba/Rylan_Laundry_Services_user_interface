@@ -1,0 +1,75 @@
+.transaction-record {
+  .header {
+    .client-name {
+      color: var(--hover-light-blue);
+    }
+    .info-box {
+      display: grid;
+      grid-gap: 1rem;
+      margin-top: 0.5rem;
+      margin-bottom: 2rem;
+
+      @media (max-width: 640px) {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+      @media (min-width: 640px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .card {
+        border: 1px solid #ccc;
+        background-color: var(--white);
+        @media (max-width: 640px) {
+          padding: 0.75rem;
+        }
+        @media (min-width: 640px) {
+          padding: 1rem;
+        }
+        @media (min-width: 1024px) {
+          padding: 1.5rem;
+        }
+      }
+      .card2 {
+        border-left: 3px solid #1f93ff;
+        color: #1f93ff;
+      }
+
+      .card3 {
+        border-left: 3px solid #1dc88b;
+        color: #1dc88b;
+      }
+    }
+
+    h1 {
+      text-align: center;
+    }
+  }
+
+  .record {
+    margin-top: 1.5rem;
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+
+      thead,
+      tr,
+      th,
+      td {
+        padding: 0.8rem;
+        border: 2px solid #d4d4d4;
+        text-transform: capitalize;
+        text-align: left;
+
+        @media screen and (max-width: 640px) {
+          padding: 5px;
+          margin-top: 1rem;
+        }
+      }
+
+      tr:nth-child(even) {
+        background-color: #f3f3f2;
+      }
+    }
+  }
+}
