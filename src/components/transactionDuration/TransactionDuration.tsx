@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { defaultPeriod, IDuration } from "../admin/transactions/Transactions";
 import styles from "./transactionDuration.module.scss";
 
@@ -26,18 +26,34 @@ interface TransactionDurationProps {
 export const TransactionDuration = ({
   updateTransactionDuration,
 }: TransactionDurationProps) => {
-  const [transactionDuration, setTransactionDuration] = useState(defaultPeriod);
+  const [transactionDuration, setTransactionDuration] = useState<IDuration>(
+    () => {
+      const storedDuration = localStorage.getItem("transactionDuration");
+      return storedDuration ? JSON.parse(storedDuration) : defaultPeriod;
+    }
+  );
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const { month, year } = transactionDuration;
 
+  // Store the new duration in local storage when form is submitted
+  if (formSubmitted) {
+    localStorage.setItem(
+      "transactionDuration",
+      JSON.stringify(transactionDuration)
+    );
+  }
+
+  //updates transaction duration
   const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setTransactionDuration((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  //passes transaction duration to parent component
   const submitTransactionDurstion = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     updateTransactionDuration(transactionDuration);
+    setFormSubmitted(true);
   };
 
   return (

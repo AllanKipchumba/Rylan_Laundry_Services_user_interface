@@ -12,9 +12,8 @@ import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../redux/slices/authSlice";
 import { base_url } from "..";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import { Notify } from "notiflix";
+import { useFetchAuthData } from "../../hooks/useFetchAuthData";
 
 // interface CustomNavLinkProps {
 //   isActive: boolean;
@@ -24,10 +23,7 @@ import { Notify } from "notiflix";
 //   isActive ? `${styles.active} ${styles.navLink}` : `${styles.navLink}`;
 
 export const Sidebar = () => {
-  const { user } = useSelector((store: RootState) => store["auth"]);
-  const token = user?.accessToken;
-  const headers = { Authorization: `Bearer ${token}` };
-
+  const headers = useFetchAuthData();
   const dispatch = useDispatch();
 
   const logout = async () => {
@@ -38,7 +34,6 @@ export const Sidebar = () => {
         headers: headers,
       }).then((res) => {
         res.status == 204 && dispatch(LOGOUT());
-        console.log(res.data);
       });
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -46,7 +41,6 @@ export const Sidebar = () => {
         Notify.failure(axiosError.response?.data);
       } else {
         console.error(error);
-        Notify.failure(`${error}!`);
       }
     }
   };

@@ -21,11 +21,13 @@ const authSlice = createSlice({
   reducers: {
     AUTH_SUCCESS: (state, action) => {
       state.user = action.payload;
+      localStorage.removeItem("transactionDuration");
     },
 
     LOGOUT: (state) => {
       state.user = null;
       localStorage.removeItem("user");
+      localStorage.removeItem("transactionDuration");
     },
   },
 });

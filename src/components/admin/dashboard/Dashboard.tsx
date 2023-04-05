@@ -44,55 +44,43 @@ export const Dashboard = () => {
   //get dashboard data
   const [err403, setErr403] = useState(false);
   useEffect(() => {
-    const getgrossSalesReport = async () => {
+    const fetchData = async () => {
       setLoading(true);
       try {
-        await axios({
-          method: "get",
-          url: `${base_url}/analytics/business`,
-          headers: headers,
-        }).then((res) => {
-          setLoading(false);
-          setTotalwatshes(res.data.totalNumberOfSales);
-          setGrossRevenueGenerated(res.data.totalAmountMadeFromSales);
-        });
+        const [grossSalesReport, clientsReport] = await Promise.all([
+          axios({
+            method: "get",
+            url: `${base_url}/analytics/business`,
+            headers: headers,
+          }),
+          axios({
+            method: "get",
+            url: `${base_url}/analytics/clients`,
+            headers: headers,
+          }),
+        ]);
+        setLoading(false);
+        setTotalwatshes(grossSalesReport.data.totalNumberOfSales);
+        setGrossRevenueGenerated(
+          grossSalesReport.data.totalAmountMadeFromSales
+        );
+        setClientsServed(clientsReport.data.clientsServed - 1);
+        setOurClients(clientsReport.data.clients);
       } catch (error) {
         setLoading(false);
-
-        // check if the error is an instance of AxiosError
         if (axios.isAxiosError(error)) {
-          setLoading(false);
           const axiosError = error;
-
           axiosError.response?.status == 403 && setErr403(true);
         } else {
           console.error(error);
-          Notify.failure(`${error}!`);
+          Notify.failure(`Unable to fetch Data!`);
         }
       }
     };
 
-    const getClientsReport = async () => {
-      setLoading(true);
-      try {
-        await axios({
-          method: "get",
-          url: `${base_url}/analytics/clients`,
-          headers: headers,
-        }).then((res) => {
-          setLoading(false);
-          setClientsServed(res.data.clientsServed - 1);
-          setOurClients(res.data.clients);
-        });
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-        Notify.failure(`${error}!`);
-      }
-    };
-    getgrossSalesReport();
-    getClientsReport();
+    fetchData();
   }, []);
+
   err403 && navigate("/login");
   //
 

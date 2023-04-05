@@ -1,15 +1,14 @@
 import axios from "axios";
 import { Notify } from "notiflix";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../../../redux/store";
 import { CheckLoadingState } from "../../checkLoadingState/CheckLoadingState";
 import { monthNames } from "../../timeStamp/TimeStamp";
 import { TransactionDuration } from "../../transactionDuration/TransactionDuration";
 import { defaultPeriod, IDuration } from "../transactions/Transactions";
 import styles from "./report.module.scss";
 import { base_url } from "../../index";
+import { useFetchAuthData } from "../../../hooks/useFetchAuthData";
 
 interface IMonthlyReport {
   sales: number;
@@ -68,9 +67,7 @@ export const Report = () => {
   const monthName = monthNames[salesPeriod.month - 1];
   const year = salesPeriod.year;
 
-  const { user } = useSelector((store: RootState) => store["auth"]);
-  const token = user?.accessToken;
-  const headers = { Authorization: `Bearer ${token}` };
+  const headers = useFetchAuthData();
 
   const changeSalesPeriod = (data: IDuration) => {
     setSalesPeriod(data);

@@ -42,7 +42,8 @@ export const Transactions = () => {
   //variable declarations
   const [showInputForm, setShowInputForm] = useState(false);
   const id = useLocation().pathname.split("/")[1];
-  const [salesPeriod, setSalesPeriod] = useState(defaultPeriod);
+  const [transactionDuration, setTransactionDuration] = useState(defaultPeriod);
+  useState(false);
   const [salesData, setsalesData] = useState([]);
   const [expenditureData, setExpenditureData] = useState([]);
   const [creditsData, setCreditsData] = useState([]);
@@ -78,8 +79,8 @@ export const Transactions = () => {
   /*updates sales period.
    *Receives data from TransactionDuration component
    */
-  const changeSalesPeriod = (data: IDuration) => {
-    setSalesPeriod(data);
+  const changetransactionDuration = (data: IDuration) => {
+    setTransactionDuration(data);
   };
   //
 
@@ -93,7 +94,7 @@ export const Transactions = () => {
         await axios({
           method: "post",
           url: `${base_url}/transactions/monthly`,
-          data: salesPeriod,
+          data: transactionDuration,
           headers: headers,
         }).then((res) => {
           setsalesData(res.data?.sales);
@@ -116,7 +117,7 @@ export const Transactions = () => {
       }
     };
     getTransactionsData();
-  }, [salesPeriod, id, transactionIsDeleted, updateCounter]);
+  }, [transactionDuration, id, transactionIsDeleted, updateCounter]);
 
   const navigate = useNavigate();
   err403 && navigate("/login");
@@ -148,8 +149,8 @@ export const Transactions = () => {
 
         axiosError.response?.status == 401 && Notify.failure(`Unauthorized!`);
       } else {
-        console.error(error);
-        Notify.failure(`${error}!`);
+        console.log(error);
+        Notify.failure(`Unable to delete!`);
       }
     }
   };
@@ -190,7 +191,7 @@ export const Transactions = () => {
               <h1>{returnTitle(id, "sales", "expenditure", "credits")} data</h1>
               <div>
                 <TransactionDuration
-                  updateTransactionDuration={changeSalesPeriod}
+                  updateTransactionDuration={changetransactionDuration}
                 />
               </div>
             </div>
@@ -211,7 +212,8 @@ export const Transactions = () => {
           <div className={styles["transactions-data"]}>
             <div className={styles.header}>
               <h1>
-                {monthNames[salesPeriod.month - 1]}, {salesPeriod.year} &nbsp;
+                {monthNames[transactionDuration.month - 1]},{" "}
+                {transactionDuration.year} &nbsp;
                 {returnTitle(id, "sales", "expenses", "credits")}
               </h1>
             </div>
