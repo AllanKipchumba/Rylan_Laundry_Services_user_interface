@@ -26,7 +26,7 @@ const filterOurClients = createSlice({
     FILTER_BY_SEARCH: (state, action: PayloadAction<FilterPayload>) => {
       const { ourClients, search } = action.payload;
       const searchedClient = ourClients.filter((client: ClientState) =>
-        client._id.toLowerCase().includes(search.toLowerCase())
+        client._id?.toLowerCase().includes(search.toLowerCase())
       );
       state.clients = searchedClient;
     },
