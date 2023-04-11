@@ -1,8 +1,9 @@
 .transaction-record {
+  .client-name {
+    color: var(--hover-light-blue);
+  }
   .header {
-    .client-name {
-      color: var(--hover-light-blue);
-    }
+    margin-top: 1.5rem;
     .info-box {
       display: grid;
       grid-gap: 1rem;
@@ -45,10 +46,25 @@
     }
   }
 
+  .graph {
+    .graph-heading {
+      display: flex;
+      gap: 2rem;
+      text-align: center;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    .chart {
+      max-height: 25rem;
+      margin-bottom: 2rem;
+    }
+  }
+
   .record {
-    margin-top: 1.5rem;
+    margin-top: 3rem;
 
     table {
+      margin: 1rem 0;
       border-collapse: collapse;
       width: 100%;
 

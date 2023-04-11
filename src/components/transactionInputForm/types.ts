@@ -40,3 +40,18 @@ export const initialState: TransactionInputData = {
   amount: 0,
   date: new Date(),
 };
+
+export const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];

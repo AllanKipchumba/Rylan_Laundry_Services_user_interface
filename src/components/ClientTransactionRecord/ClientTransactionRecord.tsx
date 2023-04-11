@@ -10,8 +10,23 @@ import { useFetchAuthData } from "../../hooks/useFetchAuthData";
 import { Notify } from "notiflix";
 import { Timestamp } from "../timeStamp/TimeStamp";
 import { CheckLoadingState } from "../checkLoadingState/CheckLoadingState";
+import { LineChart } from "../chart/LineChart";
+import { YearCard } from "../yearCard/YearCard";
+import { monthNames } from "../transactionInputForm/types";
 
 const frequencyIcon = <TbSum size={30} color="#1f93ff" />;
+const currentYear = new Date().getFullYear();
+
+interface RevenueRecord {
+  year: number;
+  data: {
+    month: number;
+    data: {
+      totalRevenue: number;
+    };
+  }[];
+  totalRevenue: number;
+}
 
 export const ClientTransactionRecord = () => {
   const client = useLocation().pathname.split("/")[2];
@@ -20,6 +35,13 @@ export const ClientTransactionRecord = () => {
   const [revenueFromClient, setRevenueFromClient] = useState(0);
   const [frequency, setFrequency] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [year, setYear] = useState(currentYear);
+  const [revenueRecord, setRevenueRecord] = useState<RevenueRecord[]>([]);
+  const currentRecord = revenueRecord.filter((rev) => rev.year === year);
+  const monthsWithData = [];
+
+  const data = [12, 19, 3, 5, 2, 3];
+  const labels = ["January", "February", "March", "April", "May", "June"];
 
   useEffect(() => {
     let isMounted = true;
@@ -35,13 +57,20 @@ export const ClientTransactionRecord = () => {
         url: `${base_url}/analytics/client/${client}`,
         headers: headers,
       }),
+      axios({
+        method: "get",
+        url: `${base_url}/analytics/revenueRecord/${client}`,
+        headers: headers,
+      }),
     ])
-      .then(([transactionRes, recordRes]) => {
+      .then(([transactionRes, recordRes, revenueRecord]) => {
         if (!isMounted) return; // check if component is still mounted
         const { count, totalAmount } = recordRes?.data?.clientRecord;
         setTransactionHistory(transactionRes.data);
         setFrequency(count);
         setRevenueFromClient(totalAmount);
+        setRevenueRecord(revenueRecord.data);
+
         setLoading(false);
       })
       .catch((error) => {
@@ -59,6 +88,10 @@ export const ClientTransactionRecord = () => {
   return (
     <CheckLoadingState loading={loading}>
       <div className={styles["transaction-record"]}>
+        <h1>
+          Client:&nbsp;
+          <span className={styles["client-name"]}>{client}</span>
+        </h1>
         <div className={styles.header}>
           <div className={styles["info-box"]}>
             <Infobox
@@ -74,12 +107,27 @@ export const ClientTransactionRecord = () => {
               icon={revenueIcon}
             />
           </div>
-          <h1>
-            <span className={styles["client-name"]}>{client}'s</span>{" "}
-            transaction history
-          </h1>
         </div>
+
+        <div className={styles.graph}>
+          <div className={styles["graph-heading"]}>
+            <h1>revenue graph</h1>
+
+            <YearCard
+              value={year}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                setYear(parseInt(e.target.value))
+              }
+            />
+          </div>
+          <div className={styles.chart}>
+            <LineChart data={data} labels={labels} />
+          </div>
+        </div>
+
         <div className={styles.record}>
+          <h1>transaction history</h1>
+
           <table>
             <thead>
               <tr>

@@ -17,7 +17,7 @@ const months = [
   { id: 12, name: "december" },
 ];
 
-const years = [2021, 2022, 2023];
+export const years = [2021, 2022, 2023];
 
 interface TransactionDurationProps {
   updateTransactionDuration: (data: IDuration) => void;

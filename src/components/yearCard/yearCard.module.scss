@@ -1,0 +1,12 @@
+.card {
+  .input {
+    display: block;
+    font-weight: 300;
+    padding: 0.7rem;
+    margin: 1rem auto;
+    width: 100%;
+    border: 1px solid var(--cont-color);
+    border-radius: 5px;
+    outline: none;
+  }
+}
