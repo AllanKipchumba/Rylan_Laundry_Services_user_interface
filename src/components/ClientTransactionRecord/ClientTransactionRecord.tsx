@@ -13,6 +13,7 @@ import { CheckLoadingState } from "../checkLoadingState/CheckLoadingState";
 import { LineChart } from "../chart/LineChart";
 import { YearCard } from "../yearCard/YearCard";
 import { monthNames } from "../transactionInputForm/types";
+import { Pagination } from "../pagination/Pagination";
 
 const frequencyIcon = <TbSum size={30} color="#1f93ff" />;
 const currentYear = new Date().getFullYear();
@@ -54,10 +55,19 @@ export const ClientTransactionRecord = () => {
   const [monthsWithData, setMonthsWithData] = useState<number[]>([]);
   const [revenuePerMonth, setRevenuePerMonth] = useState<number[]>([]);
   const monthNamesWithData = getMonthNames(monthsWithData);
-
   //props to pass to the line graph
   const data = revenuePerMonth;
   const labels = monthNamesWithData;
+  //pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [clientsPerPage] = useState(10);
+  //get current clients
+  const indexOfLastProduct = currentPage * clientsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - clientsPerPage;
+  const transactionHistoryPage = transactionHistory.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   useEffect(() => {
     const mappedData = clientData?.map((cData) => ({
@@ -156,7 +166,10 @@ export const ClientTransactionRecord = () => {
         </div>
 
         <div className={styles.record}>
-          <h1>transaction history</h1>
+          <h1>
+            <span className={styles["client-name"]}>{client}'s &nbsp;</span>
+            transaction history
+          </h1>
 
           <table>
             <thead>
@@ -167,7 +180,7 @@ export const ClientTransactionRecord = () => {
               </tr>
             </thead>
             <tbody>
-              {transactionHistory.map((transaction, index) => {
+              {transactionHistoryPage.map((transaction, index) => {
                 const { _id, transactionDate, amount } = transaction;
                 return (
                   <tr key={index}>
@@ -175,7 +188,7 @@ export const ClientTransactionRecord = () => {
                     <td>
                       <Timestamp transactionDate={transactionDate} />
                     </td>
-                    <td>{amount}</td>
+                    <td>Ksh {amount}</td>
                   </tr>
                 );
               })}
@@ -183,6 +196,13 @@ export const ClientTransactionRecord = () => {
           </table>
         </div>
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        clientsPerPage={clientsPerPage}
+        totalClients={transactionHistory.length}
+      />
     </CheckLoadingState>
   );
 };

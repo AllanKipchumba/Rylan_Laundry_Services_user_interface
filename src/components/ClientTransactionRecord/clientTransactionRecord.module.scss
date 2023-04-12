@@ -3,7 +3,7 @@
     color: var(--hover-light-blue);
   }
   .header {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     .info-box {
       display: grid;
       grid-gap: 1rem;
@@ -47,12 +47,15 @@
   }
 
   .graph {
+    margin-bottom: 2rem;
     .graph-heading {
       display: flex;
       gap: 2rem;
       text-align: center;
       align-items: baseline;
       flex-wrap: wrap;
+      margin-left: auto;
+      margin-right: auto;
     }
     .chart {
       max-height: 25rem;
@@ -62,6 +65,10 @@
 
   .record {
     margin-top: 3rem;
+
+    h1 {
+      text-align: center;
+    }
 
     table {
       margin: 1rem 0;
