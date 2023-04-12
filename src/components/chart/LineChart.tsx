@@ -4,10 +4,18 @@ import Chart from "chart.js/auto";
 interface LineChartProps {
   data: number[];
   labels: string[];
+  client?: string;
+  year: number;
 }
 
-export const LineChart: React.FC<LineChartProps> = ({ data, labels }) => {
+export const LineChart: React.FC<LineChartProps> = ({
+  data,
+  labels,
+  client,
+  year,
+}) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
+  const clientName = client?.charAt(0).toUpperCase() + client!.slice(1);
 
   useEffect(() => {
     if (chartRef.current) {
@@ -17,7 +25,7 @@ export const LineChart: React.FC<LineChartProps> = ({ data, labels }) => {
           labels,
           datasets: [
             {
-              label: "Line Graph",
+              label: `${year} Revenue Trends by ${clientName}`,
               data,
               fill: false,
               borderColor: "rgb(75, 192, 192)",

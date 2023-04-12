@@ -28,6 +28,18 @@ interface RevenueRecord {
   totalRevenue: number;
 }
 
+//get month names
+const getMonthNames = (monthIds: number[]): string[] => {
+  const result = monthIds?.map((monthId) => {
+    if (monthId < 1 || monthId > 12) {
+      throw new Error(`Invalid month ID: ${monthId}`);
+    }
+    return monthNames[monthId - 1];
+  });
+
+  return result;
+};
+
 export const ClientTransactionRecord = () => {
   const client = useLocation().pathname.split("/")[2];
   const headers = useFetchAuthData();
@@ -38,10 +50,23 @@ export const ClientTransactionRecord = () => {
   const [year, setYear] = useState(currentYear);
   const [revenueRecord, setRevenueRecord] = useState<RevenueRecord[]>([]);
   const currentRecord = revenueRecord.filter((rev) => rev.year === year);
-  const monthsWithData = [];
+  const clientData = currentRecord[0]?.data;
+  const [monthsWithData, setMonthsWithData] = useState<number[]>([]);
+  const [revenuePerMonth, setRevenuePerMonth] = useState<number[]>([]);
+  const monthNamesWithData = getMonthNames(monthsWithData);
 
-  const data = [12, 19, 3, 5, 2, 3];
-  const labels = ["January", "February", "March", "April", "May", "June"];
+  //props to pass to the line graph
+  const data = revenuePerMonth;
+  const labels = monthNamesWithData;
+
+  useEffect(() => {
+    const mappedData = clientData?.map((cData) => ({
+      month: cData.month,
+      revenue: cData.data.totalRevenue,
+    }));
+    setMonthsWithData(mappedData?.map(({ month }) => month));
+    setRevenuePerMonth(mappedData?.map(({ revenue }) => revenue));
+  }, [clientData]);
 
   useEffect(() => {
     let isMounted = true;
@@ -121,7 +146,12 @@ export const ClientTransactionRecord = () => {
             />
           </div>
           <div className={styles.chart}>
-            <LineChart data={data} labels={labels} />
+            <LineChart
+              data={data}
+              labels={labels}
+              client={client}
+              year={year}
+            />
           </div>
         </div>
 
@@ -131,7 +161,6 @@ export const ClientTransactionRecord = () => {
           <table>
             <thead>
               <tr>
-                <th>#</th>
                 <th>transaction ID</th>
                 <th>Date</th>
                 <th>amount</th>
@@ -142,7 +171,6 @@ export const ClientTransactionRecord = () => {
                 const { _id, transactionDate, amount } = transaction;
                 return (
                   <tr key={index}>
-                    <td>{index + 1}</td>
                     <td>{_id}</td>
                     <td>
                       <Timestamp transactionDate={transactionDate} />
