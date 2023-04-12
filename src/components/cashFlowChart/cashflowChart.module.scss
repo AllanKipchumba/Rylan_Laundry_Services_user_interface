@@ -1,0 +1,19 @@
+.cashFlow {
+  margin: 3rem 0;
+
+  .heading {
+    display: flex;
+    gap: 7rem;
+    text-align: center;
+    align-items: baseline;
+    flex-wrap: wrap;
+
+    .period {
+      display: flex;
+      text-align: center;
+      align-items: baseline;
+      gap: 1rem;
+      color: var(--cont-color);
+    }
+  }
+}

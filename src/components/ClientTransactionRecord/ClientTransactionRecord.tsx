@@ -10,7 +10,7 @@ import { useFetchAuthData } from "../../hooks/useFetchAuthData";
 import { Notify } from "notiflix";
 import { Timestamp } from "../timeStamp/TimeStamp";
 import { CheckLoadingState } from "../checkLoadingState/CheckLoadingState";
-import { LineChart } from "../chart/LineChart";
+import { LineChart } from "../charts/LineChart";
 import { YearCard } from "../yearCard/YearCard";
 import { monthNames } from "../transactionInputForm/types";
 import { Pagination } from "../pagination/Pagination";
@@ -148,12 +148,15 @@ export const ClientTransactionRecord = () => {
           <div className={styles["graph-heading"]}>
             <h1>revenue graph</h1>
 
-            <YearCard
-              value={year}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                setYear(parseInt(e.target.value))
-              }
-            />
+            <div className={styles.period}>
+              <h5>Select period:</h5>
+              <YearCard
+                value={year}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setYear(parseInt(e.target.value))
+                }
+              />
+            </div>
           </div>
           <div className={styles.chart}>
             <LineChart

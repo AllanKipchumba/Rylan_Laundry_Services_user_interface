@@ -50,12 +50,18 @@
     margin-bottom: 2rem;
     .graph-heading {
       display: flex;
-      gap: 2rem;
+      gap: 5rem;
       text-align: center;
       align-items: baseline;
       flex-wrap: wrap;
-      margin-left: auto;
-      margin-right: auto;
+
+      .period {
+        display: flex;
+        text-align: center;
+        align-items: baseline;
+        gap: 1rem;
+        color: var(--cont-color);
+      }
     }
     .chart {
       max-height: 25rem;

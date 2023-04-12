@@ -15,6 +15,7 @@ import { Search } from "../../search/Search";
 import { useDispatch } from "react-redux";
 import { FILTER_BY_SEARCH } from "../../../redux/slices/fliterOurClients";
 import { useFetchAuthData } from "../../../hooks/useFetchAuthData";
+import { CashFlowChart } from "../../cashFlowChart/CashFlowChart";
 
 const washesIcon = <MdDryCleaning size={30} color="#46566e" />;
 const clientsIcon = <IoIosPeople size={30} color="#1f93ff" />;
@@ -112,6 +113,8 @@ export const Dashboard = () => {
             icon={revenueIcon}
           />
         </div>
+
+        <CashFlowChart />
 
         <div className={styles["clients-list"]}>
           <div className={styles.header}>

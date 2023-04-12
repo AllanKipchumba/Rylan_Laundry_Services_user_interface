@@ -27,9 +27,9 @@ export const LineChart: React.FC<LineChartProps> = ({
             {
               label: `${year} Revenue Trends by ${clientName}`,
               data,
-              fill: false,
+              fill: true,
               borderColor: "rgb(75, 192, 192)",
-              tension: 0.1,
+              tension: 0.3,
             },
           ],
         },
