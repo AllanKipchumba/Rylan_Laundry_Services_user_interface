@@ -6,6 +6,10 @@ interface IProps {
   expenses: number[];
   credits: number[];
   labels: string[];
+  totalSales: number;
+  totalExpenses: number;
+  totalCredits: number;
+  year: number;
 }
 
 export const MultiLineGraph: React.FC<IProps> = ({
@@ -13,6 +17,10 @@ export const MultiLineGraph: React.FC<IProps> = ({
   sales,
   credits,
   expenses,
+  totalSales,
+  totalExpenses,
+  totalCredits,
+  year,
 }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
 
@@ -24,26 +32,35 @@ export const MultiLineGraph: React.FC<IProps> = ({
           labels,
           datasets: [
             {
-              label: `Sales Revenue Trends`,
+              label: [
+                `${year} Sales Revenue Trends`,
+                `Total sales: ${totalSales}`,
+              ].join(" "),
               data: sales,
               fill: false,
               borderColor: "#66cccc",
               tension: 0.1,
             },
-            {
-              label: `Expenditure Trends`,
-              data: expenses,
-              fill: false,
-              borderColor: "#cc6666",
-              tension: 0.1,
-            },
-            {
-              label: `Credit Trends`,
-              data: credits,
-              fill: false,
-              borderColor: "#99cc66",
-              tension: 0.1,
-            },
+            // {
+            //   label: [
+            //     `${year} Expenditure Trends`,
+            //     `Total expenses: ${totalExpenses}`,
+            //   ].join(" "),
+            //   data: expenses,
+            //   fill: false,
+            //   borderColor: "#cc6666",
+            //   tension: 0.1,
+            // },
+            // {
+            //   label: [
+            //     `${year} Credit Trends`,
+            //     `Total credits: ${totalCredits}`,
+            //   ].join(" "),
+            //   data: credits,
+            //   fill: false,
+            //   borderColor: "#99cc66",
+            //   tension: 0.1,
+            // },
           ],
         },
       });

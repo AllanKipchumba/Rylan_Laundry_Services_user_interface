@@ -30,7 +30,7 @@ interface RevenueRecord {
 }
 
 //get month names
-const getMonthNames = (monthIds: number[]): string[] => {
+export const getMonthNames = (monthIds: number[]): string[] => {
   const result = monthIds?.map((monthId) => {
     if (monthId < 1 || monthId > 12) {
       throw new Error(`Invalid month ID: ${monthId}`);
@@ -58,6 +58,7 @@ export const ClientTransactionRecord = () => {
   //props to pass to the line graph
   const data = revenuePerMonth;
   const labels = monthNamesWithData;
+
   //pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const [clientsPerPage] = useState(10);
