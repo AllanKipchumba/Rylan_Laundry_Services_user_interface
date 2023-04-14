@@ -42,6 +42,9 @@ export const Dashboard = () => {
   const indexOfFirstProduct = indexOfLastProduct - clientsPerPage;
   const clientPage = clients.slice(indexOfFirstProduct, indexOfLastProduct);
 
+  const CheckIfCashflowChartIsMounted = (mounted: boolean) =>
+    setLoading(mounted);
+
   //get dashboard data
   const [err403, setErr403] = useState(false);
   useEffect(() => {
@@ -114,7 +117,7 @@ export const Dashboard = () => {
           />
         </div>
 
-        <CashFlowChart />
+        <CashFlowChart checkIfMounted={CheckIfCashflowChartIsMounted} />
 
         <div className={styles["clients-list"]}>
           <div className={styles.header}>
@@ -141,15 +144,14 @@ export const Dashboard = () => {
                     const { _id, count, totalAmount } = client;
                     return (
                       _id !== "" && (
-                        <tr key={index}>
-                          <td>
-                            <NavLink
-                              to={`/transaction-history/${_id}`}
-                              className={styles.navlink}
-                            >
-                              {_id}
-                            </NavLink>
-                          </td>
+                        <tr
+                          className={styles.data}
+                          key={index}
+                          onClick={() =>
+                            navigate(`/transaction-history/${_id}`)
+                          }
+                        >
+                          <td>{_id}</td>
                           <td>{count}</td>
                           <td>Ksh {totalAmount}</td>
                         </tr>

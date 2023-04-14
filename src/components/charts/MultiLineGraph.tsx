@@ -2,25 +2,21 @@ import React, { useRef, useEffect } from "react";
 import Chart from "chart.js/auto";
 
 interface IProps {
-  sales: number[];
-  expenses: number[];
-  credits: number[];
+  data: number[];
   labels: string[];
-  totalSales: number;
-  totalExpenses: number;
-  totalCredits: number;
+  totals: number;
   year: number;
+  borderColor: string;
+  transactionType: string;
 }
 
 export const MultiLineGraph: React.FC<IProps> = ({
   labels,
-  sales,
-  credits,
-  expenses,
-  totalSales,
-  totalExpenses,
-  totalCredits,
+  data,
+  totals,
   year,
+  borderColor,
+  transactionType,
 }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
 
@@ -32,35 +28,13 @@ export const MultiLineGraph: React.FC<IProps> = ({
           labels,
           datasets: [
             {
-              label: [
-                `${year} Sales Revenue Trends`,
-                `Total sales: ${totalSales}`,
-              ].join(" "),
-              data: sales,
-              fill: false,
-              borderColor: "#66cccc",
+              label: `${year} ${transactionType} Revenue Trends, Total ${transactionType}: ${totals}`,
+              data,
+              fill: true,
+              borderColor,
               tension: 0.1,
+              // backgroundColor: borderColor,
             },
-            // {
-            //   label: [
-            //     `${year} Expenditure Trends`,
-            //     `Total expenses: ${totalExpenses}`,
-            //   ].join(" "),
-            //   data: expenses,
-            //   fill: false,
-            //   borderColor: "#cc6666",
-            //   tension: 0.1,
-            // },
-            // {
-            //   label: [
-            //     `${year} Credit Trends`,
-            //     `Total credits: ${totalCredits}`,
-            //   ].join(" "),
-            //   data: credits,
-            //   fill: false,
-            //   borderColor: "#99cc66",
-            //   tension: 0.1,
-            // },
           ],
         },
       });
@@ -69,7 +43,7 @@ export const MultiLineGraph: React.FC<IProps> = ({
         chart.destroy();
       };
     }
-  }, []);
+  }, [data]);
 
   return <canvas ref={chartRef} />;
 };

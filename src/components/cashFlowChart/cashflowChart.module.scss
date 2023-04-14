@@ -3,12 +3,13 @@
 
   .heading {
     display: flex;
-    gap: 7rem;
+    gap: 5rem;
     text-align: center;
     align-items: baseline;
     flex-wrap: wrap;
 
-    .period {
+    .period,
+    .transaction-type {
       display: flex;
       text-align: center;
       align-items: baseline;
@@ -17,6 +18,7 @@
     }
   }
   .graph {
-    max-height: 25rem !important;
+    height: 80%;
+    width: 80%;
   }
 }

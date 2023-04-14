@@ -99,14 +99,9 @@
       tr:nth-child(even) {
         background-color: #f3f3f2;
       }
-
-      .navlink {
-        text-decoration: none;
-        color: inherit;
-        &:hover {
-          color: var(--hover-light-blue);
-          font-size: 17px;
-        }
+      .data:hover {
+        background-color: #dbdbd7;
+        cursor: pointer;
       }
     }
   }
