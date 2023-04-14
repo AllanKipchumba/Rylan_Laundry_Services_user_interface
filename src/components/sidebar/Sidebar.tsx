@@ -27,13 +27,12 @@ export const Sidebar = () => {
   const dispatch = useDispatch();
 
   const logout = async () => {
+    dispatch(LOGOUT());
     try {
       await axios({
         method: "post",
         url: `${base_url}/auth/logout`,
         headers: headers,
-      }).then((res) => {
-        res.status == 204 && dispatch(LOGOUT());
       });
     } catch (error) {
       if (axios.isAxiosError(error)) {
