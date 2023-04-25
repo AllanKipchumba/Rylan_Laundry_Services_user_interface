@@ -32,7 +32,7 @@ export const MultiLineGraph: React.FC<IProps> = ({
               data,
               fill: true,
               borderColor,
-              tension: 0.1,
+              tension: 0.2,
               // backgroundColor: borderColor,
             },
           ],

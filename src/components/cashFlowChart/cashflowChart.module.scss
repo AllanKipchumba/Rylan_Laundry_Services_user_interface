@@ -19,6 +19,14 @@
   }
   .graph {
     height: 80%;
-    width: 80%;
+    margin: auto;
+
+    width: 100%;
+    @media screen and (min-width: 768px) {
+      width: 90%;
+    }
+    @media screen and (min-width: 1024px) {
+      width: 75%;
+    }
   }
 }

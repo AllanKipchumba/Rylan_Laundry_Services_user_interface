@@ -29,7 +29,7 @@ export const LineChart: React.FC<LineChartProps> = ({
               data,
               fill: true,
               borderColor: "rgb(75, 192, 192)",
-              tension: 0.3,
+              tension: 0.2,
             },
           ],
         },
