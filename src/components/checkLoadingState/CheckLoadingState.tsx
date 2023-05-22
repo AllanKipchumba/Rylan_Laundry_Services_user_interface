@@ -13,7 +13,7 @@ export const CheckLoadingState = ({
   if (loading) {
     Loading.dots("Fetching data. Please wait...", {
       svgColor: "#4f72df",
-      backgroundColor: "rgba(0,0,0,0.85)",
+      backgroundColor: "rgba(0,0,0,0.6)",
     });
     return null;
   } else {
