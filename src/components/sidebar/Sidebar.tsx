@@ -14,6 +14,7 @@ import { base_url } from "..";
 import axios from "axios";
 import { Notify } from "notiflix";
 import { useFetchAuthData } from "../../hooks/useFetchAuthData";
+import image from "../../assets/logo.png";
 
 // interface CustomNavLinkProps {
 //   isActive: boolean;
@@ -48,7 +49,15 @@ export const Sidebar = () => {
   return (
     <div className={styles.sidebar}>
       <div className={styles.header}>
-        <h1>LMS</h1>
+        <h1>Rylan</h1>
+        <div>
+          {/* <img
+            src={image}
+            alt="logo"
+            style={{ width: "50px", height: "50px" }}
+            className={styles.logo}
+          /> */}
+        </div>
       </div>
       <hr />
       <div className={styles["dash-list"]}>
