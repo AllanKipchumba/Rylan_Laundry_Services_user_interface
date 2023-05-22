@@ -3,7 +3,7 @@
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 9;
+  z-index: 100;
 
   .inputForm {
     position: fixed;
@@ -17,7 +17,8 @@
     width: 50%;
 
     @media screen and (max-width: 640px) {
-      width: 90%;
+      width: 100vw;
+      height: 90vh;
     }
     @media screen and (max-width: 768px) {
       width: 80%;

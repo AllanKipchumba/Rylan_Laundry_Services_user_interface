@@ -17,7 +17,7 @@ import {
   TransactionData,
 } from "../../../redux/slices/transactionDetails";
 import { Confirm } from "notiflix";
-import { base_url } from "../../index";
+import { Infobox, base_url } from "../../index";
 import { useFetchAuthData } from "../../../hooks/useFetchAuthData";
 
 export const editIcon = <FiEdit color="#36b9cc" />;
@@ -45,11 +45,15 @@ export const Transactions = () => {
   const [transactionDuration, setTransactionDuration] = useState(defaultPeriod);
   useState(false);
   const [salesData, setsalesData] = useState([]);
+
   const [expenditureData, setExpenditureData] = useState([]);
   const [creditsData, setCreditsData] = useState([]);
   const [transactionsData, setTransactionsData] = useState<TransactionData[]>(
     []
   );
+  const totalRevenue = transactionsData.reduce((accumulator, transaction) => {
+    return accumulator + transaction.amount;
+  }, 0);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
   const [editTransaction, setEdittransaction] = useState(false);
@@ -202,11 +206,26 @@ export const Transactions = () => {
               }}
               className={`btn`}
             >
-              <BsPlus />{" "}
+              <BsPlus />
               <span>
-                Add {returnTitle(id, "sales", "expenditure", "credits")}
+                Add {returnTitle(id, "sale", "expenditure", "credit")}
               </span>
             </button>
+          </div>
+
+          <div className={styles["info-box"]}>
+            {id === "sales" && (
+              <Infobox
+                cardClass={`${styles.card} ${styles.card1}`}
+                title={`Clients served`}
+                count={salesData.length}
+              />
+            )}
+            <Infobox
+              cardClass={`${styles.card} ${styles.card1}`}
+              title={returnTitle(id, "Revenue", "expenditure", "credits")}
+              count={`Ksh ${totalRevenue}`}
+            />
           </div>
 
           <div className={styles["transactions-data"]}>
@@ -220,7 +239,7 @@ export const Transactions = () => {
             {transactionsData?.length == 0 ? (
               <div className={styles.noTransactionRecords}>
                 <p>
-                  No {returnTitle(id, "sales ", "expenses ", "credits ")}{" "}
+                  No {returnTitle(id, "sales ", "expenses ", "credits ")}
                   present for this period
                 </p>
               </div>

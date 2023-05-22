@@ -14,6 +14,34 @@
       gap: 2rem;
     }
   }
+
+  .info-box {
+    display: grid;
+    grid-gap: 1rem;
+    margin-top: 2.5rem;
+
+    @media (max-width: 640px) {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .card {
+    border: 1px solid #ccc;
+    background-color: var(--white);
+    padding: 1rem;
+    max-width: 50vw;
+  }
+  .card1 {
+    border-left: 3px solid var(--cont-color);
+    color: var(--cont-color);
+  }
+
   .transactions-data {
     margin: 2rem 0;
     max-width: 100vw;

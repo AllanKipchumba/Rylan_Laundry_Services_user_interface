@@ -115,7 +115,7 @@ export const CashFlowChart: React.FC<IProps> = ({ checkIfMounted }) => {
 
   return (
     <div className={styles.cashFlow}>
-      <div className={styles.heading}>
+      <div className={`${styles.heading} flex gap-2`}>
         <h1>Cash flow analysis</h1>
         <div className={styles.period}>
           <h5>Select period:</h5>
