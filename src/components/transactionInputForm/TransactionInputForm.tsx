@@ -281,12 +281,14 @@ export const TransactionInputForm = ({
           <div className={styles.btns}>
             <button type="submit" className="btn">
               {loading ? (
-                <BeatLoader
-                  loading={loading}
-                  color="#fff"
-                  margin={4}
-                  size={17}
-                />
+                <p>
+                  <BeatLoader
+                    loading={loading}
+                    color="#fff"
+                    margin={4}
+                    size={17}
+                  />
+                </p>
               ) : (
                 `submit`
               )}
