@@ -17,8 +17,8 @@ import { FILTER_BY_SEARCH } from "../../../redux/slices/fliterOurClients";
 import { useFetchAuthData } from "../../../hooks/useFetchAuthData";
 import { CashFlowChart } from "../../cashFlowChart/CashFlowChart";
 
-const washesIcon = <MdDryCleaning size={30} color="#46566e" />;
-const clientsIcon = <IoIosPeople size={30} color="#1f93ff" />;
+export const washesIcon = <MdDryCleaning size={30} color="#46566e" />;
+export const clientsIcon = <IoIosPeople size={30} color="#1f93ff" />;
 export const revenueIcon = <AiOutlineDollarCircle size={30} color="#1dc88b" />;
 
 export const Dashboard = () => {

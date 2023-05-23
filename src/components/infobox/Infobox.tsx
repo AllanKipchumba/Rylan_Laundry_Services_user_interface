@@ -6,7 +6,7 @@ interface propTypes {
   cardClass: string;
   title: string;
   count: number | string;
-  icon: ReactNode;
+  icon?: ReactNode;
 }
 
 export const Infobox = ({ cardClass, title, count, icon }: propTypes) => {

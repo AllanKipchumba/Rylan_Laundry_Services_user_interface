@@ -3,7 +3,6 @@ import styles from "./login.module.scss";
 import logo from "../../assets/logo.png";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
-import { BeatLoader } from "react-spinners";
 import { AUTH_SUCCESS } from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -89,11 +88,7 @@ export const Login = () => {
           </div>
 
           <button type="submit" className={styles.btn}>
-            {loading ? (
-              <BeatLoader loading={loading} color="#fff" margin={4} size={17} />
-            ) : (
-              `Login`
-            )}
+            {loading ? <p>Loading...</p> : `Login`}
           </button>
         </form>
       </div>
