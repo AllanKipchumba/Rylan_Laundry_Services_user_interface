@@ -3,6 +3,7 @@
   padding-top: 1rem;
 
   .header {
+    width: 95%;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -12,6 +13,10 @@
       justify-content: center;
       align-items: center;
       gap: 2rem;
+    }
+
+    .btn {
+      padding: 0.7rem;
     }
   }
 

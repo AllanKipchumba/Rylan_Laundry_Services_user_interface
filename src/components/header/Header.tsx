@@ -17,11 +17,11 @@ export const Header = () => {
       <div>
         <img src={image} alt="logo" style={{ width: "70px", height: "70px" }} />
       </div>
-      <div>
-        <h1 className="font-bold">Laundry Data Management System</h1>
-      </div>
+      <div className={styles["hero-header"]}>
+        <div>
+          <h1 className="font-bold">Laundry Data Management System</h1>
+        </div>
 
-      <div className="m-auto">
         <div className={styles["header-right"]}>
           <h4>Howdy, {username}!</h4>
         </div>

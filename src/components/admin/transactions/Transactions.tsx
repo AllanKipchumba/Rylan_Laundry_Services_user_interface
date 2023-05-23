@@ -204,7 +204,7 @@ export const Transactions = () => {
                 setShowInputForm(!showInputForm);
                 setEdittransaction(false);
               }}
-              className={`btn`}
+              className={`btn ${styles.btn}`}
             >
               <BsPlus />
               <span>
