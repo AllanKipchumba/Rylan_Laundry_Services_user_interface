@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { defaultPeriod, IDuration } from "../admin/transactions/Transactions";
-import styles from "./transactionDuration.module.scss";
+import React, { useState, useEffect } from 'react';
+import { defaultPeriod, IDuration } from '../admin/transactions/Transactions';
+import styles from './transactionDuration.module.scss';
 
 const months = [
-  { id: 1, name: "january" },
-  { id: 2, name: "february" },
-  { id: 3, name: "march" },
-  { id: 4, name: "april" },
-  { id: 5, name: "may" },
-  { id: 6, name: "june" },
-  { id: 7, name: "july" },
-  { id: 8, name: "august" },
-  { id: 9, name: "september" },
-  { id: 10, name: "october" },
-  { id: 11, name: "november" },
-  { id: 12, name: "december" },
+  { id: 1, name: 'january' },
+  { id: 2, name: 'february' },
+  { id: 3, name: 'march' },
+  { id: 4, name: 'april' },
+  { id: 5, name: 'may' },
+  { id: 6, name: 'june' },
+  { id: 7, name: 'july' },
+  { id: 8, name: 'august' },
+  { id: 9, name: 'september' },
+  { id: 10, name: 'october' },
+  { id: 11, name: 'november' },
+  { id: 12, name: 'december' },
 ];
 
-export const years = [2021, 2022, 2023];
+export const years = [2021, 2022, 2023, 2024];
 
 interface TransactionDurationProps {
   updateTransactionDuration: (data: IDuration) => void;
@@ -28,7 +28,7 @@ export const TransactionDuration = ({
 }: TransactionDurationProps) => {
   const [transactionDuration, setTransactionDuration] = useState<IDuration>(
     () => {
-      const storedDuration = localStorage.getItem("transactionDuration");
+      const storedDuration = localStorage.getItem('transactionDuration');
       return storedDuration ? JSON.parse(storedDuration) : defaultPeriod;
     }
   );
@@ -38,7 +38,7 @@ export const TransactionDuration = ({
   // Store the new duration in local storage when form is submitted
   if (formSubmitted) {
     localStorage.setItem(
-      "transactionDuration",
+      'transactionDuration',
       JSON.stringify(transactionDuration)
     );
   }
@@ -60,13 +60,13 @@ export const TransactionDuration = ({
     <div>
       <form onSubmit={submitTransactionDurstion}>
         <select
-          name="month"
+          name='month'
           value={month}
           onChange={(e) => handleInputChange(e)}
           required
           className={styles.input}
         >
-          <option value="" disabled>
+          <option value='' disabled>
             month
           </option>
           {months.map((month) => {
@@ -80,13 +80,13 @@ export const TransactionDuration = ({
         </select>
 
         <select
-          name="year"
+          name='year'
           value={year}
           onChange={(e) => handleInputChange(e)}
           required
           className={styles.input}
         >
-          <option value="" disabled>
+          <option value='' disabled>
             year
           </option>
           {years.map((year, index) => {
@@ -99,9 +99,9 @@ export const TransactionDuration = ({
         </select>
 
         <button
-          type="submit"
+          type='submit'
           className={`btn }`}
-          style={{ padding: "7px", width: "100%" }}
+          style={{ padding: '7px', width: '100%' }}
         >
           Get data
         </button>
